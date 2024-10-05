@@ -35,11 +35,13 @@ nav button {
   border: 1px solid #d7e4fe;
   border-radius: 8px;
 }
+
 @media only screen and (max-device-width: 1000px) {
   nav {
-    scale: 0.75;
+    scale: 0.8;
   }
 }
+
 nav button:hover {
   background-color: #e0e0e0;
 }
