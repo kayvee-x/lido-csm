@@ -1,0 +1,83 @@
+body {
+  background-color: #f2f4f6;
+  font-family: Manrope, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #d7e4fe;
+  line-height: 2;
+  border-radius: 10px;
+}
+
+.App-header {
+  background-color: #f2f4f6;
+  padding: 20px;
+  color: #023235;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+nav button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #d7e4fe;
+  border-radius: 8px;
+}
+
+nav button:hover {
+  background-color: #e0e0e0;
+}
+
+.content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.calculator {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.calculator label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.calculator input {
+  width: full;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.results {
+  background-color: #e0e0e0;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.calculator-info {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+ul {
+  padding-left: 20px;
+}
