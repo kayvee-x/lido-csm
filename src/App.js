@@ -88,6 +88,7 @@ function App() {
               <div className="input-section">
                 <label htmlFor="ethInput">Enter ETH amount:</label>
                 <input
+                  disabled
                   id="ethInput"
                   type="number"
                   value={ethAmount}
