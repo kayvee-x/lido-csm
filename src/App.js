@@ -9,23 +9,26 @@ function App() {
 
   const BOND_CURVE_MIN = 1.5;
   const BOND_CURVE_MAX = 2;
-  const REWARDS_RATE = 0.07; // 7% of total rewards
-  const ANNUAL_ETH_REWARDS_ESTIMATE = 0.04; // 4% annual ETH rewards (rough estimate)
+  const REWARDS_RATE = 0.07;
+  const ANNUAL_ETH_REWARDS_ESTIMATE = 0.04;
 
   const csmInfo = {
-    summary: `Community Staking Module (CSM) is the Lido on Ethereum protocol's first module with permissionless entry, allowing any node operator to operate validators by providing an ETH-based bond.`,
-    vision: `The ultimate goal for this module is to allow for permissionless entry to the Lido on Ethereum Node Operator set and enfranchise solo-staker participation in the protocol, increasing the total number of independent Node Operators in the overall Ethereum network.`,
+    summary: `Think of the Community Staking Module (CSM) as a special club in the Lido family where anyone can help run the network! It's like a neighborhood watch program, but for Ethereum. To join, you need to put some ETH in a piggy bank (we call it a bond) to show you'll be responsible.`,
+
+    vision: `Lido is trying to make Ethereum more like a big friendly neighborhood where lots of different people can help keep things running smoothly. The more helpers present, the better and safer the network becomes for everyone! It's like having many different crossing guards instead of just a few.`,
+
     characteristics: [
-      "Operators Onboarding: Permissionless with additional permissioned Early Adoption period",
-      "Bond Required: from 2 to 1.5 Holesky ETH based on the Bond Curve for CSM testnet",
-      "Rewards Rate: 10% total rewards share (3% to treasury, 7% to the module)",
-      "DVT: Optional",
-      "Maximum Stake Limit: 10%, subject to further increases by the DAO",
+      "How to Join: Right now, anyone can join! (It's like an open house party 🎉)",
+      "Safety Deposit: You need to put 1.5 to 2 test ETH in a special wallet (like a trust fund)",
+      "Rewards: You get 7% of the earnings for helping (like getting allowance for doing chores)",
+      "Special Features: You can use something called DVT if you want (it's like having a backup helper)",
+      "Size Limits: You can only run 10% of all validators (so everyone gets a fair chance to help)",
     ],
+
     status: [
-      "CSM is live and fully permissionless on Holesky testnet",
-      "On December 15th, the Lido DAO gave the green light for the development of Community Staking Module",
-      "Early Adoption mode ended on July 11, 2024, and CSM Testnet is now in fully permissionless state",
+      "We're testing everything on a special practice network called Holesky (like a simulator)",
+      "The Lido community said 'Yes!' to building this on December 15th",
+      "As of July 11th, 2024, anyone can join without needing special permission (like removing the velvet rope)",
     ],
   };
 
@@ -53,16 +56,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Lido Community Staking Module Dashboard</h1>
+        <h1>Lido's Community Staking Module Dashboard</h1>
       </header>
       <main>
         <nav>
-          <button onClick={() => setActiveTab("summary")}>Summary</button>
-          <button onClick={() => setActiveTab("vision")}>Vision</button>
+          <button onClick={() => setActiveTab("summary")}>What?</button>
+          <button onClick={() => setActiveTab("vision")}>The Dream</button>
           <button onClick={() => setActiveTab("characteristics")}>
-            Characteristics
+            How it Works
           </button>
-          <button onClick={() => setActiveTab("status")}>Status</button>
+          <button onClick={() => setActiveTab("status")}>CSM's Latest</button>
           <button onClick={() => setActiveTab("calculator")}>Calculator</button>
         </nav>
         <section className="content">
@@ -86,23 +89,26 @@ function App() {
             <div className="calculator">
               <h2>CSM Calculator</h2>
               <div className="input-section">
-                <label htmlFor="ethInput">Enter ETH amount:</label>
+                <label htmlFor="ethInput">
+                  How much ETH do you want to stake?
+                </label>
                 <input
                   disabled
                   id="ethInput"
                   type="number"
                   value={ethAmount}
                   onChange={(e) => setEthAmount(e.target.value)}
-                  placeholder="Enter ETH amount"
+                  placeholder="Type your ETH amount here"
                 />
               </div>
               <div className="results">
-                <h3>Estimates:</h3>
+                <h3>Your Numbers:</h3>
                 <p>
-                  Bond Requirement: <strong>{bondAmount.toFixed(2)} ETH</strong>
+                  Safety Deposit Needed:{" "}
+                  <strong>{bondAmount.toFixed(2)} ETH</strong>
                 </p>
                 <p>
-                  Annual Rewards:{" "}
+                  Yearly Rewards:{" "}
                   <strong>{potentialRewards.toFixed(4)} ETH</strong>
                 </p>
                 <p>
@@ -116,23 +122,23 @@ function App() {
                 </p>
               </div>
               <div className="calculator-info">
-                <h3>About this Calculator</h3>
-                <p>This calculator provides simplified estimates based on:</p>
+                <h3>How This Works</h3>
+                <p>This calculator uses these simple rules:</p>
                 <ul>
                   <li>
-                    Bond Curve: {BOND_CURVE_MIN} - {BOND_CURVE_MAX} ETH
+                    Safety Deposit Range: {BOND_CURVE_MIN} - {BOND_CURVE_MAX}{" "}
+                    ETH
                   </li>
-                  <li>Rewards Rate: {REWARDS_RATE * 100}% of total rewards</li>
+                  <li>Your Share of Rewards: {REWARDS_RATE * 100}%</li>
                   <li>
-                    Estimated Annual ETH Rewards:{" "}
+                    Expected Yearly ETH Rewards:{" "}
                     {ANNUAL_ETH_REWARDS_ESTIMATE * 100}%
                   </li>
                 </ul>
                 <p>
                   <em>
-                    Note: These are simplified estimates and may not reflect
-                    actual returns. Always do your own research before making
-                    investment decisions.
+                    Remember: These are just estimates - like a weather
+                    forecast, the actual results might be different!
                   </em>
                 </p>
               </div>

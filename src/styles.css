@@ -37,7 +37,7 @@ nav button {
 }
 @media only screen and (max-device-width: 1000px) {
   nav {
-    scale: 0.8;
+    scale: 0.75;
   }
 }
 nav button:hover {
