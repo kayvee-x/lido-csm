@@ -60,8 +60,10 @@ nav button:hover {
   margin: 0 auto;
 }
 
+
 .input-section {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .input-section label {
