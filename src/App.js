@@ -5,12 +5,13 @@ function App() {
   const [activeTab, setActiveTab] = useState("summary");
   const [ethAmount, setEthAmount] = useState("");
   const [bondAmount, setBondAmount] = useState(0);
-  const [potentialRewards, setPotentialRewards] = useState(0);
+  const [potentialRewards, setPotentialRewards] = useState({ bondRebase: 0, nodeOperator: 0 });
 
   const BOND_CURVE_MIN = 1.5;
   const BOND_CURVE_MAX = 2;
-  const REWARDS_RATE = 0.07;
-  const ANNUAL_ETH_REWARDS_ESTIMATE = 0.04;
+  const NODE_OPERATOR_REWARD_SHARE = 0.07; // 7% share of rewards
+  const BOND_REBASE_RATE = 0.9; // 90% of staking rewards for bond rebase
+  const ETH_POS_STAKING_YIELD = 0.04; // 4% annual ETH PoS staking yield estimate
 
   const csmInfo = {
     summary: `Think of the Community Staking Module (CSM) as a special club in the Lido family where anyone can help run the network! It's like a neighborhood watch program, but for Ethereum. To join, you need to put some ETH in a piggy bank (we call it a bond) to show you'll be responsible.`,
@@ -40,16 +41,23 @@ function App() {
   };
 
   const calculateRewards = (amount) => {
-    return parseFloat(amount) * ANNUAL_ETH_REWARDS_ESTIMATE * REWARDS_RATE;
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount)) return { bondRebase: 0, nodeOperator: 0 };
+
+    const bondRebaseRewards = bondAmount * ETH_POS_STAKING_YIELD * BOND_REBASE_RATE;
+    const nodeOperatorRewards = parsedAmount * ETH_POS_STAKING_YIELD * NODE_OPERATOR_REWARD_SHARE;
+    
+    return { bondRebase: bondRebaseRewards, nodeOperator: nodeOperatorRewards };
   };
 
   useEffect(() => {
     if (ethAmount) {
-      setBondAmount(calculateBond(ethAmount));
+      const calculatedBond = calculateBond(ethAmount);
+      setBondAmount(calculatedBond);
       setPotentialRewards(calculateRewards(ethAmount));
     } else {
       setBondAmount(0);
-      setPotentialRewards(0);
+      setPotentialRewards({ bondRebase: 0, nodeOperator: 0 });
     }
   }, [ethAmount]);
 
@@ -85,66 +93,86 @@ function App() {
               ))}
             </ul>
           )}
-          {activeTab === "calculator" && (
-            <div className="calculator">
-              <h2>CSM Calculator</h2>
-              <div className="input-section">
-                <label htmlFor="ethInput">
-                  How much ETH do you want to stake?
-                </label>
-                <input
-                  disabled
-                  id="ethInput"
-                  type="number"
-                  value={ethAmount}
-                  onChange={(e) => setEthAmount(e.target.value)}
-                  placeholder="Type your ETH amount here"
-                />
-              </div>
-              <div className="results">
-                <h3>Your Numbers:</h3>
-                <p>
-                  Safety Deposit Needed:{" "}
-                  <strong>{bondAmount.toFixed(2)} ETH</strong>
-                </p>
-                <p>
-                  Yearly Rewards:{" "}
-                  <strong>{potentialRewards.toFixed(4)} ETH</strong>
-                </p>
-                <p>
-                  Reward Percentage:{" "}
-                  <strong>
-                    {(
-                      (potentialRewards / parseFloat(ethAmount)) * 100 || 0
-                    ).toFixed(2)}
-                    %
-                  </strong>
-                </p>
-              </div>
-              <div className="calculator-info">
-                <h3>How This Works</h3>
-                <p>This calculator uses these simple rules:</p>
-                <ul>
-                  <li>
-                    Safety Deposit Range: {BOND_CURVE_MIN} - {BOND_CURVE_MAX}{" "}
-                    ETH
-                  </li>
-                  <li>Your Share of Rewards: {REWARDS_RATE * 100}%</li>
-                  <li>
-                    Expected Yearly ETH Rewards:{" "}
-                    {ANNUAL_ETH_REWARDS_ESTIMATE * 100}%
-                  </li>
-                </ul>
-                <p>
-                  <em>
-                    Remember: These are just estimates - like a weather
-                    forecast, the actual results might be different!
-                  </em>
-                </p>
-              </div>
+        {activeTab === "calculator" && (
+          <div className="calculator">
+            <h2>CSM Calculator</h2>
+            <div className="input-section">
+              <label htmlFor="ethInput">
+                How much ETH do you want to stake?
+              </label>
+              <input
+                disabled
+                id="ethInput"
+                type="number"
+                value={ethAmount}
+                onChange={(e) => setEthAmount(e.target.value)}
+                placeholder="Type your ETH amount here"
+              />
             </div>
-          )}
-        </section>
+            <div className="results">
+              <h3>Your Numbers:</h3>
+              <p>
+                Safety Deposit Needed:{" "}
+                <strong>{bondAmount.toFixed(2)} ETH</strong>
+              </p>
+              <p>
+                Estimated Yearly Bond Rebase Rewards:{" "}
+                <strong>{potentialRewards.bondRebase.toFixed(4)} ETH</strong>
+              </p>
+              <p>
+                Estimated Yearly Node Operator Rewards:{" "}
+                <strong>{potentialRewards.nodeOperator.toFixed(4)} ETH</strong>
+              </p>
+              <p>
+                Total Estimated Yearly Rewards:{" "}
+                <strong>{(potentialRewards.bondRebase + potentialRewards.nodeOperator).toFixed(4)} ETH</strong>
+              </p>
+              <p>
+                Total Reward Percentage:{" "}
+                <strong>
+                  {(
+                    ((potentialRewards.bondRebase + potentialRewards.nodeOperator) / parseFloat(ethAmount)) * 100 || 0
+                  ).toFixed(2)}
+                  %
+                </strong>
+              </p>
+            </div>
+            <div className="calculator-info">
+              <h3>How This Works</h3>
+              <p>This calculator uses these rules:</p>
+              <ul>
+                <li>
+                  Safety Deposit Range: {BOND_CURVE_MIN} - {BOND_CURVE_MAX}{" "}
+                  ETH
+                </li>
+                <li>Bond Rebase Rate: {BOND_REBASE_RATE * 100}% of staking rewards</li>
+                <li>Node Operator Reward Share: {(NODE_OPERATOR_REWARD_SHARE * 100).toFixed(3)}% of staking rewards</li>
+                <li>
+                  Estimated ETH PoS Staking Yield:{" "}
+                  {ETH_POS_STAKING_YIELD * 100}%
+                </li>
+              </ul>
+              <p>
+                <em>
+                  Remember: These are estimates based on Holesky testnet values. 
+                  Actual results may vary, and mainnet values will be set by DAO vote.
+                </em>
+              </p>
+              <p>
+                <strong>Additional Reward Features:</strong>
+              </p>
+              <ul>
+                <li>Rewards smoothing across all Lido modules (e.g., block proposer rewards, sync committee rewards)</li>
+                <li>Rewards socialisation among validators whose performance exceeds a certain threshold</li>
+                <li>Underperforming validators will receive no node operator rewards for the given frame</li>
+              </ul>
+              <p>
+                <strong>Note:</strong> The actual rewards may be reduced due to poor performance penalties.
+              </p>
+            </div>
+          </div>
+        )}
+      </section>
       </main>
     </div>
   );
