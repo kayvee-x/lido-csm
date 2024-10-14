@@ -112,11 +112,13 @@ nav button:hover {
 .timeline::before {
   background-color: #e17b77;
   content: '';
-  height: 100%;
+  height: calc(100% - 150px);
   left: calc(50% - 2px);
   position: absolute;
   width: 4px;
+  top: 100px;
 }
+
 
 .timeline-item {
   margin-bottom: 40px;
