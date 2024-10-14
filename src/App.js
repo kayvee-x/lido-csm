@@ -27,9 +27,26 @@ function App() {
     ],
 
     status: [
-      "We're testing everything on a special practice network called Holesky (like a simulator)",
-      "The Lido community said 'Yes!' to building this on December 15th",
-      "As of July 11th, 2024, anyone can join without needing special permission (like removing the velvet rope)",
+      { date: "December 15, 2023", event: "Lido community approves building the Community Staking Module" },
+      { date: "July 11, 2024", event: "Open participation begins: anyone can join without special permission" },
+      { date: "Present", event: "Testing on Holesky testnet continues" },
+    ],
+    setup: [
+      "Prepare VM/Hardware: Create a Google Cloud VM (2 vCPU, 8GB RAM, 350GB SSD, Ubuntu 24.04 LTS)",
+      <span key="2">
+        Install ETHPillar: SSH into VM, run installation command from{" "}
+        <a
+          href="https://www.coincashew.com/coins/overview-eth/ethpillar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Coincashew website
+        </a>
+      </span>, 
+      "Configure ETHPillar: Follow TUI prompts to sync clients and generate validator keys",
+      "Get Holesky ETH: Use provided faucets",
+      "Upload deposit data: Generate with ETHPillar, upload to CSM Widget",
+      "Monitor: Use ETHPillar TUI for node management and monitoring",
     ],
   };
 
@@ -46,7 +63,7 @@ function App() {
 
     const bondRebaseRewards = bondAmount * ETH_POS_STAKING_YIELD * BOND_REBASE_RATE;
     const nodeOperatorRewards = parsedAmount * ETH_POS_STAKING_YIELD * NODE_OPERATOR_REWARD_SHARE;
-    
+
     return { bondRebase: bondRebaseRewards, nodeOperator: nodeOperatorRewards };
   };
 
@@ -80,99 +97,114 @@ function App() {
           {activeTab === "summary" && <p>{csmInfo.summary}</p>}
           {activeTab === "vision" && <p>{csmInfo.vision}</p>}
           {activeTab === "characteristics" && (
+          <>
             <ul>
               {csmInfo.characteristics.map((char, index) => (
                 <li key={index}>{char}</li>
               ))}
             </ul>
-          )}
-          {activeTab === "status" && (
-            <ul>
-              {csmInfo.status.map((status, index) => (
-                <li key={index}>{status}</li>
+            <h3>Setup Guide:</h3>
+            <ol>
+              {csmInfo.setup.map((step, index) => (
+                <li key={index}>{typeof step === 'string' ? step : step}</li>
               ))}
-            </ul>
-          )}
-        {activeTab === "calculator" && (
-          <div className="calculator">
-            <h2>CSM Calculator</h2>
-            <div className="input-section">
-              <label htmlFor="ethInput">
-                How much ETH do you want to stake?
-              </label>
-              <input
-                disabled
-                id="ethInput"
-                type="number"
-                value={ethAmount}
-                onChange={(e) => setEthAmount(e.target.value)}
-                placeholder="Type your ETH amount here"
-              />
-            </div>
-            <div className="results">
-              <h3>Your Numbers:</h3>
-              <p>
-                Safety Deposit Needed:{" "}
-                <strong>{bondAmount.toFixed(2)} ETH</strong>
-              </p>
-              <p>
-                Estimated Yearly Bond Rebase Rewards:{" "}
-                <strong>{potentialRewards.bondRebase.toFixed(4)} ETH</strong>
-              </p>
-              <p>
-                Estimated Yearly Node Operator Rewards:{" "}
-                <strong>{potentialRewards.nodeOperator.toFixed(4)} ETH</strong>
-              </p>
-              <p>
-                Total Estimated Yearly Rewards:{" "}
-                <strong>{(potentialRewards.bondRebase + potentialRewards.nodeOperator).toFixed(4)} ETH</strong>
-              </p>
-              <p>
-                Total Reward Percentage:{" "}
-                <strong>
-                  {(
-                    ((potentialRewards.bondRebase + potentialRewards.nodeOperator) / parseFloat(ethAmount)) * 100 || 0
-                  ).toFixed(2)}
-                  %
-                </strong>
-              </p>
-            </div>
-            <div className="calculator-info">
-              <h3>How This Works</h3>
-              <p>This calculator uses these rules:</p>
-              <ul>
-                <li>
-                  Safety Deposit Range: {BOND_CURVE_MIN} - {BOND_CURVE_MAX}{" "}
-                  ETH
-                </li>
-                <li>Bond Rebase Rate: {BOND_REBASE_RATE * 100}% of staking rewards</li>
-                <li>Node Operator Reward Share: {(NODE_OPERATOR_REWARD_SHARE * 100).toFixed(3)}% of staking rewards</li>
-                <li>
-                  Estimated ETH PoS Staking Yield:{" "}
-                  {ETH_POS_STAKING_YIELD * 100}%
-                </li>
-              </ul>
-              <p>
-                <em>
-                  Remember: These are estimates based on Holesky testnet values. 
-                  Actual results may vary, and mainnet values will be set by DAO vote.
-                </em>
-              </p>
-              <p>
-                <strong>Additional Reward Features:</strong>
-              </p>
-              <ul>
-                <li>Rewards smoothing across all Lido modules (e.g., block proposer rewards, sync committee rewards)</li>
-                <li>Rewards socialisation among validators whose performance exceeds a certain threshold</li>
-                <li>Underperforming validators will receive no node operator rewards for the given frame</li>
-              </ul>
-              <p>
-                <strong>Note:</strong> The actual rewards may be reduced due to poor performance penalties.
-              </p>
-            </div>
-          </div>
+            </ol>
+          </>
         )}
-      </section>
+          {activeTab === "status" && (
+            <div className="timeline">
+              <h2>CSM's Latest Updates</h2>
+              {csmInfo.status.map((item, index) => (
+                <div key={index} className="timeline-item">
+                  <div className="timeline-item-content">
+                    <time>{item.date}</time>
+                    <p>{item.event}</p>
+                    <span className="circle" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {activeTab === "calculator" && (
+            <div className="calculator">
+              <h2>CSM Calculator</h2>
+              <div className="input-section">
+                <label htmlFor="ethInput">
+                  How much ETH do you want to stake?
+                </label>
+                <input
+                  disabled
+                  id="ethInput"
+                  type="number"
+                  value={ethAmount}
+                  onChange={(e) => setEthAmount(e.target.value)}
+                  placeholder="Type your ETH amount here"
+                />
+              </div>
+              <div className="results">
+                <h3>Your Numbers:</h3>
+                <p>
+                  Safety Deposit Needed:{" "}
+                  <strong>{bondAmount.toFixed(2)} ETH</strong>
+                </p>
+                <p>
+                  Estimated Yearly Bond Rebase Rewards:{" "}
+                  <strong>{potentialRewards.bondRebase.toFixed(4)} ETH</strong>
+                </p>
+                <p>
+                  Estimated Yearly Node Operator Rewards:{" "}
+                  <strong>{potentialRewards.nodeOperator.toFixed(4)} ETH</strong>
+                </p>
+                <p>
+                  Total Estimated Yearly Rewards:{" "}
+                  <strong>{(potentialRewards.bondRebase + potentialRewards.nodeOperator).toFixed(4)} ETH</strong>
+                </p>
+                <p>
+                  Total Reward Percentage:{" "}
+                  <strong>
+                    {(
+                      ((potentialRewards.bondRebase + potentialRewards.nodeOperator) / parseFloat(ethAmount)) * 100 || 0
+                    ).toFixed(2)}
+                    %
+                  </strong>
+                </p>
+              </div>
+              <div className="calculator-info">
+                <h3>How This Works</h3>
+                <p>This calculator uses these rules:</p>
+                <ul>
+                  <li>
+                    Safety Deposit Range: {BOND_CURVE_MIN} - {BOND_CURVE_MAX}{" "}
+                    ETH
+                  </li>
+                  <li>Bond Rebase Rate: {BOND_REBASE_RATE * 100}% of staking rewards</li>
+                  <li>Node Operator Reward Share: {(NODE_OPERATOR_REWARD_SHARE * 100).toFixed(3)}% of staking rewards</li>
+                  <li>
+                    Estimated ETH PoS Staking Yield:{" "}
+                    {ETH_POS_STAKING_YIELD * 100}%
+                  </li>
+                </ul>
+                <p>
+                  <em>
+                    Remember: These are estimates based on Holesky testnet values.
+                    Actual results may vary, and mainnet values will be set by DAO vote.
+                  </em>
+                </p>
+                <p>
+                  <strong>Additional Reward Features:</strong>
+                </p>
+                <ul>
+                  <li>Rewards smoothing across all Lido modules (e.g., block proposer rewards, sync committee rewards)</li>
+                  <li>Rewards socialisation among validators whose performance exceeds a certain threshold</li>
+                  <li>Underperforming validators will receive no node operator rewards for the given frame</li>
+                </ul>
+                <p>
+                  <strong>Note:</strong> The actual rewards may be reduced due to poor performance penalties.
+                </p>
+              </div>
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );
