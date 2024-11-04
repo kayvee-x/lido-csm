@@ -6,14 +6,57 @@ function App() {
   const [ethAmount, setEthAmount] = useState("");
   const [bondAmount, setBondAmount] = useState(0);
   const [potentialRewards, setPotentialRewards] = useState({ bondRebase: 0, nodeOperator: 0 });
+  const [ethAvailable, setEthAvailable] = useState(32);
+  const [standardStakingYield, setStandardStakingYield] = useState(3);
+  const [isEA, setIsEA] = useState(true);
+  const [standardStaking, setStandardStaking] = useState(null);
+  const [eaCSMStaking, setEaCSMStaking] = useState(null);
+  const [permissionlessCSMStaking, setPermissionlessCSMStaking] = useState(null);
 
-  const BOND_CURVE_MIN = 1.5;
-  const BOND_CURVE_MAX = 2;
-  const MODULE_FEE = 0.06; // 6% for node operators
-  const REWARD_PERIOD = 28; // 28 days
-  const APR = 0.04; // 4% annual percentage rate
-  const SHARE_RATE_INCREASE = 0.01; // 1% increase for this example
+  // Constants
+  const NODE_OPERATOR_FEE_RATE = 0.06; // 6%
+  const LIDO_STETH_FEE_RATE = 0.10; // 10%
+  const VALIDATOR_EFFECTIVE_BALANCE = 32;
+  const MAX_EA_VALIDATORS = 12;
+  const EA_MAX_BOND = 15.8;
 
+  // Helper functions
+  const calculateBond = (validators) => {
+    if (isEA) {
+      if (validators <= 1) return 1.5;
+      if (validators <= 6) return 1.5 + (validators - 1) * 1.3;
+      if (validators <= MAX_EA_VALIDATORS) return 8 + (validators - 6) * 1.3;
+      return EA_MAX_BOND + (validators - MAX_EA_VALIDATORS) * 1.3;
+    } else {
+      return validators * 1.3;
+    }
+  };
+
+  const calculateRewards = (validators, bond) => {
+    const ethStaked = validators * VALIDATOR_EFFECTIVE_BALANCE;
+    const ethEarnedYear = ethStaked * (standardStakingYield / 100);
+    const nodeOperatorFeeYear = ethEarnedYear * NODE_OPERATOR_FEE_RATE;
+    const bondEarningsYear = bond * (standardStakingYield / 100);
+    const lidoFee = bondEarningsYear * LIDO_STETH_FEE_RATE;
+    const netBondEarningsYear = bondEarningsYear - lidoFee;
+    const totalEarnings = nodeOperatorFeeYear + netBondEarningsYear;
+    const rateOfReturn = (totalEarnings / bond) * 100;
+    const csmMultiplier = rateOfReturn / standardStakingYield;
+
+    return {
+      validators,
+      ethStaked,
+      ethEarnedYear,
+      nodeOperatorFeeYear,
+      totalBond: bond,
+      bondEarningsYear,
+      lidoFee,
+      netBondEarningsYear,
+      totalEarnings,
+      rateOfReturn,
+      csmMultiplier
+    };
+  };
 
   const csmInfo = {
     summary: `Think of the Community Staking Module (CSM) as a special club in the Lido family where anyone can help run the network! It's like a neighborhood watch program, but for Ethereum. To join, you need to put some ETH in a piggy bank (we call it a bond) to show you'll be responsible.`,
@@ -44,32 +87,12 @@ function App() {
         >
           Coincashew website
         </a>
-      </span>, 
+      </span>,
       "Configure ETHPillar: Follow TUI prompts to sync clients and generate validator keys",
       "Get Holesky ETH: Use provided faucets",
       "Upload deposit data: Generate with ETHPillar, upload to CSM Widget",
       "Monitor: Use ETHPillar TUI for node management and monitoring",
     ],
-  };
-
-  const calculateBond = (amount) => {
-    return Math.min(
-      BOND_CURVE_MAX,
-      Math.max(BOND_CURVE_MIN, BOND_CURVE_MIN + parseFloat(amount) * 0.01)
-    );
-  };
-
-  const calculateRewards = (amount) => {
-    const parsedAmount = parseFloat(amount);
-    if (isNaN(parsedAmount)) return { baseReward: 0, bondReward: 0 };
-
-    // Base Reward calculation
-    const baseReward = 32 * APR * (REWARD_PERIOD / 365) * MODULE_FEE;
-
-    // Bond Reward calculation
-    const bondReward = bondAmount * SHARE_RATE_INCREASE;
-
-    return { baseReward, bondReward };
   };
 
   useEffect(() => {
@@ -83,10 +106,27 @@ function App() {
     }
   }, [ethAmount]);
 
+  useEffect(() => {
+    const standardValidators = Math.floor(ethAvailable / VALIDATOR_EFFECTIVE_BALANCE);
+    setStandardStaking({
+      validators: standardValidators,
+      ethStaked: standardValidators * VALIDATOR_EFFECTIVE_BALANCE,
+      ethEarnedYear: (standardValidators * VALIDATOR_EFFECTIVE_BALANCE * standardStakingYield) / 100
+    });
+
+    const eaValidators = Math.min(MAX_EA_VALIDATORS, Math.floor(ethAvailable / 1.3));
+    const eaBond = calculateBond(eaValidators);
+    setEaCSMStaking(calculateRewards(eaValidators, eaBond));
+
+    const permissionlessValidators = Math.floor(ethAvailable / 1.3);
+    const permissionlessBond = calculateBond(permissionlessValidators);
+    setPermissionlessCSMStaking(calculateRewards(permissionlessValidators, permissionlessBond));
+  }, [ethAvailable, standardStakingYield, isEA]);
+
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <h1>Lido's Community Staking Module Dashboard</h1>
       </header>
       <main>
@@ -103,20 +143,20 @@ function App() {
           {activeTab === "summary" && <p>{csmInfo.summary}</p>}
           {activeTab === "vision" && <p>{csmInfo.vision}</p>}
           {activeTab === "characteristics" && (
-          <>
-            <ul>
-              {csmInfo.characteristics.map((char, index) => (
-                <li key={index}>{char}</li>
-              ))}
-            </ul>
-            <h3>Setup Guide:</h3>
-            <ol>
-              {csmInfo.setup.map((step, index) => (
-                <li key={index}>{typeof step === 'string' ? step : step}</li>
-              ))}
-            </ol>
-          </>
-        )}
+            <>
+              <ul>
+                {csmInfo.characteristics.map((char, index) => (
+                  <li key={index}>{char}</li>
+                ))}
+              </ul>
+              <h3>Setup Guide:</h3>
+              <ol>
+                {csmInfo.setup.map((step, index) => (
+                  <li key={index}>{typeof step === 'string' ? step : step}</li>
+                ))}
+              </ol>
+            </>
+          )}
           {activeTab === "status" && (
             <div className="timeline">
               <h2>CSM's Latest Updates</h2>
@@ -131,77 +171,121 @@ function App() {
               ))}
             </div>
           )}
-      {activeTab === "calculator" && (
-        <div className="calculator">
-          <h2>CSM Calculator</h2>
-          <div className="input-section">
-            <label htmlFor="ethInput">
-              How much ETH do you want to stake?
-            </label>
-            <input
-              className="calculator-input"
-              id="ethInput"
-              type="number"
-              value={ethAmount}
-              onChange={(e) => setEthAmount(e.target.value)}
-              placeholder="Type your ETH amount here"
-              min={0}
-            />
-          </div>
-          <div className="results">
-            <h3>Your Numbers:</h3>
-            <p>
-              Safety Deposit Needed:{" "}
-              <strong>{bondAmount.toFixed(2)} ETH</strong>
-            </p>
-            <p>
-              Estimated Base Reward (28 days):{" "}
-              <strong>{potentialRewards.baseReward.toFixed(6)} ETH</strong>
-            </p>
-            <p>
-              Estimated Bond Reward (28 days):{" "}
-              <strong>{potentialRewards.bondReward.toFixed(6)} ETH</strong>
-            </p>
-            <p>
-              Total Estimated Rewards (28 days):{" "}
-              <strong>{(potentialRewards.baseReward + potentialRewards.bondReward).toFixed(6)} ETH</strong>
-            </p>
-          </div>
-          <div className="calculator-info">
-            <h3>How This Works</h3>
-            <p>This calculator uses these rules:</p>
-            <ul>
-              <li>
-                Safety Deposit Range: {BOND_CURVE_MIN} - {BOND_CURVE_MAX}{" "}
-                ETH
-              </li>
-              <li>Module Fee (for node operators): {MODULE_FEE * 100}%</li>
-              <li>Reward Period: {REWARD_PERIOD} days</li>
-              <li>Annual Percentage Rate (APR): {APR * 100}%</li>
-              <li>Share Rate Increase (for this example): {SHARE_RATE_INCREASE * 100}%</li>
-            </ul>
-            <p>
-              <em>
-                Remember: These are estimates based on Holesky testnet values. 
-                Actual results may vary, and mainnet values will be set by DAO vote.
-              </em>
-            </p>
-            <p>
-              <strong>Additional Reward Features:</strong>
-            </p>
-            <ul>
-              <li>Rewards smoothing across all Lido modules (e.g., block proposer rewards, sync committee rewards)</li>
-              <li>Rewards socialisation among validators whose performance exceeds a certain threshold</li>
-              <li>Underperforming validators will receive no node operator rewards for the given frame</li>
-            </ul>
-            <p>
-              <strong>Note:</strong> The actual rewards may be reduced due to poor performance penalties.
-            </p>
-          </div>
-        </div>
-      )}
+          {activeTab === "calculator" && ( */}
+            <div className="calculator">
+              <div className="p-6 max-w-4xl mx-auto">
+                <h1 className="text-3xl font-bold mb-6">CSM Calculator</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <label className="block mb-2">ETH Available for Bond</label>
+                    <input
+                      type="number"
+                      value={ethAvailable}
+                      onChange={(e) => setEthAvailable(Number(e.target.value))}
+                      className="w-full p-2 border rounded"
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2">Standard Staking Yield (%)</label>
+                    <input
+                      type="number"
+                      value={standardStakingYield}
+                      onChange={(e) => setStandardStakingYield(Number(e.target.value))}
+                      className="w-full p-2 border rounded"
+                    />
+                  </div>
+                </div>
+                <div className="mb-6">
+                  <label className="block mb-2">Early Adoption (EA) Status</label>
+                  <select
+                    value={isEA.toString()}
+                    onChange={(e) => setIsEA(e.target.value === 'true')}
+                    className="w-full p-2 border rounded"
+                  >
+                    <option value="true">EA List</option>
+                    <option value="false">Not in EA List</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-gray-100 p-4 rounded">
+                    <h2 className="text-xl font-bold mb-4">Standard Staking</h2>
+                    {standardStaking && (
+                      <>
+                        <p>Number of Validators: {standardStaking.validators}</p>
+                        <p>ETH Staked: {standardStaking.ethStaked.toFixed(4)}</p>
+                        <p>ETH Earned/Year: {standardStaking.ethEarnedYear.toFixed(4)}</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="bg-gray-100 p-4 rounded">
+                    <h2 className="text-xl font-bold mb-4">EA CSM Staking</h2>
+                    {eaCSMStaking && (
+                      <>
+                        <p>Bonded Validators: {eaCSMStaking.validators}</p>
+                        <p>ETH Staked: {eaCSMStaking.ethStaked.toFixed(4)}</p>
+                        <p>ETH Earned/Year: {eaCSMStaking.ethEarnedYear.toFixed(4)}</p>
+                        <p>Node Operator Fee/Year (ETH): {eaCSMStaking.nodeOperatorFeeYear.toFixed(4)}</p>
+                        <p>Total Bond (ETH): {eaCSMStaking.totalBond.toFixed(4)}</p>
+                        <p>Bond Earnings/Year (ETH): {eaCSMStaking.bondEarningsYear.toFixed(4)}</p>
+                        <p>Lido Fee (ETH): {eaCSMStaking.lidoFee.toFixed(4)}</p>
+                        <p>Net Bond Earnings/Year: {eaCSMStaking.netBondEarningsYear.toFixed(4)}</p>
+                        <p>Total Earnings (ETH): {eaCSMStaking.totalEarnings.toFixed(4)}</p>
+                        <p>Total Rate of Return: {eaCSMStaking.rateOfReturn.toFixed(2)}%</p>
+                        <p>CSM Multiplier: {eaCSMStaking.csmMultiplier.toFixed(2)}</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="bg-gray-100 p-4 rounded">
+                    <h2 className="text-xl font-bold mb-4">Permissionless CSM Staking</h2>
+                    {permissionlessCSMStaking && (
+                      <>
+                        <p>Bonded Validators: {permissionlessCSMStaking.validators}</p>
+                        <p>ETH Staked: {permissionlessCSMStaking.ethStaked.toFixed(4)}</p>
+                        <p>ETH Earned/Year: {permissionlessCSMStaking.ethEarnedYear.toFixed(4)}</p>
+                        <p>Node Operator Fee/Year (ETH): {permissionlessCSMStaking.nodeOperatorFeeYear.toFixed(4)}</p>
+                        <p>Total Bond (ETH): {permissionlessCSMStaking.totalBond.toFixed(4)}</p>
+                        <p>Bond Earnings/Year (ETH): {permissionlessCSMStaking.bondEarningsYear.toFixed(4)}</p>
+                        <p>Lido Fee (ETH): {permissionlessCSMStaking.lidoFee.toFixed(4)}</p>
+                        <p>Net Bond Earnings/Year: {permissionlessCSMStaking.netBondEarningsYear.toFixed(4)}</p>
+                        <p>Total Earnings (ETH): {permissionlessCSMStaking.totalEarnings.toFixed(4)}</p>
+                        <p>Total Rate of Return: {permissionlessCSMStaking.rateOfReturn.toFixed(2)}%</p>
+                        <p>CSM Multiplier: {permissionlessCSMStaking.csmMultiplier.toFixed(2)}</p>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <h2 className="text-2xl font-bold mb-4">Explanation</h2>
+                  <p>This calculator compares three staking scenarios:</p>
+                  <ol className="list-decimal list-inside mb-4">
+                    <li>Standard Staking: Traditional ETH staking without CSM.</li>
+                    <li>EA CSM Staking: Early Adoption CSM staking with special bonding rules.</li>
+                    <li>Permissionless CSM Staking: Regular CSM staking after the EA phase.</li>
+                  </ol>
+                  <p>Key points:</p>
+                  <ul className="list-disc list-inside mb-4">
+                    <li>Node Operator Fee Rate: {NODE_OPERATOR_FEE_RATE * 100}%</li>
+                    <li>Lido stETH Fee Rate: {LIDO_STETH_FEE_RATE * 100}%</li>
+                    <li>Validator Effective Balance: {VALIDATOR_EFFECTIVE_BALANCE} ETH</li>
+                    <li>EA max validators: {MAX_EA_VALIDATORS}</li>
+                    <li>EA max bond: {EA_MAX_BOND} ETH</li>
+                  </ul>
+                  <p>
+                    The total rewards for CSM staking are calculated as:
+                    bond * Lido Protocol APR * (1 - Lido Fee) + No_of_validators * (32 * Lido Protocol APR * Node Operator Fee)
+                  </p>
+                  <p>
+                    The CSM Multiplier shows how much more effective CSM staking is compared to standard staking.
+                    A multiplier of 2 means CSM staking yields twice as much as standard staking.
+                  </p>
+                </div>
+              </div>
+            </div>
+          {/* )}
         </section>
-      </main>
+      </main> */}
     </div>
   );
 }
