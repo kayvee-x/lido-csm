@@ -247,7 +247,7 @@ nav button:hover {
   font-size: 1rem;
   padding: 0.75rem 1rem;
   transition: all 0.2s ease-in-out;
-  width: 100%;
+  width: 80%;
 }
 
 .calculator input[type="number"]:focus,
