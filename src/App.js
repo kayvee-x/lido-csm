@@ -256,7 +256,7 @@ function App() {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 explanation">
                   <h2 className="text-2xl font-bold mb-4">Explanation</h2>
                   <p>This calculator compares three staking scenarios:</p>
                   <ol className="list-decimal list-inside mb-4">
