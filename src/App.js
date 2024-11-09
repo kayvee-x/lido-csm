@@ -6,6 +6,7 @@ import { YieldComparison } from "./components/YieldComparison";
 import { InputSection } from "./components/InputSection";
 import { EarningsAnalysis } from "./components/EarningAnalysis";
 import { StakingTable } from "./components/StakingTable";
+import { BondCurveTables } from "./components/BondCurveTables";
 import "./app.css";
 
 function App() {
@@ -31,6 +32,28 @@ function App() {
     totalStaked: 0
   });
 
+  const bondCurveData = {
+    nonEAMainnet: Array.from({ length: 50 }, (_, i) => ({
+      validators: i + 1,
+      bondForValidator: (2.4 + (i * 0.2)).toFixed(1),
+      capital: ((2.4 + (i * 0.2)) * (i + 1)).toFixed(1),
+      multiplier: `${(170 + (i * 10)).toFixed(2)}%`
+    })),
+    
+    eaMainnet: Array.from({ length: 50 }, (_, i) => ({
+      validators: i + 1,
+      bondForValidator: (1.5 + (i * 0.2)).toFixed(1),
+      capital: ((1.5 + (i * 0.2)) * (i + 1)).toFixed(1),
+      multiplier: `${(218 + (i * 7)).toFixed(2)}%`
+    })),
+    
+    nonEATestnet: Array.from({ length: 50 }, (_, i) => ({
+      validators: i + 1,
+      bondForValidator: (2.0 + (i * 0.2)).toFixed(1),
+      capital: ((2.0 + (i * 0.2)) * (i + 1)).toFixed(1),
+      multiplier: `${(202 + (i * 8)).toFixed(2)}%`
+    }))
+  };
   useEffect(() => {
     if (stakingConfig.ethAvailable > 0) {
       // Calculate validators and bond
@@ -132,6 +155,7 @@ function App() {
               rewards={rewards}
               ethPrice={ETH_PRICE}
             />
+            <BondCurveTables bondCurveData={bondCurveData} />
           </section>
         </main>
       </div>
