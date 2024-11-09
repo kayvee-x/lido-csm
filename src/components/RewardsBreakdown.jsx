@@ -4,25 +4,25 @@ import { formatEth } from '../utils/formatting';
 
 export function RewardsBreakdown({ daily, cumulative, calculations }) {
   const comparisonData = [
-    { 
-      period: '1d', 
-      csm: daily.total, 
-      vanilla: daily.total / (calculations.isEA ? 2.37 : 2.32) 
+    {
+      period: '1d',
+      csm: daily.total,
+      vanilla: daily.total / (calculations.isEA ? 2.37 : 2.32)
     },
-    { 
-      period: '7d', 
-      csm: daily.total * 7, 
-      vanilla: (daily.total * 7) / (calculations.isEA ? 2.37 : 2.32) 
+    {
+      period: '7d',
+      csm: daily.total * 7,
+      vanilla: (daily.total * 7) / (calculations.isEA ? 2.37 : 2.32)
     },
-    { 
-      period: '30d', 
-      csm: daily.total * 30, 
-      vanilla: (daily.total * 30) / (calculations.isEA ? 2.37 : 2.32) 
+    {
+      period: '30d',
+      csm: daily.total * 30,
+      vanilla: (daily.total * 30) / (calculations.isEA ? 2.37 : 2.32)
     },
-    { 
-      period: '365d', 
-      csm: daily.total * 365, 
-      vanilla: (daily.total * 365) / (calculations.isEA ? 2.37 : 2.32) 
+    {
+      period: '365d',
+      csm: daily.total * 365,
+      vanilla: (daily.total * 365) / (calculations.isEA ? 2.37 : 2.32)
     }
   ];
 
@@ -55,12 +55,15 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
             <LineChart data={comparisonData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#eef2f7" />
               <XAxis dataKey="period" stroke="#64748b" />
-              <YAxis 
+              <YAxis
                 stroke="#64748b"
-                tickFormatter={value => `${formatEth(value)} ETH`}
+                tickFormatter={value => `${(value).toFixed(2)} ETH`}
+                domain={[0, 'auto']}
+                scale="linear"
               />
-              <Tooltip 
-                contentStyle={{ 
+
+              <Tooltip
+                contentStyle={{
                   background: '#fff',
                   borderRadius: '8px',
                   padding: '10px'
@@ -68,19 +71,19 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
                 formatter={value => [`${formatEth(value)} ETH`]}
               />
               <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="csm" 
+              <Line
+                type="monotone"
+                dataKey="csm"
                 name="CSM Staking"
-                stroke="#1a73e8" 
+                stroke="#1a73e8"
                 strokeWidth={2}
                 dot={{ fill: '#1a73e8' }}
               />
-              <Line 
-                type="monotone" 
-                dataKey="vanilla" 
+              <Line
+                type="monotone"
+                dataKey="vanilla"
                 name="Standard Staking"
-                stroke="#34a853" 
+                stroke="#34a853"
                 strokeWidth={2}
                 dot={{ fill: '#34a853' }}
               />
