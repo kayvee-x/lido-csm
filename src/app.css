@@ -396,4 +396,10 @@ body {
       font-size: 14px;
     }
   }
+  @media (max-width: 768px) {
+    .yield-comparison,
+    .yield-chart-container {
+      display: none;
+    }
+  }
   

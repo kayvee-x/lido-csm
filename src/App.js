@@ -57,25 +57,25 @@ function App() {
     // Guard against invalid inputs while keeping calculation flow
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
     const results = calculateRewards(ethAmount, stakingConfig.isEA);
-  
+
     setCalculations({
       validators: results?.validators || 0,
       bondAmount: results?.bondRequired || 0,
       totalStaked: (results?.validators || 0) * 32
     });
-  
+
     const dailyRewards = {
       bond: results?.bondRebase || 0,
       operator: results?.nodeOperatorRewards || 0,
       total: results?.totalRewards || 0
     };
-  
+
     const cumulativeRewards = {
       weekly: (results?.totalRewards || 0) * 7,
       monthly: (results?.totalRewards || 0) * 30,
       yearly: (results?.totalRewards || 0) * 365
     };
-  
+
     setRewards({
       daily: dailyRewards,
       cumulative: cumulativeRewards,
@@ -86,8 +86,8 @@ function App() {
       }
     });
   }, [stakingConfig]);
-  
-  
+
+
 
   useEffect(() => {
     const fetchEthPrice = async () => {
@@ -119,11 +119,14 @@ function App() {
           <section className="primary-section">
             <div className="input-wrapper">
               <InputSection config={stakingConfig} onChange={setStakingConfig} />
-              <YieldComparison
-                standard={rewards.comparison.standard}
-                csm={rewards.comparison.csm}
-                data={generateChartData(rewards)}
-              />
+              <div className="yield-chart-container">
+                <YieldComparison
+                  standard={rewards.comparison.standard}
+                  csm={rewards.comparison.csm}
+                  data={generateChartData(rewards)}
+                />
+              </div>
+
 
               <div className="yield-comparison">
                 <div className="yield-card">
