@@ -401,5 +401,12 @@ body {
     .yield-chart-container {
       display: none;
     }
+    .input-group, .select-group {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      flex-direction: column;
+
+    }
   }
   
