@@ -103,7 +103,7 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
           <thead>
             <tr>
               <th>Duration</th>
-              <th>ETH Stake</th>
+              <th>ETH Staked</th>
               <th>ETH Reward</th>
               <th>Return (USD)</th>
               <th>APR %</th>

@@ -1,27 +1,23 @@
-export function calculateDailyRewards({ validators, bondAmount, lidoApr }) {
-  // Constants from documentation
-  const NODE_OPERATOR_FEE = 0.06; // 6%
-  const LIDO_FEE = 0.10; // 10%
-  const VALIDATOR_BALANCE = 32; // ETH
-
+export const calculateDailyRewards = ({ validators, bondAmount, lidoApr }) => {
   // Convert APR to daily rate
-  const dailyApr = lidoApr / 365 / 100; // Convert percentage to decimal and to daily
-
-  // Calculate bond rebase rewards
-  // Formula: bond * APR * (1 - protocol fee)
-  const bondRebase = bondAmount * dailyApr * (1 - LIDO_FEE);
-
-  // Calculate node operator rewards
-  // Formula: validators * 32 ETH * APR * operator fee
-  // Note: Based on full 32 ETH, not (32 - bond) as specified in docs
-  const operatorFee = validators * VALIDATOR_BALANCE * dailyApr * NODE_OPERATOR_FEE;
+  const dailyRate = lidoApr / 365 / 100;
+  
+  // Bond rewards with 10% reduction
+  const bondRewards = bondAmount * dailyRate * 0.9;
+  
+  // Validator rewards with 6% commission
+  const operatorRewards = validators * (32 * dailyRate * 0.06);
+  
+  // Total daily rewards
+  const totalRewards = bondRewards + operatorRewards;
 
   return {
-    bond: bondRebase,
-    operator: operatorFee,
-    total: bondRebase + operatorFee
+    bond: bondRewards,
+    operator: operatorRewards,
+    total: totalRewards
   };
-}
+};
+
 
 export function calculateCumulativeRewards(dailyRewards) {
   return {
@@ -83,3 +79,99 @@ export function calculateValidatorsAndBond(ethAvailable, isEA) {
     totalStaked: validators * 32
   };
 }
+
+export const calculateRewards = (ethAvailable, isEA) => {
+  const defaultValues = {
+    validators: 0,
+    bondRequired: 0,
+    bondRebase: 0,
+    nodeOperatorRewards: 0,
+    totalRewards: 0,
+    apy: 0,
+    capitalEfficiency: 0,
+    bondYieldNet: 0
+  };
+
+  if (!ethAvailable || ethAvailable <= 0) {
+    return defaultValues;
+  }
+
+  let validators, bondRequired;
+
+  if (isEA) {
+    if (ethAvailable <= 2) {
+      validators = 1;
+      bondRequired = 1.5;
+    } else if (ethAvailable <= 8) {
+      validators = 6;
+      bondRequired = 8;
+    } else if (ethAvailable <= 15.8) {
+      validators = 12;
+      bondRequired = 15.8;
+    } else {
+      // Scale validators and bond for larger amounts
+      const multiplier = Math.floor(ethAvailable / 32);
+      validators = 24 * multiplier;
+      bondRequired = 31.4 * multiplier;
+    }
+  } else {
+    if (ethAvailable <= 2.4) {
+      validators = 1;
+      bondRequired = 2.4;
+    } else if (ethAvailable <= 8) {
+      validators = 5;
+      bondRequired = 7.6;
+    } else {
+      // Scale validators and bond for larger amounts
+      const multiplier = Math.floor(ethAvailable / 32);
+      validators = 23 * multiplier;
+      bondRequired = 31 * multiplier;
+    }
+  }
+
+  const yearlyValues = calculateYearlyValues(validators, bondRequired, 0.03, 0.06, 0.10);
+
+  return {
+    validators,
+    bondRequired,
+    bondRebase: yearlyValues.bondYieldNet / 365,
+    nodeOperatorRewards: yearlyValues.nodeOperatorFee / 365,
+    totalRewards: yearlyValues.totalEarnings / 365,
+    apy: yearlyValues.totalRateOfReturn,
+    capitalEfficiency: yearlyValues.csmMultiplier * 100,
+    bondYieldNet: yearlyValues.bondYieldNet
+  };
+};
+
+
+
+export const calculateYearlyValues = (validators, bondRequired, standardYield, nodeOperatorFee, lidoFee) => {
+  const totalStaked = validators * 32;
+  const totalStakingYield = totalStaked * standardYield;
+  const nodeOperatorFeeYearly = totalStakingYield * nodeOperatorFee;
+  
+  const bondYieldGross = bondRequired * standardYield;
+  const lidoFeeAmount = bondYieldGross * lidoFee;
+  const bondYieldNet = bondYieldGross - lidoFeeAmount;
+  
+  const totalEarnings = nodeOperatorFeeYearly + bondYieldNet;
+  const totalRateOfReturn = (totalEarnings / bondRequired) * 100;
+  const csmMultiplier = totalRateOfReturn / (standardYield * 100);
+
+  return {
+    nodeOperatorFee: nodeOperatorFeeYearly,
+    bondYieldNet,
+    totalEarnings,
+    totalRateOfReturn,
+    csmMultiplier
+  };
+};
+
+
+export const convertToDaily = (yearlyValues) => {
+  return {
+    nodeOperatorFee: yearlyValues.nodeOperatorFee / 365,
+    bondYieldNet: yearlyValues.bondYieldNet / 365,
+    totalEarnings: yearlyValues.totalEarnings / 365
+  };
+};
