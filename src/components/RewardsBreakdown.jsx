@@ -4,10 +4,26 @@ import { formatEth } from '../utils/formatting';
 
 export function RewardsBreakdown({ daily, cumulative, calculations }) {
   const comparisonData = [
-    { period: '1d', csm: daily.total, vanilla: daily.total * 0.75 },
-    { period: '7d', csm: cumulative.weekly, vanilla: cumulative.weekly * 0.75 },
-    { period: '30d', csm: cumulative.monthly, vanilla: cumulative.monthly * 0.75 },
-    { period: '365d', csm: cumulative.yearly, vanilla: cumulative.yearly * 0.75 }
+    { 
+      period: '1d', 
+      csm: daily.total, 
+      vanilla: daily.total / (calculations.isEA ? 2.37 : 2.32) 
+    },
+    { 
+      period: '7d', 
+      csm: daily.total * 7, 
+      vanilla: (daily.total * 7) / (calculations.isEA ? 2.37 : 2.32) 
+    },
+    { 
+      period: '30d', 
+      csm: daily.total * 30, 
+      vanilla: (daily.total * 30) / (calculations.isEA ? 2.37 : 2.32) 
+    },
+    { 
+      period: '365d', 
+      csm: daily.total * 365, 
+      vanilla: (daily.total * 365) / (calculations.isEA ? 2.37 : 2.32) 
+    }
   ];
 
   return (
@@ -18,12 +34,16 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
           <div className="reward-card">
             <span className="reward-label">Bond Rebase</span>
             <span className="reward-value">{formatEth(daily.bond)} ETH</span>
-            <span className="reward-rate">+{(daily.bond / calculations.bondAmount * 100).toFixed(4)}%</span>
+            <span className="reward-rate">
+              +{((daily.bond / calculations.bondAmount) * 100).toFixed(4)}%
+            </span>
           </div>
           <div className="reward-card">
             <span className="reward-label">Node Operator</span>
             <span className="reward-value">{formatEth(daily.operator)} ETH</span>
-            <span className="reward-rate">+{(daily.operator / calculations.totalStaked * 100).toFixed(4)}%</span>
+            <span className="reward-rate">
+              +{((daily.operator / (calculations.validators * 32)) * 100).toFixed(4)}%
+            </span>
           </div>
         </div>
       </div>
@@ -34,10 +54,7 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={comparisonData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#eef2f7" />
-              <XAxis 
-                dataKey="period" 
-                stroke="#64748b"
-              />
+              <XAxis dataKey="period" stroke="#64748b" />
               <YAxis 
                 stroke="#64748b"
                 tickFormatter={value => `${formatEth(value)} ETH`}
@@ -70,15 +87,6 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
             </LineChart>
           </ResponsiveContainer>
         </div>
-        {/* <div className="rewards-timeline">
-          {comparisonData.map(item => (
-            <div key={item.period} className="timeline-item">
-              <span className="period">{item.period}</span>
-              <span className="value">CSM: {formatEth(item.csm)} ETH</span>
-              <span className="value">Standard: {formatEth(item.vanilla)} ETH</span>
-            </div>
-          ))}
-        </div> */}
       </div>
     </div>
   );

@@ -17,16 +17,6 @@ export function YieldComparison({ standard, csm, data }) {
           <span className="yield-difference">+{yieldDifference}%</span>
         </div>
       </div>
-{/* 
-      <div className="yield-chart">
-        <AreaChart data={data} height={200}>
-          <Area type="monotone" dataKey="csm" fill="#34a853" fillOpacity={0.2} />
-          <Area type="monotone" dataKey="standard" fill="#1a73e8" fillOpacity={0.2} />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-        </AreaChart>
-      </div> */}
     </div>
   );
 }

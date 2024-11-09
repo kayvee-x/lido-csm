@@ -1,22 +1,22 @@
-export const calculateDailyRewards = ({ validators, bondAmount, lidoApr }) => {
-  // Convert APR to daily rate
-  const dailyRate = lidoApr / 365 / 100;
+export const calculateDailyRewards = ({ validators, bondAmount, standardYield = 0.03 }) => {
+  // Standard yield is 3% annually
+  const dailyYield = standardYield / 365;
   
-  // Bond rewards with 10% reduction
-  const bondRewards = bondAmount * dailyRate * 0.9;
+  // Calculate bond rebase rewards (with 10% Lido fee)
+  const bondRewards = bondAmount * dailyYield * 0.9;
   
-  // Validator rewards with 6% commission
-  const operatorRewards = validators * (32 * dailyRate * 0.06);
+  // Calculate node operator rewards (6% of total staking yield)
+  const totalStaked = validators * 32;
+  const totalDailyYield = totalStaked * dailyYield;
+  const operatorRewards = totalDailyYield * 0.06;
   
-  // Total daily rewards
-  const totalRewards = bondRewards + operatorRewards;
-
   return {
     bond: bondRewards,
     operator: operatorRewards,
-    total: totalRewards
+    total: bondRewards + operatorRewards
   };
 };
+
 
 
 export function calculateCumulativeRewards(dailyRewards) {
