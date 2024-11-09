@@ -1,45 +1,103 @@
 import React from 'react';
+import { formatEth } from '../utils/formatting';
+
+
+// Helper function to safely calculate percentages and avoid division by zero
+const calculateReturn = (reward, stake, daysInPeriod) => {
+  if (!stake || stake === 0) return 0;
+  // Convert to annual rate for periods other than 365 days
+  const annualizedReturn = (reward / stake) * (365 / daysInPeriod) * 100;
+  return annualizedReturn;
+};
 
 export function StakingTable({ calculations, rewards, ethPrice }) {
-  // Early return if data isn't ready
-  if (!calculations?.totalStaked || !rewards?.daily?.total) {
-    return <div className="staking-table-container">Loading...</div>;
-  }
+  // Data validation and defaults
+  const validCalculations = {
+    totalStaked: calculations?.totalStaked || 0,
+    validators: calculations?.validators || 0,
+    bondAmount: calculations?.bondAmount || 0
+  };
 
+  const validRewards = {
+    daily: {
+      total: rewards?.daily?.total || 0,
+      bond: rewards?.daily?.bond || 0,
+      operator: rewards?.daily?.operator || 0
+    },
+    cumulative: {
+      weekly: rewards?.cumulative?.weekly || 0,
+      monthly: rewards?.cumulative?.monthly || 0,
+      yearly: rewards?.cumulative?.yearly || 0
+    }
+  };
+
+  // Calculate staking data for each time period
   const stakingData = [
     {
       duration: '24 Hours',
-      ethStake: calculations.totalStaked,
-      ethReward: rewards.daily.total,
-      return: rewards.daily.total * ethPrice,
-      returnPercentage: (rewards.daily.total / calculations.totalStaked) * 100
+      ethStake: validCalculations.totalStaked,
+      ethReward: validRewards.daily.total,
+      usdReturn: validRewards.daily.total * ethPrice,
+      // Calculate daily return as annualized percentage
+      returnPercentage: calculateReturn(
+        validRewards.daily.total,
+        validCalculations.totalStaked,
+        1
+      )
     },
     {
       duration: '7 Days',
-      ethStake: calculations.totalStaked,
-      ethReward: rewards.cumulative.weekly,
-      return: rewards.cumulative.weekly * ethPrice,
-      returnPercentage: (rewards.cumulative.weekly / calculations.totalStaked) * 100
+      ethStake: validCalculations.totalStaked,
+      ethReward: validRewards.cumulative.weekly,
+      usdReturn: validRewards.cumulative.weekly * ethPrice,
+      // Calculate weekly return as annualized percentage
+      returnPercentage: calculateReturn(
+        validRewards.cumulative.weekly,
+        validCalculations.totalStaked,
+        7
+      )
     },
     {
       duration: '30 Days',
-      ethStake: calculations.totalStaked,
-      ethReward: rewards.cumulative.monthly,
-      return: rewards.cumulative.monthly * ethPrice,
-      returnPercentage: (rewards.cumulative.monthly / calculations.totalStaked) * 100
+      ethStake: validCalculations.totalStaked,
+      ethReward: validRewards.cumulative.monthly,
+      usdReturn: validRewards.cumulative.monthly * ethPrice,
+      // Calculate monthly return using average month length
+      returnPercentage: calculateReturn(
+        validRewards.cumulative.monthly,
+        validCalculations.totalStaked,
+        30.44  // Average days in a month for more accurate calculations
+      )
     },
     {
       duration: '365 Days',
-      ethStake: calculations.totalStaked,
-      ethReward: rewards.cumulative.yearly,
-      return: rewards.cumulative.yearly * ethPrice,
-      returnPercentage: (rewards.cumulative.yearly / calculations.totalStaked) * 100
+      ethStake: validCalculations.totalStaked,
+      ethReward: validRewards.cumulative.yearly,
+      usdReturn: validRewards.cumulative.yearly * ethPrice,
+      // Yearly return (no need to annualize)
+      returnPercentage: calculateReturn(
+        validRewards.cumulative.yearly,
+        validCalculations.totalStaked,
+        365
+      )
     }
   ];
 
+  // Breakdown of returns by source (bond vs operator)
+  const returnsBreakdown = {
+    daily: {
+      bondReturn: (validRewards.daily.bond / validCalculations.bondAmount) * 100,
+      operatorReturn: (validRewards.daily.operator / (validCalculations.totalStaked - validCalculations.bondAmount)) * 100
+    },
+    yearly: {
+      bondReturn: (validRewards.cumulative.yearly * (validRewards.daily.bond / validRewards.daily.total) / validCalculations.bondAmount) * 100,
+      operatorReturn: (validRewards.cumulative.yearly * (validRewards.daily.operator / validRewards.daily.total) / (validCalculations.totalStaked - validCalculations.bondAmount)) * 100
+    }
+  };
+
   return (
     <div className="staking-table-container">
-      <h3>Staking Returns Analysis</h3>
+      <h3>CSM Returns Analysis</h3>
       <div className="table-responsive">
         <table className="staking-table">
           <thead>
@@ -48,16 +106,16 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
               <th>ETH Stake</th>
               <th>ETH Reward</th>
               <th>Return (USD)</th>
-              <th>Return %</th>
+              <th>APR %</th>
             </tr>
           </thead>
           <tbody>
             {stakingData.map((row) => (
               <tr key={row.duration}>
                 <td>{row.duration}</td>
-                <td>{row.ethStake.toFixed(4)} ETH</td>
-                <td>{row.ethReward.toFixed(4)} ETH</td>
-                <td>${row.return.toLocaleString()}</td>
+                <td>{formatEth(row.ethStake)} ETH</td>
+                <td>{formatEth(row.ethReward)} ETH</td>
+                <td>${row.usdReturn.toLocaleString()}</td>
                 <td className="return-percentage">
                   {row.returnPercentage.toFixed(2)}%
                 </td>

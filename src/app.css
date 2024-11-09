@@ -1,6 +1,11 @@
+body {
+  font-size: 12px;
+  line-height: 1.3333733333;
+  font-weight: 400;
+}
 .calculator-container {
     min-height: 100vh;
-    padding: 20px 10px;
+    padding: 0px 10px;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   }
   
@@ -17,8 +22,9 @@
   }
   
   .calculator-title {
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1.07143;
+    font-weight: 600;
     background: linear-gradient(90deg, #0071e3, #00c7ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -95,12 +101,13 @@
     font-size: 16px;
     transition: all 0.3s ease;
     margin-left: 5px;
+    border-color: #86868b;
 
   }
   
   input:focus, select:focus {
-    border-color: #010c17;
-    box-shadow: 0 0 0 2px rgba(1, 23, 46, 0.3);
+    border-color: #86868b;
+    /* box-shadow: 0 0 0 2px rgba(1, 23, 46, 0.3); */
   }
   
   .metric-value {
@@ -125,8 +132,13 @@
       font-size: 2.5rem;
     }
   }
-  .input-container {
-    width: 20%;
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: #f8fafc;
   }
   .input-group {
     display: flex;
@@ -202,11 +214,6 @@
     font-size: 0.875rem;
   }
   
-  .chart-container {
-    height: 200px;
-    margin: 1.5rem 0;
-  }
-  
   .rewards-timeline {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -227,14 +234,19 @@
     font-weight: 600;
     color: #1a1f36;
   }
-  .earnings-chart {
+
+  .earnings-chart  {
     font-size: 0.8rem;
-    background: white;
+    background: #f8fafc;
     border-radius: 20px;
     padding: 24px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   }
-  
+  .cumulative-rewards{
+    font-size: 0.8rem;
+    background: #f8fafc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
   .earnings-chart h3 {
     font-size: 1.25rem;
     font-weight: 600;
@@ -291,4 +303,6 @@
       font-size: 0.875rem;
     }
   }
-  
+  .cumulative-rewards {
+    padding: 0.6rem;
+  }

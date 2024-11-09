@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "recharts";
-import { calculateDailyRewards, calculateCumulativeRewards, generateChartData } from "./utils/calculations";
+import { calculateDailyRewards, calculateCumulativeRewards, generateChartData, calculateValidatorsAndBond, calculateAPY, calculateCapitalEfficiency } from "./utils/calculations";
 import { RewardsBreakdown } from "./components/RewardsBreakdown";
 import { YieldComparison } from "./components/YieldComparison";
 import { InputSection } from "./components/InputSection";
@@ -14,7 +14,7 @@ function App() {
     ethAvailable: 32,
     standardYield: 3,
     isEA: true,
-    lidoApr: 4
+    lidoApr: 4 // Ensure this is the APR in percentage
   });
 
   // Rewards state
@@ -34,26 +34,23 @@ function App() {
   useEffect(() => {
     if (stakingConfig.ethAvailable > 0) {
       // Calculate validators and bond
-      const validators = Math.floor(stakingConfig.ethAvailable / 32);
-      const bondAmount = stakingConfig.isEA ? 
-        Math.min(15.8, validators * 1.3) : 
-        validators * 1.3;
+      const { validators, bondAmount, totalStaked } = calculateValidatorsAndBond(
+        stakingConfig.ethAvailable,
+        stakingConfig.isEA
+      );
 
       // Update calculations
-      setCalculations({
-        validators,
-        bondAmount,
-        totalStaked: validators * 32
-      });
+      setCalculations({ validators, bondAmount, totalStaked });
 
       // Calculate rewards
       const dailyRewards = calculateDailyRewards({
         validators,
         bondAmount,
-        lidoApr: stakingConfig.lidoApr
+        lidoApr: stakingConfig.lidoApr // Ensure APR is passed correctly
       });
 
       const cumulativeRewards = calculateCumulativeRewards(dailyRewards);
+      const csmAPY = calculateAPY(cumulativeRewards.yearly, bondAmount);
 
       // Update rewards state
       setRewards({
@@ -61,57 +58,76 @@ function App() {
         cumulative: cumulativeRewards,
         comparison: {
           standard: stakingConfig.standardYield,
-          csm: (cumulativeRewards.yearly / bondAmount) * 100
+          csm: csmAPY,
+          efficiency: calculateCapitalEfficiency(csmAPY, stakingConfig.standardYield)
         }
       });
     }
   }, [stakingConfig]);
 
-  const ETH_PRICE = 2808; // You can make this dynamic with an API call
+  const ETH_PRICE = 3050; // You can make this dynamic with an API call
 
   return (
     <div className="calculator-container">
       <div className="calculator-wrapper">
         <header className="calculator-header">
           <h1 className="calculator-title">
-            CSM Rewards Calculator   
-            </h1>
-            <p>
+            CSM Rewards Calculator
+          </h1>
+          <p>
             Calculate your potential rewards from Lido's Community Staking Module
-              </p>     
+          </p>
         </header>
 
         <main className="calculator-content">
           <section className="primary-section">
-            <InputSection 
-              config={stakingConfig}
-              onChange={setStakingConfig}
-            />
+            <div className="input-wrapper">
+              <InputSection
+                config={stakingConfig}
+                onChange={setStakingConfig}
+              />
 
+              <YieldComparison
+                standard={rewards.comparison.standard}
+                csm={rewards.comparison.csm}
+                data={generateChartData(rewards)}
+              />
+              <div className="yield-comparison">
+                <div className="yield-card">
+                  <h4>Standard Staking Power</h4>
+                  <span className="yield-value">Base Network Impact</span>
+                  <div className="yield-details">
+                    <p>Network Validators: {calculations.validators}</p>
+                    <p>Voting Power: {(calculations.totalStaked * 0.01).toFixed(2)}%</p>
+                  </div>
+                </div>
+
+                <div className="yield-card highlight">
+                  <h4>CSM Enhanced Power</h4>
+                  <span className="yield-value">Amplified Network Impact</span>
+                  <div className="yield-details">
+                    <p>Governance Weight: {(calculations.totalStaked * 0.15).toFixed(2)}%</p>
+                    <p>Network Multiplier: {(1 + calculations.bondAmount / 100).toFixed(2)}x</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="metrics-grid">
-              <RewardsBreakdown 
+              <RewardsBreakdown
                 daily={rewards.daily}
                 cumulative={rewards.cumulative}
                 calculations={calculations}
               />
-            <EarningsAnalysis 
-              ethPrice={ETH_PRICE}
-              rewards={rewards.cumulative}
-            />
-              {/* <YieldComparison 
-                standard={rewards.comparison.standard}
-                csm={rewards.comparison.csm}
-                data={generateChartData(rewards)}
-              /> */}
+
+              <EarningsAnalysis
+                ethPrice={ETH_PRICE}
+                rewards={rewards.cumulative}
+              />
             </div>
           </section>
 
           <section className="analysis-section">
-            {/* <EarningsAnalysis 
-              ethPrice={ETH_PRICE}
-              rewards={rewards.cumulative}
-            /> */}
-            <StakingTable 
+            <StakingTable
               calculations={calculations}
               rewards={rewards}
               ethPrice={ETH_PRICE}

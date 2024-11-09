@@ -13,7 +13,8 @@ export function EarningsAnalysis({ ethPrice, rewards }) {
 
   return (
     <div className="earnings-chart">
-      <h3>Earnings Analysis</h3>
+    <div className="earnings-container">
+      <h3>CSM Earnings Analysis</h3>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={earningsData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#eef2f7" />
@@ -46,6 +47,7 @@ export function EarningsAnalysis({ ethPrice, rewards }) {
           />
         </LineChart>
       </ResponsiveContainer>
+    </div>
     </div>
   );
 }
