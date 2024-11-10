@@ -9,6 +9,7 @@ import { EarningsAnalysis } from "./components/EarningAnalysis";
 import { StakingTable } from "./components/StakingTable";
 import { BondCurveTables } from "./components/BondCurveTables";
 import { formatEth } from "./utils/formatting";
+import { bondCurveData } from "./utils/data";
 import "./app.css";
 
 function App() {
@@ -32,28 +33,6 @@ function App() {
     totalStaked: 0
   });
 
-  const bondCurveData = {
-    nonEAMainnet: Array.from({ length: 50 }, (_, i) => ({
-      validators: i + 1,
-      bondForValidator: (2.4).toFixed(1), // Fixed value based on the provided data
-      capital: (2.4 * (i + 1)).toFixed(1), // Capital calculation
-      multiplier: `${(170 + (i * 10)).toFixed(2)}%` // Multiplier calculation
-    })),
-    
-    eaMainnet: Array.from({ length: 50 }, (_, i) => ({
-      validators: i + 1,
-      bondForValidator: (1.5).toFixed(1), // Fixed value based on the provided data
-      capital: (1.5 * (i + 1)).toFixed(1), // Capital calculation
-      multiplier: `${(218 + (i * 7)).toFixed(2)}%` // Multiplier calculation
-    })),
-    
-    nonEATestnet: Array.from({ length: 50 }, (_, i) => ({
-      validators: i + 1,
-      bondForValidator: (2.0).toFixed(1), // Fixed value based on the provided data
-      capital: (2.0 * (i + 1)).toFixed(1), // Capital calculation
-      multiplier: `${(202 + (i * 8)).toFixed(2)}%` // Multiplier calculation
-    }))
-  };
   useEffect(() => {
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
     const results = calculateRewards(
