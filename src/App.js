@@ -16,8 +16,8 @@ function App() {
   const [ethPrice, setEthPrice] = useState(3052);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
-    standardYield: 3,  // Standard yield (3%)
-    lidoApr: 4,        // Lido APR (4%)
+    standardYield: 3,  
+    lidoApr: 4,        
     isEA: true
   });
 
