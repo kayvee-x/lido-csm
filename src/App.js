@@ -54,7 +54,6 @@ function App() {
   };
 
   useEffect(() => {
-    // Guard against invalid inputs while keeping calculation flow
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
     const results = calculateRewards(ethAmount, stakingConfig.isEA);
 
@@ -130,7 +129,7 @@ function App() {
 
               <div className="yield-comparison">
                 <div className="yield-card">
-                  <h4>{stakingConfig.isEA ? 'EA List Metrics' : 'Non-EA List Metrics'} Daily Rewards</h4>
+                  <h4>{stakingConfig.isEA ? 'EA List Metrics' : 'Non-EA List Metrics'} Rewards (Daily) </h4>
                   <div className="yield-details">
                     <p>Bond Rebase Rewards: {formatEth(rewards.daily.bond)} ETH</p>
                     <p>Node Operator Rewards: {formatEth(rewards.daily.operator)} ETH</p>

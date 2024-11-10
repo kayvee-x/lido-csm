@@ -2,7 +2,6 @@ import React from 'react';
 import { formatEth } from '../utils/formatting';
 
 
-// Helper function to safely calculate percentages and avoid division by zero
 const calculateReturn = (reward, stake, daysInPeriod) => {
   if (!stake || stake === 0) return 0;
   // Convert to annual rate for periods other than 365 days

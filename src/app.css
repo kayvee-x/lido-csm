@@ -55,6 +55,7 @@ body {
   justify-content: space-between;
   padding: 1rem 3rem;
   background: #f8fafc;
+  margin-bottom: 1rem;
 }
 
 .input-group, .select-group {
