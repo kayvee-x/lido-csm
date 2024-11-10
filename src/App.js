@@ -15,9 +15,9 @@ function App() {
   const [ethPrice, setEthPrice] = useState(3052);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
-    standardYield: 3,
-    isEA: true,
-    lidoApr: 4
+    standardYield: 3,  // Standard yield (3%)
+    lidoApr: 4,        // Lido APR (4%)
+    isEA: true
   });
 
   const [rewards, setRewards] = useState({
@@ -35,28 +35,34 @@ function App() {
   const bondCurveData = {
     nonEAMainnet: Array.from({ length: 50 }, (_, i) => ({
       validators: i + 1,
-      bondForValidator: (2.4 + (i * 0.2)).toFixed(1),
-      capital: ((2.4 + (i * 0.2)) * (i + 1)).toFixed(1),
-      multiplier: `${(170 + (i * 10)).toFixed(2)}%`
+      bondForValidator: (2.4).toFixed(1), // Fixed value based on the provided data
+      capital: (2.4 * (i + 1)).toFixed(1), // Capital calculation
+      multiplier: `${(170 + (i * 10)).toFixed(2)}%` // Multiplier calculation
     })),
+    
     eaMainnet: Array.from({ length: 50 }, (_, i) => ({
       validators: i + 1,
-      bondForValidator: (1.5 + (i * 0.2)).toFixed(1),
-      capital: ((1.5 + (i * 0.2)) * (i + 1)).toFixed(1),
-      multiplier: `${(218 + (i * 7)).toFixed(2)}%`
+      bondForValidator: (1.5).toFixed(1), // Fixed value based on the provided data
+      capital: (1.5 * (i + 1)).toFixed(1), // Capital calculation
+      multiplier: `${(218 + (i * 7)).toFixed(2)}%` // Multiplier calculation
     })),
+    
     nonEATestnet: Array.from({ length: 50 }, (_, i) => ({
       validators: i + 1,
-      bondForValidator: (2.0 + (i * 0.2)).toFixed(1),
-      capital: ((2.0 + (i * 0.2)) * (i + 1)).toFixed(1),
-      multiplier: `${(202 + (i * 8)).toFixed(2)}%`
+      bondForValidator: (2.0).toFixed(1), // Fixed value based on the provided data
+      capital: (2.0 * (i + 1)).toFixed(1), // Capital calculation
+      multiplier: `${(202 + (i * 8)).toFixed(2)}%` // Multiplier calculation
     }))
   };
-
   useEffect(() => {
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
-    const results = calculateRewards(ethAmount, stakingConfig.isEA);
-
+    const results = calculateRewards(
+      ethAmount, 
+      stakingConfig.isEA,
+      stakingConfig.standardYield,
+      stakingConfig.lidoApr
+    );
+    
     setCalculations({
       validators: results?.validators || 0,
       bondAmount: results?.bondRequired || 0,

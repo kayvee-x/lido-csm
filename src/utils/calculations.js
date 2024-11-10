@@ -80,7 +80,41 @@ export function calculateValidatorsAndBond(ethAvailable, isEA) {
   };
 }
 
-export const calculateRewards = (ethAvailable, isEA) => {
+
+
+export const calculateYearlyValues = (validators, bondRequired, standardYield, nodeOperatorFee, lidoFee, lidoApr = standardYield) => {
+  // Convert percentages to decimals
+  const standardYieldDecimal = standardYield / 100;
+  const lidoAprDecimal = lidoApr / 100;
+  
+  const totalStaked = validators * 32;
+  
+  // Use Lido APR for bond rewards calculation
+  const bondYieldGross = bondRequired * lidoAprDecimal;
+  const lidoFeeAmount = bondYieldGross * lidoFee;
+  const bondYieldNet = bondYieldGross - lidoFeeAmount;
+  
+  // Use Lido APR for node operator rewards calculation
+  const totalStakingYield = totalStaked * lidoAprDecimal;
+  const nodeOperatorFeeYearly = totalStakingYield * nodeOperatorFee;
+  
+  const totalEarnings = nodeOperatorFeeYearly + bondYieldNet;
+  const totalRateOfReturn = (totalEarnings / bondRequired) * 100;
+  
+  // Calculate capital efficiency against standard yield
+  const standardReturn = standardYieldDecimal * 100;
+  const csmMultiplier = totalRateOfReturn / standardReturn;
+
+  return {
+    nodeOperatorFee: nodeOperatorFeeYearly,
+    bondYieldNet,
+    totalEarnings,
+    totalRateOfReturn,
+    csmMultiplier
+  };
+};
+
+export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr = 4) => {
   const defaultValues = {
     validators: 0,
     bondRequired: 0,
@@ -109,7 +143,6 @@ export const calculateRewards = (ethAvailable, isEA) => {
       validators = 12;
       bondRequired = 15.8;
     } else {
-      // Scale validators and bond for larger amounts
       const multiplier = Math.floor(ethAvailable / 32);
       validators = 24 * multiplier;
       bondRequired = 31.4 * multiplier;
@@ -122,14 +155,21 @@ export const calculateRewards = (ethAvailable, isEA) => {
       validators = 5;
       bondRequired = 7.6;
     } else {
-      // Scale validators and bond for larger amounts
       const multiplier = Math.floor(ethAvailable / 32);
       validators = 23 * multiplier;
       bondRequired = 31 * multiplier;
     }
   }
 
-  const yearlyValues = calculateYearlyValues(validators, bondRequired, 0.03, 0.06, 0.10);
+  // Pass both standardYield and lidoApr to calculateYearlyValues
+  const yearlyValues = calculateYearlyValues(
+    validators, 
+    bondRequired,
+    standardYield,
+    0.06, // Node operator fee
+    0.10, // Lido fee
+    lidoApr
+  );
 
   return {
     validators,
@@ -140,30 +180,6 @@ export const calculateRewards = (ethAvailable, isEA) => {
     apy: yearlyValues.totalRateOfReturn,
     capitalEfficiency: yearlyValues.csmMultiplier * 100,
     bondYieldNet: yearlyValues.bondYieldNet
-  };
-};
-
-
-
-export const calculateYearlyValues = (validators, bondRequired, standardYield, nodeOperatorFee, lidoFee) => {
-  const totalStaked = validators * 32;
-  const totalStakingYield = totalStaked * standardYield;
-  const nodeOperatorFeeYearly = totalStakingYield * nodeOperatorFee;
-  
-  const bondYieldGross = bondRequired * standardYield;
-  const lidoFeeAmount = bondYieldGross * lidoFee;
-  const bondYieldNet = bondYieldGross - lidoFeeAmount;
-  
-  const totalEarnings = nodeOperatorFeeYearly + bondYieldNet;
-  const totalRateOfReturn = (totalEarnings / bondRequired) * 100;
-  const csmMultiplier = totalRateOfReturn / (standardYield * 100);
-
-  return {
-    nodeOperatorFee: nodeOperatorFeeYearly,
-    bondYieldNet,
-    totalEarnings,
-    totalRateOfReturn,
-    csmMultiplier
   };
 };
 
