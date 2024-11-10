@@ -1,5 +1,4 @@
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 
 export function YieldComparison({ standard, csm, data }) {
   const yieldDifference = ((csm - standard) / standard * 100).toFixed(2);
