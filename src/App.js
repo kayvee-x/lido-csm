@@ -10,6 +10,7 @@ import { StakingTable } from "./components/StakingTable";
 import { BondCurveTables } from "./components/BondCurveTables";
 import { formatEth } from "./utils/formatting";
 import { bondCurveData } from "./utils/data";
+import { InfoSection } from "./components/InfoSection";
 import "./app.css";
 
 function App() {
@@ -154,6 +155,9 @@ function App() {
               ethPrice={ethPrice}
             />
             <BondCurveTables bondCurveData={bondCurveData} />
+          </section>
+          <section className="analysis-section">
+            <InfoSection />
           </section>
         </main>
       </div>

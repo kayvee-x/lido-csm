@@ -357,3 +357,50 @@ select:focus {
     flex-direction: column;
   }
 }
+.info-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.info-section h2 {
+  align-items: center;
+}
+
+.info-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-links {
+  margin-top: 2rem;
+}
+
+.info-links a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.info-links a:hover {
+  text-decoration: underline;
+}
+
+.validator-info {
+  background: #f0f7ff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.validator-info strong {
+  color: #1a73e8;
+  font-size: 1.1em;
+}
+
+.validator-info .note {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 0.5rem;
+}
