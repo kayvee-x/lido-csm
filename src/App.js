@@ -15,6 +15,7 @@ import "./app.css";
 
 function App() {
   const [ethPrice, setEthPrice] = useState(3052);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
     standardYield: 3,  
