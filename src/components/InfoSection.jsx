@@ -1,15 +1,15 @@
 import React from "react";
 
 export function InfoSection() {
-  
+
   return (
     <div className="info-section">
       <h2>Understanding CSM Bonding Curves & Rewards</h2>
-      
+
       <div className="info-card">
         <h3>Bonding Curves</h3>
         <p>Bonding curves define the relationship between validators and required ETH bonds. They determine capital efficiency and staking rewards multiplication.</p>
-        
+
         <h4>Early Adoption (EA) Mode</h4>
         <ul>
           <li>Lower initial bond (1.5 ETH for first validator)</li>
@@ -38,6 +38,7 @@ export function InfoSection() {
       <div className="info-links">
         <h3>Learn More</h3>
         <ul>
+          <li><a href="https://csm.lido.fi" target="_blank" rel="noopener noreferrer">CSM</a></li>
           <li><a href="https://docs.lido.fi/staking-modules/csm/intro" target="_blank" rel="noopener noreferrer">CSM Documentation</a></li>
           <li><a href="https://research.lido.fi/t/community-staking-module/5917" target="_blank" rel="noopener noreferrer">Community Staking Research</a></li>
           <li><a href="https://vote.lido.fi/180" target="_blank" rel="noopener noreferrer">CSM Proposal</a></li>

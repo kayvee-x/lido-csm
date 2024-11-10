@@ -390,7 +390,7 @@ select:focus {
 .validator-info {
   background: #f0f7ff;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   margin: 1rem 0;
 }
 
