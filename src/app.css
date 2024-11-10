@@ -56,9 +56,14 @@ body {
   padding: 1rem 3rem;
   background: #f8fafc;
   margin-bottom: 1rem;
+  box-shadow: 0 6px 16px -8px rgba(42, 28, 28, 0.124);
+  transition: box-shadow .2s ease;
+  text-decoration: none;
+  transform: translateZ(0);
 }
 
-.input-group, .select-group {
+.input-group,
+.select-group {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -77,7 +82,8 @@ body {
 }
 
 /* Form Controls */
-input, select {
+input,
+select {
   border: 1px solid #86868b;
   padding: 10px 10px;
   border-radius: 5px;
@@ -86,7 +92,8 @@ input, select {
   margin-left: 5px;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: #86868b;
 }
 
@@ -224,6 +231,7 @@ input:focus, select:focus {
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   padding: 24px;
+  margin-top: 1rem;
 }
 
 .table-controls {
@@ -312,25 +320,25 @@ input:focus, select:focus {
   .calculator-wrapper {
     padding: 20px;
   }
-  
+
   .calculator-title {
     font-size: 2.5rem;
   }
-  
+
   .metrics-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .bond-curve-container,
   .staking-table-container {
     padding: 16px;
   }
-  
+
   .tab-button {
     padding: 8px 16px;
     font-size: 14px;
   }
-  
+
   .bond-table th,
   .bond-table td,
   .staking-table th,
@@ -338,12 +346,12 @@ input:focus, select:focus {
     padding: 12px;
     font-size: 14px;
   }
-  
+
   .yield-comparison,
   .yield-chart-container {
     display: none;
   }
-  
+
   .input-group,
   .select-group {
     flex-direction: column;
