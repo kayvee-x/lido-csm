@@ -14,7 +14,7 @@ import { InfoSection } from "./components/InfoSection";
 import "./app.css";
 
 function App() {
-  const [ethPrice, setEthPrice] = useState(3052);
+  const [ethPrice, setEthPrice] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
@@ -76,22 +76,39 @@ function App() {
 
 
   useEffect(() => {
-    const fetchEthPrice = async () => {
+    const FALLBACK_PRICE = 3195;
+    const RETRY_ATTEMPTS = 3;
+    const RETRY_DELAY = 1000; // 1 second
+  
+    const fetchEthPrice = async (attempts = 0) => {
       try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
         const data = await response.json();
+        
         if (data.ethereum?.usd) {
           setEthPrice(data.ethereum.usd);
+          return true;
         }
+        throw new Error('Invalid price data');
       } catch (error) {
-        console.log('Using fallback ETH price');
+        if (attempts < RETRY_ATTEMPTS) {
+          setTimeout(() => fetchEthPrice(attempts + 1), RETRY_DELAY);
+        } else {
+          setEthPrice(FALLBACK_PRICE);
+        }
+        return false;
       }
     };
-
+  
+    // Initial fetch
     fetchEthPrice();
-    const interval = setInterval(fetchEthPrice, 300000);
+  
+    // Set up polling interval
+    const interval = setInterval(() => fetchEthPrice(), 300000);
     return () => clearInterval(interval);
   }, []);
+  
+  
 
   return (
     <div className="calculator-container">

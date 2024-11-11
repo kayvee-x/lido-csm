@@ -49,7 +49,7 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
       </div>
 
       <div className="cumulative-rewards">
-        <h3>CSM vs Standard Staking Comparison</h3>
+        <h3>CSM vs Vanilla Staking Comparison</h3>
         <div className="chart-container">
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={comparisonData}>
@@ -82,7 +82,7 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
               <Line
                 type="monotone"
                 dataKey="vanilla"
-                name="Standard Staking"
+                name="Vanilla Staking"
                 stroke="#34a853"
                 strokeWidth={2}
                 dot={{ fill: '#34a853' }}

@@ -7,7 +7,7 @@ export function YieldComparison({ standard, csm, data }) {
     <div className="yield-panel">
       <div className="yield-comparison">
         <div className="yield-card">
-          <h4>Standard Staking</h4>
+          <h4>Vanilla Staking</h4>
           <span className="yield-value">{standard.toFixed(2)}% APR</span>
         </div>
         <div className="yield-card highlight">
