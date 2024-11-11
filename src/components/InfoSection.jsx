@@ -38,10 +38,13 @@ export function InfoSection() {
       <div className="info-links">
         <h3>Learn More</h3>
         <ul>
-          <li><a href="https://csm.lido.fi" target="_blank" rel="noopener noreferrer">CSM</a></li>
+          <li><a href="https://csm.lido.fi" target="_blank" rel="noopener noreferrer">CSM Portal</a></li>
           <li><a href="https://docs.lido.fi/staking-modules/csm/intro" target="_blank" rel="noopener noreferrer">CSM Documentation</a></li>
+          <li><a href="https://youtu.be/f0L5j-yy7VM" target="_blank" rel="noopener noreferrer">Video: How CSM Rewards Work</a></li>
+          <li><a href="https://docs.google.com/spreadsheets/d/17mEuaI8ui-pmTTwev1FFIhch1X90HefpDB65kKyXDUU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Capital Efficiency Analysis</a></li>
           <li><a href="https://research.lido.fi/t/community-staking-module/5917" target="_blank" rel="noopener noreferrer">Community Staking Research</a></li>
-          <li><a href="https://vote.lido.fi/180" target="_blank" rel="noopener noreferrer">CSM Proposal</a></li>
+          <li><a href="https://blog.lido.fi/csm-early-adoption/" target="_blank" rel="noopener noreferrer">Early Adoption Program</a></li>
+          <li><a href="https://vote.lido.fi/180" target="_blank" rel="noopener noreferrer">CSM Governance Proposal</a></li>
         </ul>
       </div>
     </div>

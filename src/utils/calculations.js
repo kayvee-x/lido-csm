@@ -142,6 +142,10 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     } else if (ethAvailable <= 15.8) {
       validators = 12;
       bondRequired = 15.8;
+    } else if (ethAvailable <= 32) {
+      // Handle amounts between 15.8 and 32
+      validators = Math.floor((ethAvailable - 15.8) / 1.3) + 12;
+      bondRequired = 15.8 + ((validators - 12) * 1.3);
     } else {
       const multiplier = Math.floor(ethAvailable / 32);
       validators = 24 * multiplier;
@@ -154,6 +158,10 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     } else if (ethAvailable <= 8) {
       validators = 5;
       bondRequired = 7.6;
+    } else if (ethAvailable <= 32) {
+      // Handle amounts between 8 and 32
+      validators = Math.floor((ethAvailable - 7.6) / 1.3) + 5;
+      bondRequired = 7.6 + ((validators - 5) * 1.3);
     } else {
       const multiplier = Math.floor(ethAvailable / 32);
       validators = 23 * multiplier;
@@ -161,13 +169,13 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     }
   }
 
-  // Pass both standardYield and lidoApr to calculateYearlyValues
+  // Rest of the calculation remains the same
   const yearlyValues = calculateYearlyValues(
     validators, 
     bondRequired,
     standardYield,
-    0.06, // Node operator fee
-    0.10, // Lido fee
+    0.06,
+    0.10,
     lidoApr
   );
 
@@ -182,6 +190,7 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     bondYieldNet: yearlyValues.bondYieldNet
   };
 };
+
 
 
 export const convertToDaily = (yearlyValues) => {
