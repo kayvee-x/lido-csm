@@ -2,12 +2,30 @@ import React from 'react';
 import { formatEth } from '../utils/formatting';
 
 
-const calculateReturn = (reward, stake, daysInPeriod) => {
+const calculateReturn = (reward, stake, bondAmount, daysInPeriod) => {
   if (!stake || stake === 0) return 0;
-  // Convert to annual rate for periods other than 365 days
-  const annualizedReturn = (reward / stake) * (365 / daysInPeriod) * 100;
-  return annualizedReturn;
+  
+  const baseAPR = 0.04; // 4%
+  const stakingFee = 0.10; // 10%
+  const maxFee = 0.06; // 6%
+  
+  // CSM APR formula
+  const bondRewards = bondAmount * baseAPR * (1 - stakingFee);
+  const operatorRewards = (32 - bondAmount) * baseAPR * maxFee;
+  const totalAPR = (bondRewards + operatorRewards) / bondAmount;
+  
+  // Convert to the specific time period
+  return totalAPR * 100;
 };
+
+const calculateAPY = (reward, stake, daysInPeriod) => {
+  if (!stake || stake === 0) return 0;
+  // APY formula: (1 + r)^n - 1
+  const periodsPerYear = 365 / daysInPeriod;
+  const ratePerPeriod = reward / stake;
+  return (Math.pow(1 + ratePerPeriod, periodsPerYear) - 1) * 100;
+};
+
 
 export function StakingTable({ calculations, rewards, ethPrice }) {
   // Data validation and defaults
@@ -41,8 +59,9 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
       returnPercentage: calculateReturn(
         validRewards.daily.total,
         validCalculations.totalStaked,
+        validCalculations.bondAmount,
         1
-      )
+      )      
     },
     {
       duration: '7 Days',
@@ -103,9 +122,9 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
             <tr>
               <th>Duration</th>
               <th>ETH Staked</th>
-              <th>ETH Reward</th>
+              <th>ETH Reward (Total) </th>
               <th>Return (USD)</th>
-              <th>APR %</th>
+              {/* <th>APR %</th> */}
             </tr>
           </thead>
           <tbody>
@@ -115,9 +134,9 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
                 <td>{formatEth(row.ethStake)} ETH</td>
                 <td>{formatEth(row.ethReward)} ETH</td>
                 <td>${row.usdReturn.toLocaleString()}</td>
-                <td className="return-percentage">
+                {/* <td className="return-percentage">
                   {row.returnPercentage.toFixed(2)}%
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
