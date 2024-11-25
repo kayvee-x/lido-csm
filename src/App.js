@@ -19,7 +19,7 @@ function App() {
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
     standardYield: 3,  
-    lidoApr: 4,        
+    lidoApr: 3,        
     isEA: true
   });
 
