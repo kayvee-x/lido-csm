@@ -145,7 +145,7 @@ function App() {
                   <h4>Returns & Efficiency</h4>
                   <div className="yield-details">
                     <p>APY on Bond: {rewards.comparison.csm.toFixed(2)}%</p>
-                    <p>Capital Efficiency vs Vanilla: {rewards.comparison.efficiency.toFixed(4)}%</p>
+                    <p>Multiplier: {(rewards.comparison.efficiency / 100).toFixed(2)}%</p>
                     <p>Total CSM Bond: {formatEth(calculations.bondAmount)} ETH</p>
                   </div>
                 </div>

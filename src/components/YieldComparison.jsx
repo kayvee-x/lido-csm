@@ -14,7 +14,7 @@ export function YieldComparison({ standard, csm, data }) {
         <div className="yield-card highlight">
           <h4>CSM Staking</h4>
           <span className="yield-value">{csm.toFixed(2)}% APR</span>
-          <span className="yield-difference">+{multiplier}%</span>
+          {/* <span className="yield-difference">+{multiplier}%</span> */}
         </div>
       </div>
     </div>
