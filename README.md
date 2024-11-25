@@ -1,2 +1,3 @@
 # LIDO CSM 
-LIdo's module with permissionless entry, allowing any node operator to operate validators by providing an ETH-based bond as security collateral.
+
+Rewards Calculator for Lido's Community Staking Module, built to help operators visualize returns and understand capital efficiency compared to traditional or vanilla staking.
