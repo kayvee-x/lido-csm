@@ -2,6 +2,7 @@ import React from 'react';
 
 export function YieldComparison({ standard, csm, data }) {
   const yieldDifference = ((csm - standard) / standard * 100).toFixed(2);
+  const multiplier = (csm / standard).toFixed(1);
 
   return (
     <div className="yield-panel">
@@ -13,7 +14,7 @@ export function YieldComparison({ standard, csm, data }) {
         <div className="yield-card highlight">
           <h4>CSM Staking</h4>
           <span className="yield-value">{csm.toFixed(2)}% APR</span>
-          <span className="yield-difference">+{yieldDifference}%</span>
+          <span className="yield-difference">+{multiplier}%</span>
         </div>
       </div>
     </div>
