@@ -200,3 +200,27 @@ export const convertToDaily = (yearlyValues) => {
     totalEarnings: yearlyValues.totalEarnings / 365
   };
 };
+
+// export const EPOCH_DAYS = 28;
+
+// export const calculateEpochData = (startDate = new Date()) => {
+//   const epochStart = new Date(startDate);
+//   const epochEnd = new Date(startDate);
+//   epochEnd.setDate(epochEnd.getDate() + EPOCH_DAYS);
+  
+//   return {
+//     startDate: epochStart,
+//     endDate: epochEnd,
+//     epochNumber: Math.floor(startDate.getTime() / (EPOCH_DAYS * 24 * 60 * 60 * 1000))
+//   };
+// };
+
+// export const calculateEpochAPR = (rewards, stake, epoch) => {
+//   const annualizedReturn = (rewards / stake) * (365 / EPOCH_DAYS);
+//   return {
+//     epoch: epoch,
+//     apr: annualizedReturn * 100,
+//     rewards: rewards,
+//     stake: stake
+//   };
+// };
