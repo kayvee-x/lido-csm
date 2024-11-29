@@ -201,26 +201,50 @@ export const convertToDaily = (yearlyValues) => {
   };
 };
 
-// export const EPOCH_DAYS = 28;
+export const EPOCH_DAYS = 28;
 
-// export const calculateEpochData = (startDate = new Date()) => {
-//   const epochStart = new Date(startDate);
-//   const epochEnd = new Date(startDate);
-//   epochEnd.setDate(epochEnd.getDate() + EPOCH_DAYS);
+export const calculateEpochData = (startDate = new Date()) => {
+  const epochStart = new Date(startDate);
+  const epochEnd = new Date(startDate);
+  epochEnd.setDate(epochEnd.getDate() + EPOCH_DAYS);
   
-//   return {
-//     startDate: epochStart,
-//     endDate: epochEnd,
-//     epochNumber: Math.floor(startDate.getTime() / (EPOCH_DAYS * 24 * 60 * 60 * 1000))
-//   };
-// };
+  return {
+    startDate: epochStart,
+    endDate: epochEnd,
+    epochNumber: Math.floor(startDate.getTime() / (EPOCH_DAYS * 24 * 60 * 60 * 1000))
+  };
+};
 
-// export const calculateEpochAPR = (rewards, stake, epoch) => {
-//   const annualizedReturn = (rewards / stake) * (365 / EPOCH_DAYS);
-//   return {
-//     epoch: epoch,
-//     apr: annualizedReturn * 100,
-//     rewards: rewards,
-//     stake: stake
-//   };
-// };
+export const calculateEpochAPR = (rewards, stake, epoch) => {
+  const annualizedReturn = (rewards / stake) * (365 / EPOCH_DAYS);
+  return {
+    epoch: epoch,
+    apr: annualizedReturn * 100,
+    rewards: rewards,
+    stake: stake
+  };
+};
+
+export const fetchRealAPRData = async () => {
+  try {
+    // Fetch Lido APR from their API
+    const lidoResponse = await fetch('https://stake.lido.fi/api/apr');
+    const lidoData = await lidoResponse.json();
+    
+    // Fetch vanilla staking APR from Beaconcha.in or other sources
+    const vanillaResponse = await fetch('https://beaconcha.in/api/v1/epoch/latest');
+    const vanillaData = await vanillaResponse.json();
+    
+    return {
+      lidoApr: lidoData.apr,
+      vanillaApr: vanillaData.apr
+    };
+  } catch (error) {
+    console.error('Error fetching APR data:', error);
+    // Fallback values
+    return {
+      lidoApr: 3,  // Default Lido APR
+      vanillaApr: 3  // Default vanilla staking APR
+    };
+  }
+};

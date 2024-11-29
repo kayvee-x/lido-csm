@@ -225,8 +225,44 @@ select:focus {
   font-size: 0.8rem;
 }
 
-/* Bond Curve Styles */
-.bond-curve-container {
+/* Common Table Styles */
+.bond-table,
+.staking-table,
+.frame-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.bond-table th,
+.staking-table th,
+.frame-table th {
+  background: #f8fafc;
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #eef2f7;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  color: #1a1f36;
+}
+
+.bond-table td,
+.staking-table td,
+.frame-table td {
+  padding: 16px;
+  border-bottom: 1px solid #eef2f7;
+  color: #1a1f36;
+}
+
+/* Table Container Styles */
+.bond-curve-container,
+.staking-table-container,
+.frame-performance-container {
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -234,6 +270,7 @@ select:focus {
   margin-top: 1rem;
 }
 
+/* Table Controls */
 .table-controls {
   margin-bottom: 24px;
 }
@@ -259,111 +296,59 @@ select:focus {
   border-bottom: 2px solid #1a73e8;
 }
 
-/* Table Styles */
+/* Table Wrapper */
 .table-wrapper,
 .table-responsive {
   overflow-x: auto;
 }
 
-.bond-table,
-.staking-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.bond-table th,
-.staking-table th {
+/* Hover Effects */
+.bond-table tbody tr:hover,
+.staking-table tbody tr:hover,
+.frame-table tbody tr:hover {
   background: #f8fafc;
-  padding: 16px;
-  text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid #eef2f7;
 }
 
-.bond-table td,
-.staking-table td {
-  padding: 16px;
-  border-bottom: 1px solid #eef2f7;
-  color: #1a1f36;
-}
-
-.bond-table th {
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-}
-
-.bond-table th:hover {
+.bond-table th:hover,
+.staking-table th:hover,
+.frame-table th:hover {
   background: #f1f5f9;
 }
 
-.bond-table tbody tr:hover {
-  background: #f8fafc;
-}
-
+/* Sort Icon */
 .sort-icon {
   display: inline-block;
   width: 16px;
   height: 16px;
   margin-left: 4px;
   vertical-align: middle;
+  color: #1a73e8;
 }
 
-.return-percentage {
-  color: #34a853;
-  font-weight: 600;
+/* Frame Dropdown */
+.frame-dropdown {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #eef2f7;
+  background: white;
+  color: #1a1f36;
+  font-size: 14px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  transition: border-color 0.2s ease;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .calculator-wrapper {
-    padding: 20px;
-  }
-
-  .calculator-title {
-    font-size: 2.5rem;
-  }
-
-  .metrics-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .bond-curve-container,
-  .staking-table-container {
-    padding: 16px;
-  }
-
-  .tab-button {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-  .bond-table th,
-  .bond-table td,
-  .staking-table th,
-  .staking-table td {
-    padding: 12px;
-    font-size: 14px;
-  }
-
-  .yield-comparison,
-  .yield-chart-container {
-    display: none;
-  }
-
-  .input-group,
-  .select-group {
-    flex-direction: column;
-  }
+.frame-dropdown:hover {
+  border-color: #1a73e8;
 }
+
+/* Info Section */
 .info-section {
   max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
-}
-.info-section h2 {
-  align-items: center;
 }
 
 .info-card {
@@ -403,4 +388,49 @@ select:focus {
   color: #666;
   font-size: 0.9em;
   margin-top: 0.5rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .calculator-wrapper {
+    padding: 20px;
+  }
+
+  .calculator-title {
+    font-size: 2.5rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bond-curve-container,
+  .staking-table-container {
+    padding: 16px;
+  }
+
+  .tab-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .bond-table th,
+  .bond-table td,
+  .staking-table th,
+  .staking-table td,
+  .frame-table th,
+  .frame-table td {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .yield-comparison,
+  .yield-chart-container {
+    display: none;
+  }
+
+  .input-group,
+  .select-group {
+    flex-direction: column;
+  }
 }

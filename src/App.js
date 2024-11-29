@@ -10,7 +10,9 @@ import { StakingTable } from "./components/StakingTable";
 import { BondCurveTables } from "./components/BondCurveTables";
 import { formatEth } from "./utils/formatting";
 import { bondCurveData } from "./utils/data";
+import { frameData } from "./utils/recentData"
 import { InfoSection } from "./components/InfoSection";
+import { FramePerformanceTable } from './components/performanceTable';
 import "./app.css";
 
 function App() {
@@ -18,8 +20,8 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
-    standardYield: 3,  
-    lidoApr: 3,        
+    standardYield: 3,
+    lidoApr: 3,
     isEA: true
   });
 
@@ -28,6 +30,12 @@ function App() {
     cumulative: { weekly: 0, monthly: 0, yearly: 0 },
     comparison: { standard: 0, csm: 0, efficiency: 0 }
   });
+  const [frameMetrics, setFrameMetrics] = useState({
+    currentFrame: [],
+    epochRewards: 0,
+    operatorPerformance: 0
+  });
+
 
   const [calculations, setCalculations] = useState({
     validators: 0,
@@ -38,12 +46,12 @@ function App() {
   useEffect(() => {
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
     const results = calculateRewards(
-      ethAmount, 
+      ethAmount,
       stakingConfig.isEA,
       stakingConfig.standardYield,
       stakingConfig.lidoApr
     );
-    
+
     setCalculations({
       validators: results?.validators || 0,
       bondAmount: results?.bondRequired || 0,
@@ -79,12 +87,12 @@ function App() {
     const FALLBACK_PRICE = 3195;
     const RETRY_ATTEMPTS = 3;
     const RETRY_DELAY = 1000; // 1 second
-  
+
     const fetchEthPrice = async (attempts = 0) => {
       try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
         const data = await response.json();
-        
+
         if (data.ethereum?.usd) {
           setEthPrice(data.ethereum.usd);
           return true;
@@ -99,16 +107,38 @@ function App() {
         return false;
       }
     };
-  
+
     // Initial fetch
     fetchEthPrice();
-  
+
     // Set up polling interval
     const interval = setInterval(() => fetchEthPrice(), 300000);
     return () => clearInterval(interval);
   }, []);
-  
-  
+
+  useEffect(() => {
+    const processFrameMetrics = () => {
+      const frameLength = frameData.frame[1] - frameData.frame[0];
+      const totalDistributable = frameData.distributable / 1e18;
+
+      // Calculate average operator performance
+      const operatorPerformance = Object.values(frameData.operators).reduce((acc, op) => {
+        const validators = Object.values(op.validators);
+        const performance = validators.reduce((total, val) => {
+          return total + (val.perf.included / val.perf.assigned);
+        }, 0) / validators.length;
+        return acc + performance;
+      }, 0) / Object.keys(frameData.operators).length;
+
+      setFrameMetrics({
+        currentFrame: frameData.frame,
+        epochRewards: totalDistributable,
+        operatorPerformance
+      });
+    };
+
+    processFrameMetrics();
+  }, []);
 
   return (
     <div className="calculator-container">
@@ -172,10 +202,15 @@ function App() {
               rewards={rewards}
               ethPrice={ethPrice}
             />
-            <BondCurveTables bondCurveData={bondCurveData} />
+            <FramePerformanceTable
+              frameMetrics={frameMetrics}
+              ethPrice={ethPrice}
+            />
           </section>
           <section className="analysis-section">
             <InfoSection />
+            <BondCurveTables bondCurveData={bondCurveData} />
+
           </section>
         </main>
       </div>
