@@ -202,10 +202,10 @@ function App() {
               rewards={rewards}
               ethPrice={ethPrice}
             />
-            <FramePerformanceTable
+            {/* <FramePerformanceTable
               frameMetrics={frameMetrics}
               ethPrice={ethPrice}
-            />
+            /> */}
           </section>
           <section className="analysis-section">
             <InfoSection />
