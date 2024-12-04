@@ -501,7 +501,7 @@ select:focus {
 .upgrade-notification {
   background: #f0f9ff;
   border-left: 4px solid #0284c7;
-  padding: 0.2rem;
+  padding: 0.25rem;
   margin: 1rem 0;
   border-radius: 0 4px 4px 0;
 }

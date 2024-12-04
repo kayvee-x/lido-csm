@@ -42,6 +42,7 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
       operator: rewards?.daily?.operator || 0
     },
     cumulative: {
+      daily: rewards?.cumulative?.daily || 0,
       weekly: rewards?.cumulative?.weekly || 0,
       monthly: rewards?.cumulative?.monthly || 0,
       yearly: rewards?.cumulative?.yearly || 0
@@ -53,13 +54,12 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
     {
       duration: '24 Hours',
       ethStake: validCalculations.totalStaked,
-      ethReward: validRewards.daily.total,
-      usdReturn: validRewards.daily.total * ethPrice,
+      ethReward: validRewards.cumulative.daily,
+      usdReturn: validRewards.cumulative.daily * ethPrice,
       // Calculate daily return as annualized percentage
       returnPercentage: calculateReturn(
-        validRewards.daily.total,
+        validRewards.cumulative.daily,
         validCalculations.totalStaked,
-        validCalculations.bondAmount,
         1
       )      
     },
