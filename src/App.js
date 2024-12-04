@@ -234,20 +234,20 @@ function App() {
               <button
                 className={`tab-button ${activeTab === 'staking' ? 'active' : ''}`}
                 onClick={() => setActiveTab('staking')}
-              >
-                Staking Details
+              > 
+                <h3>Reward Estimate</h3>
               </button>
               <button
                 className={`tab-button ${activeTab === 'performance' ? 'active' : ''}`}
                 onClick={() => setActiveTab('performance')}
               >
-                Recent Rewards Frame
+                <h3>Recent Reward Distribution</h3>
               </button>
               <button
                 className={`tab-button ${activeTab === 'bondCurve' ? 'active' : ''}`}
                 onClick={() => setActiveTab('bondCurve')}
               >
-                Bond Curve
+                <h3>Bond Curve</h3>            
               </button>
             </div>
 
