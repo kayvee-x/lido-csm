@@ -17,7 +17,7 @@ import "./app.css";
 
 function App() {
   const [ethPrice, setEthPrice] = useState(null);
-  const [activeTab, setActiveTab] = useState('staking'); 
+  const [activeTab, setActiveTab] = useState('staking');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
@@ -234,7 +234,7 @@ function App() {
               <button
                 className={`tab-button ${activeTab === 'staking' ? 'active' : ''}`}
                 onClick={() => setActiveTab('staking')}
-              > 
+              >
                 <h3>Reward Estimate</h3>
               </button>
               <button
@@ -247,7 +247,7 @@ function App() {
                 className={`tab-button ${activeTab === 'bondCurve' ? 'active' : ''}`}
                 onClick={() => setActiveTab('bondCurve')}
               >
-                <h3>Bond Curve</h3>            
+                <h3>Bond Curve</h3>
               </button>
             </div>
 
@@ -271,6 +271,21 @@ function App() {
             </div>
           </section>
           <section className="analysis-section">
+            <div className="upgrade-notification">
+              <div className="notification-content">
+                <span className="notification-icon">🔔</span>
+                <p>
+                  Proposed CSM upgrade coming soon! Check out the
+                  <a
+                    href="https://research.lido.fi/t/community-staking-module/5917/75"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    proposal details
+                  </a>
+                </p>
+              </div>
+            </div>
             <InfoSection />
           </section>
         </main>
