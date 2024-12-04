@@ -402,6 +402,9 @@ select:focus {
   margin: 2rem auto;
   padding: 0 1rem;
 }
+.info-section h2 {
+  color: #1a73e8;
+}
 
 .info-card {
   background: #f8f9fa;
