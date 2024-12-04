@@ -312,28 +312,37 @@ select:focus {
 .table-controls {
   margin-bottom: 24px;
 }
-
 .table-tabs {
   display: flex;
-  gap: 12px;
-  border-bottom: 1px solid #eee;
+  gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .tab-button {
-  padding: 12px 24px;
+  padding: 0.5rem 1rem;
   border: none;
   background: none;
   cursor: pointer;
-  font-weight: 500;
-  color: #666;
-  transition: all 0.2s ease;
+  font-size: 1rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
 .tab-button.active {
-  color: #1a73e8;
-  border-bottom: 2px solid #1a73e8;
+  border-bottom: 2px solid #007bff;
+    color: #007bff;
 }
 
+.tab-button:hover {
+  color: #007bff;
+}
+
+.table-content {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 /* Table Wrapper */
 .table-wrapper,
 .table-responsive {

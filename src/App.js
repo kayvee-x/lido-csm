@@ -17,6 +17,7 @@ import "./app.css";
 
 function App() {
   const [ethPrice, setEthPrice] = useState(null);
+  const [activeTab, setActiveTab] = useState('staking'); 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
@@ -228,22 +229,49 @@ function App() {
               />
             </div>
           </section>
-
           <section className="analysis-section">
-            <StakingTable
-              calculations={calculations}
-              rewards={rewards}
-              ethPrice={ethPrice}
-            />
-            <FramePerformanceTable
-              frameMetrics={frameMetrics}
-              ethPrice={ethPrice}
-            />
+            <div className="table-tabs">
+              <button
+                className={`tab-button ${activeTab === 'staking' ? 'active' : ''}`}
+                onClick={() => setActiveTab('staking')}
+              >
+                Staking Details
+              </button>
+              <button
+                className={`tab-button ${activeTab === 'performance' ? 'active' : ''}`}
+                onClick={() => setActiveTab('performance')}
+              >
+                Recent Rewards Frame
+              </button>
+              <button
+                className={`tab-button ${activeTab === 'bondCurve' ? 'active' : ''}`}
+                onClick={() => setActiveTab('bondCurve')}
+              >
+                Bond Curve
+              </button>
+            </div>
+
+            <div className="table-content">
+              {activeTab === 'staking' && (
+                <StakingTable
+                  calculations={calculations}
+                  rewards={rewards}
+                  ethPrice={ethPrice}
+                />
+              )}
+              {activeTab === 'performance' && (
+                <FramePerformanceTable
+                  frameMetrics={frameMetrics}
+                  ethPrice={ethPrice}
+                />
+              )}
+              {activeTab === 'bondCurve' && (
+                <BondCurveTables bondCurveData={bondCurveData} />
+              )}
+            </div>
           </section>
           <section className="analysis-section">
             <InfoSection />
-            <BondCurveTables bondCurveData={bondCurveData} />
-
           </section>
         </main>
       </div>
