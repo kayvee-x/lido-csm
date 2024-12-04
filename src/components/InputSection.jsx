@@ -31,13 +31,21 @@ export function InputSection({ config, onChange }) {
   
   const validatorCount = getValidatorCount(config.ethAvailable, config.isEA);
 
+  const durationOptions = [
+    { label: '1D', value: 1 },
+    { label: '7D', value: 7 },
+    { label: '14D', value: 14 },
+    { label: '28D', value: 28 },
+    { label: '3M', value: 90 },
+    { label: '6M', value: 180 },
+    { label: '12M', value: 365 }
+  ];
+
   return (
     <div className="input-container">
       <div className="input-grid">
         <div className="input-group">
-          <label className="input-label">
-            ETH Available
-          </label>
+          <label className="input-label">ETH Available</label>
           <input
             type="number"
             min="0"
@@ -48,9 +56,7 @@ export function InputSection({ config, onChange }) {
         </div>
 
         <div className="input-group">
-          <label className="input-label">
-            Standard Yield (%)
-          </label>
+          <label className="input-label">Standard Yield (%)</label>
           <input
             type="number"
             min="0"
@@ -61,11 +67,10 @@ export function InputSection({ config, onChange }) {
             className="input-field"
           />
         </div>
+        <span className="data-source">Live: beaconcha.in/api/v1/epoch/latest</span>
 
         <div className="input-group">
-          <label className="input-label">
-            Lido APR (%)
-          </label>
+          <label className="input-label">Lido APR (%)</label>
           <input
             type="number"
             min="0"
@@ -76,8 +81,8 @@ export function InputSection({ config, onChange }) {
             className="input-field"
           />
         </div>
+        <span className="data-source">Live: eth-api.lido.fi/v1/protocol/eth/apr/last</span>
       </div>
-
       <div className="select-group">
         <label className="input-label">
           Early Adoption Status
@@ -91,12 +96,27 @@ export function InputSection({ config, onChange }) {
           <option value="false">Regular Staker</option>
         </select>
       </div>
+
       <div className="validator-info">
         <h4>Validator Capacity</h4>
         <p>With {config.ethAvailable} ETH you can run: <strong>{validatorCount} validator{validatorCount !== 1 ? 's' : ''}</strong></p>
         {config.isEA && validatorCount > 12 && (
           <p className="note">Note: Maximum 12 validators during EA phase</p>
         )}
+      </div>
+
+      <div className="duration-selector">
+        <div className="duration-buttons">
+          {durationOptions.map(option => (
+            <button
+              key={option.value}
+              onClick={() => handleChange("stakingDuration", option.value)}
+              className={`duration-button ${config.stakingDuration === option.value ? 'active' : ''}`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

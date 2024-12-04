@@ -1,4 +1,3 @@
-// components/FramePerformanceTable.js
 import { useState } from 'react';
 import { ArrowUpDown } from 'lucide-react';
 import { formatEth } from '../utils/formatting';
@@ -60,11 +59,8 @@ export function FramePerformanceTable({ ethPrice }) {
                             <th onClick={() => handleSort('validatorCount')}>
                                 Validators <ArrowUpDown className="sort-icon" />
                             </th>
-                            {/* <th onClick={() => handleSort('effectiveness')}>
-                                Effectiveness <ArrowUpDown className="sort-icon" />
-                            </th> */}
                             <th onClick={() => handleSort('distributed')}>
-                                Rewards (ETH) <ArrowUpDown className="sort-icon" />
+                                Node-Reward (ETH) <ArrowUpDown className="sort-icon" />
                             </th>
                             <th onClick={() => handleSort('usdValue')}>
                                 Value (USD) <ArrowUpDown className="sort-icon" />
@@ -76,7 +72,6 @@ export function FramePerformanceTable({ ethPrice }) {
                             <tr key={op.operatorId}>
                                 <td>Operator {op.operatorId}</td>
                                 <td>{op.validatorCount}</td>
-                                {/* <td>{op.effectiveness.toFixed(2)}%</td> */}
                                 <td>{formatEth(op.distributed)} ETH</td>
                                 <td>${op.usdValue.toLocaleString()}</td>
                             </tr>

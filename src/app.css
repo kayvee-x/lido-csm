@@ -32,7 +32,7 @@ body {
 }
 
 .calculator-title {
-  font-size: 2rem;
+  font-size: 2.1rem;
   line-height: 1.07143;
   font-weight: 600;
   background: linear-gradient(90deg, #0071e3, #00c7ff);
@@ -54,12 +54,16 @@ body {
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 3rem;
-  background: #f8fafc;
+  background: #bbd7f3;
+    border-radius: 1rem;
   margin-bottom: 1rem;
   box-shadow: 0 6px 16px -8px rgba(42, 28, 28, 0.124);
   transition: box-shadow .2s ease;
   text-decoration: none;
   transform: translateZ(0);
+  font-weight: 300;
+    font-size: 0.9rem;
+    /* align-items: baseline; */
 }
 
 .input-group,
@@ -155,6 +159,7 @@ select:focus {
   background: white;
   border-radius: 20px;
   padding: 1.5rem;
+  border: 1px solid #bbd7f3;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -214,15 +219,48 @@ select:focus {
 /* Charts and Tables */
 .earnings-chart,
 .cumulative-rewards {
-  font-size: 0.8rem;
+  border: 1px solid #bbd7f3;
+    font-size: 0.7rem;
   background: #f8fafc;
   border-radius: 20px;
   padding: 24px;
+  margin: auto 0px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.earnings-chart {
+  margin: auto 0px;
 }
 
 .chart-container {
   font-size: 0.8rem;
+}
+.duration-selector {
+  margin-top: 20px;
+}
+
+.duration-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.duration-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.duration-button.active {
+  background: #00A3FF;
+  color: white;
+  border-color: #00A3FF;
+}
+
+.duration-button:hover:not(.active) {
+  background: #f5f5f5;
 }
 
 /* Common Table Styles */
@@ -433,4 +471,13 @@ select:focus {
   .select-group {
     flex-direction: column;
   }
+}
+
+.data-source {
+  font-size: 0.6rem;
+  margin: -12px 0px;
+  color: #848383;
+  display: flex;
+  justify-content: end;
+
 }
