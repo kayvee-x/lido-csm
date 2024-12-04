@@ -342,6 +342,7 @@ select:focus {
 }
 
 .table-content {
+  border: 1px solid #bbd7f3;
   background: white;
   border-radius: 8px;
   padding: 1rem;
