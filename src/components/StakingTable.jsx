@@ -92,7 +92,6 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
       ethStake: validCalculations.totalStaked,
       ethReward: validRewards.cumulative.yearly,
       usdReturn: validRewards.cumulative.yearly * ethPrice,
-      // Yearly return (no need to annualize)
       returnPercentage: calculateReturn(
         validRewards.cumulative.yearly,
         validCalculations.totalStaked,
@@ -101,7 +100,6 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
     }
   ];
 
-  // Breakdown of returns by source (bond vs operator)
   const returnsBreakdown = {
     daily: {
       bondReturn: (validRewards.daily.bond / validCalculations.bondAmount) * 100,

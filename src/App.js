@@ -162,7 +162,7 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const FALLBACK_PRICE = 3195;
+  const FALLBACK_PRICE = 3985;
   const RETRY_ATTEMPTS = 3;
   const RETRY_DELAY = 1000; // 1 second
 
