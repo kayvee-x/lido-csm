@@ -35,7 +35,7 @@ body {
   font-size: 2.1rem;
   line-height: 1.07143;
   font-weight: 600;
-  background: linear-gradient(90deg, #0071e3, #00c7ff);
+  background: linear-gradient(90deg, #4764ff, #00c7ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
@@ -247,16 +247,16 @@ select:focus {
 .duration-button {
   padding: 8px 16px;
   border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #f2efef;
   background: transparent;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .duration-button.active {
-  background: #00A3FF;
+  background: #4764ff;
   color: white;
-  border-color: #00A3FF;
+  border-color: #4764ff;
 }
 
 .duration-button:hover:not(.active) {
@@ -403,7 +403,7 @@ select:focus {
   padding: 0 1rem;
 }
 .info-section h2 {
-  color: #1a73e8;
+  color: #4764ff;
 }
 
 .info-card {
@@ -500,7 +500,7 @@ select:focus {
 }
 .upgrade-notification {
   background: #f0f9ff;
-  border-left: 4px solid #0284c7;
+  border-left: 4px solid #1202c7;
   padding: 0.25rem;
   margin: 1rem 0;
   border-radius: 0 4px 4px 0;
@@ -517,7 +517,7 @@ select:focus {
 }
 
 .notification-content a {
-  color: #0284c7;
+  color: #4764ff;
   margin-left: 0.25rem;
   text-decoration: none;
   font-weight: 500;
