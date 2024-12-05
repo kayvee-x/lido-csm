@@ -33,6 +33,7 @@ function App() {
     operatorPerformance: 0
   });
 
+  const [useLatestApr, setUseLatestApr] = useState(true);
 
   const [calculations, setCalculations] = useState({
     validators: 0,
@@ -60,26 +61,58 @@ function App() {
     if (days === 365) return '12-Month';
     return `${days}-Day`;
   };
-
   useEffect(() => {
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
+    let validators, bondRequired;
+
+    if (stakingConfig.isEA) {
+      if (ethAmount <= 2) {
+        validators = 1;
+        bondRequired = 1.5;
+      } else if (ethAmount <= 8) {
+        validators = 6;
+        bondRequired = 8;
+      } else if (ethAmount <= 15.8) {
+        validators = 12;
+        bondRequired = 15.8;
+      } else if (ethAmount <= 32) {
+        validators = Math.floor((ethAmount - 15.8) / 1.3) + 12;
+        bondRequired = 15.8 + ((validators - 12) * 1.3);
+      } else {
+        const multiplier = Math.floor(ethAmount / 32);
+        validators = 24 * multiplier;
+        bondRequired = 31.4 * multiplier;
+      }
+    } else {
+      if (ethAmount <= 2.4) {
+        validators = 1;
+        bondRequired = 2.4;
+      } else if (ethAmount <= 8) {
+        validators = 5;
+        bondRequired = 7.6;
+      } else if (ethAmount <= 32) {
+        validators = Math.floor((ethAmount - 7.6) / 1.3) + 5;
+        bondRequired = 7.6 + ((validators - 5) * 1.3);
+      } else {
+        const multiplier = Math.floor(ethAmount / 32);
+        validators = 23 * multiplier;
+        bondRequired = 31 * multiplier;
+      }
+    }
+
+    const aprToUse = useLatestApr ? stakingConfig.recentApr : stakingConfig.standardYield;
+
     const results = calculateRewards(
       ethAmount,
       stakingConfig.isEA,
       stakingConfig.standardYield,
-      stakingConfig.recentApr,
-      stakingConfig.stakingDuration
+      aprToUse
     );
-
-    // Calculate bond amount based on EA status
-    const bondAmount = stakingConfig.isEA ?
-      Math.min(ethAmount, 1.5 + (Math.floor(ethAmount / 32) - 1) * 1.5) : // EA calculation
-      Math.min(ethAmount, Math.floor(ethAmount / 32) * 2.4); // Non-EA calculation
 
     setCalculations(prev => ({
       ...prev,
-      bondAmount: bondAmount,
-      validators: Math.floor(ethAmount / 32),
+      bondAmount: bondRequired,
+      validators: validators,
       totalStaked: ethAmount
     }));
 
@@ -97,7 +130,7 @@ function App() {
     };
 
     setRewards({
-      daily: selectedPeriodRewards,  // Will rename this prop later for clarity
+      daily: selectedPeriodRewards,
       cumulative: cumulativeRewards,
       comparison: {
         standard: stakingConfig.standardYield,
@@ -105,9 +138,7 @@ function App() {
         efficiency: 237
       }
     });
-  }, [stakingConfig]);
-
-
+  }, [stakingConfig, useLatestApr]);
   useEffect(() => {
     const fetchLiveMetrics = async () => {
       const [ethPrice, lidoApr, vanillaApr] = await Promise.all([
@@ -127,7 +158,6 @@ function App() {
     // Initial fetch
     fetchLiveMetrics();
 
-    // Set up polling interval - every 5 minutes
     const interval = setInterval(fetchLiveMetrics, 300000);
     return () => clearInterval(interval);
   }, []);
@@ -211,7 +241,7 @@ function App() {
                   <div className="yield-details">
                     <p>APY on Bond: {rewards.comparison.csm.toFixed(2)}%</p>
                     <p>Multiplier: {(rewards.comparison.efficiency / 100).toFixed(2)}x</p>
-                    <p>Total CSM Bond: {formatEth(calculations.bondAmount)} ETH</p>
+                    <p>Total CSM Bond Required: {formatEth(calculations.bondAmount)} ETH</p>
                   </div>
                 </div>
               </div>
