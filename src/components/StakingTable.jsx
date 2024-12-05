@@ -76,7 +76,7 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
       )
     },
     {
-      duration: '30 Days',
+      duration: '28 Days',
       ethStake: validCalculations.totalStaked,
       ethReward: validRewards.cumulative.monthly,
       usdReturn: validRewards.cumulative.monthly * ethPrice,
@@ -84,7 +84,7 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
       returnPercentage: calculateReturn(
         validRewards.cumulative.monthly,
         validCalculations.totalStaked,
-        30.44  // Average days in a month for more accurate calculations
+        28
       )
     },
     {
@@ -124,7 +124,6 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
               <th>ETH Staked</th>
               <th>ETH Reward (Total) </th>
               <th>Return (USD)</th>
-              {/* <th>APR %</th> */}
             </tr>
           </thead>
           <tbody>
@@ -134,9 +133,6 @@ export function StakingTable({ calculations, rewards, ethPrice }) {
                 <td>{formatEth(row.ethStake)} ETH</td>
                 <td>{formatEth(row.ethReward)} ETH</td>
                 <td>${row.usdReturn.toLocaleString()}</td>
-                {/* <td className="return-percentage">
-                  {row.returnPercentage.toFixed(2)}%
-                </td> */}
               </tr>
             ))}
           </tbody>

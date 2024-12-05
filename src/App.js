@@ -76,8 +76,8 @@ function App() {
         validators = 12;
         bondRequired = 15.8;
       } else if (ethAmount <= 32) {
-        validators = Math.floor((ethAmount - 15.8) / 1.3) + 12;
-        bondRequired = 15.8 + ((validators - 12) * 1.3);
+        validators = 24;
+        bondRequired = 31.4;
       } else {
         const multiplier = Math.floor(ethAmount / 32);
         validators = 24 * multiplier;
@@ -91,8 +91,8 @@ function App() {
         validators = 5;
         bondRequired = 7.6;
       } else if (ethAmount <= 32) {
-        validators = Math.floor((ethAmount - 7.6) / 1.3) + 5;
-        bondRequired = 7.6 + ((validators - 5) * 1.3);
+        validators = 23;
+        bondRequired = 31;
       } else {
         const multiplier = Math.floor(ethAmount / 32);
         validators = 23 * multiplier;
