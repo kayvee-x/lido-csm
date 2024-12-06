@@ -45,7 +45,7 @@ export function InputSection({ config, onChange }) {
     <div className="input-container">
       <div className="input-grid">
         <div className="input-group">
-          <label className="input-label">ETH Available</label>
+          <label className="input-label">ETH Amount</label>
           <input
             type="number"
             min="0"
