@@ -56,7 +56,7 @@ body {
   padding: 1rem 3rem;
   background: #bbd7f3;
     border-radius: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0 6px 16px -8px rgba(42, 28, 28, 0.124);
   transition: box-shadow .2s ease;
   text-decoration: none;
@@ -152,7 +152,7 @@ select:focus {
 .rewards-panel {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .daily-breakdown {
