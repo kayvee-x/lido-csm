@@ -36,4 +36,22 @@ const fetchVanillaStakingAPR = async () => {
     }
 };
 
-export { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR };
+const fetchCSM = async () => {
+    try {
+        const response = await fetch('https://keys-api.lido.fi/v1/modules/3/operators');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+    }
+};
+
+
+
+
+export { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR, fetchCSM };

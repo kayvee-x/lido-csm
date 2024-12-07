@@ -526,3 +526,6 @@ select:focus {
 .notification-content a:hover {
   text-decoration: underline;
 }
+.operator-margin {
+  margin-bottom: 1.5rem;
+}

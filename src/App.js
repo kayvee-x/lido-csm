@@ -13,6 +13,7 @@ import { bondCurveData } from "./utils/data";
 import { frameData } from "./utils/recentData"
 import { InfoSection } from "./components/InfoSection";
 import { FramePerformanceTable } from './components/performanceTable';
+import { OperatorAllocation } from "./components/OperatorAllocation";
 import "./app.css";
 
 function App() {
@@ -249,6 +250,7 @@ function App() {
             </div>
 
             <div className="metrics-grid">
+
               <RewardsBreakdown
                 daily={rewards.daily}
                 cumulative={rewards.cumulative}
@@ -280,6 +282,12 @@ function App() {
               >
                 <h3>Bond Curve</h3>
               </button>
+              <button
+                className={`tab-button ${activeTab === 'operators' ? 'active' : ''}`}
+                onClick={() => setActiveTab('operators')}
+              >
+                <h3>CSM Live Operators</h3>
+              </button>
             </div>
 
             <div className="table-content">
@@ -298,6 +306,9 @@ function App() {
               )}
               {activeTab === 'bondCurve' && (
                 <BondCurveTables bondCurveData={bondCurveData} />
+              )}
+              {activeTab === 'operators' && (
+                <OperatorAllocation ethAmount={stakingConfig.ethAvailable} />
               )}
             </div>
           </section>
