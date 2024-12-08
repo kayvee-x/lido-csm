@@ -8,6 +8,7 @@
     "@heroicons/react": "^2.1.5",
     "chart.js": "^4.4.6",
     "classnames": "^2.5.1",
+    "cors-anywhere": "^0.4.4",
     "lucide-react": "^0.456.0",
     "react": "^18.0.0",
     "react-chartjs-2": "^5.2.0",
@@ -35,5 +36,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "https://keys-api.lido.fi"
 }

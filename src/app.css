@@ -315,14 +315,14 @@ select:focus {
 .table-tabs {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 0 1rem;
 }
 .table-tabs h3 {
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
 }
 .tab-button {
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
   border: none;
   background: none;
   cursor: pointer;
@@ -528,4 +528,28 @@ select:focus {
 }
 .operator-margin {
   margin-bottom: 1.5rem;
+}
+.chart-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  min-width: 800px;
+  /* Minimum width to ensure readability */
+  padding-bottom: 20px;
+  /* Space for scrollbar */
+}
+
+/* Optional: Custom scrollbar styling */
+.chart-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
 }

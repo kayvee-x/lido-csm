@@ -308,7 +308,7 @@ function App() {
                 <BondCurveTables bondCurveData={bondCurveData} />
               )}
               {activeTab === 'operators' && (
-                <OperatorAllocation ethAmount={stakingConfig.ethAvailable} />
+                <OperatorAllocation  />
               )}
             </div>
           </section>

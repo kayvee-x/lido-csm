@@ -1,19 +1,35 @@
 const fetchEthPrice = async (attempts = 0) => {
+    const backoffTime = Math.pow(2, attempts) * 1000; 
+
     try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd', {
+            headers: {
+                'Accept': 'application/json',
+                'Cache-Control': 'no-cache'
+            }
+        });
+
+        if (response.status === 429) {
+            if (attempts < 3) {
+                await new Promise(resolve => setTimeout(resolve, backoffTime));
+                return fetchEthPrice(attempts + 1);
+            }
+            return 3930;
+        }
+
         const data = await response.json();
-        if (data.ethereum?.usd) {
-            return data.ethereum.usd;
-        }
-        throw new Error('Invalid price data');
+        return data.ethereum?.usd || 3195;
     } catch (error) {
+        console.error(`Attempt ${attempts + 1} failed:`, error);
+
         if (attempts < 3) {
-            setTimeout(() => fetchEthPrice(attempts + 1), 1000);
-        } else {
-            return 3195; // Fallback price
+            await new Promise(resolve => setTimeout(resolve, backoffTime));
+            return fetchEthPrice(attempts + 1);
         }
+        return 3930;
     }
 };
+
 
 const fetchLidoAPR = async () => {
     try {
@@ -36,22 +52,7 @@ const fetchVanillaStakingAPR = async () => {
     }
 };
 
-const fetchCSM = async () => {
-    try {
-        const response = await fetch('https://keys-api.lido.fi/v1/modules/3/operators');
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('API Error:', error);
-        throw error;
-    }
-};
 
 
 
-
-export { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR, fetchCSM };
+export { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR };
