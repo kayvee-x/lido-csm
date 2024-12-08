@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ApiService from '../utils/ApiService';
+import { Ttip } from './Tooltip';
 import {
     BarChart,
     Bar,
@@ -64,38 +65,49 @@ export const OperatorAllocation = () => {
 
     return (
         <div className="bond-curve-container">
-            {error && (
-                <div className="error-message" style={{ color: 'red', padding: '10px', backgroundColor: '#ffeeee' }}>
-                    {error}
-                </div>
-            )}
+            {error && <div className="error-message" style={{ color: 'red', padding: '10px', backgroundColor: '#ffeeee' }}>
+                {error}
+            </div>}
 
             <div className="rewards-grid">
                 <div className="reward-card">
-                    <h4>Module Type</h4>
+                    <div className="reward-header">
+                        <h4>Module Type</h4>
+                    </div>
                     <div className="reward-value">{moduleData?.type}</div>
                 </div>
+
                 <div className="reward-card">
-                    <h4>Module Fee</h4>
+                    <div className="reward-header">
+                        <h4>Module Fee</h4>
+                        <Ttip content="The percentage of staking rewards allocated to node operators. This fee covers operational costs and is split proportionally among active validators who meet performance thresholds. It includes both consensus rewards and MEV earnings from block proposals." />
+                    </div>
                     <div className="reward-value">{moduleData?.moduleFee / 100}%</div>
                 </div>
+
                 <div className="reward-card">
-                    <h4>Treasury Fee</h4>
+                    <div className="reward-header">
+                        <h4>Treasury Fee</h4>
+                        <Ttip content="Fee allocated to the Lido treasury for protocol maintenance and development. This contributes to the ongoing sustainability of the protocol." />
+                    </div>
                     <div className="reward-value">{moduleData?.treasuryFee / 100}%</div>
                 </div>
+
                 <div className="reward-card">
-                    <h4>Exited Validators</h4>
+                    <div className="reward-header">
+                        <h4>Exited Validators</h4>
+                        <Ttip content="The protocol cannot exit validators automatically. Operators must monitor for exit requests and process them manually. You can use tools like Ejector or CSM Sentinel to help with this process." />
+                    </div>
                     <div className="reward-value">{moduleData?.exitedValidatorsCount}</div>
                 </div>
             </div>
 
             <div className='operator-margin'></div>
 
-
             {allocatedData.length > 0 && (
                 <div className="earnings-chart">
                     <div className="chart-scroll-wrapper">
-                        <ResponsiveContainer width="450%" height={300}>
+                        <ResponsiveContainer width="400%" height={400}>
                             <BarChart data={allocatedData}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="operator" angle={-45} textAnchor="end" interval={0} height={100} />
@@ -109,17 +121,20 @@ export const OperatorAllocation = () => {
                                         paddingTop: "20px",
                                         paddingLeft: "10px"
                                     }}
-                                />
-                                <Bar dataKey="usedKeys" stackId="a" fill="#4764ff" name="Used Keys" />
-                                <Bar dataKey="allocation" stackId="a" fill="#00c7ff" name="New Allocation" />
+                                />                               <Bar dataKey="usedKeys" stackId="a" fill="#4764ff" name="Used Keys" />
                                 <Bar dataKey="availableCapacity" stackId="a" fill="#bbd7f3" name="Available Capacity" />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
             )}
+
             <div className='operator-margin'></div>
+
             <div className="table-wrapper">
+                <div className="table-header">
+                    <h4>Operator Details</h4>
+                </div>
                 <table className="staking-table">
                     <thead>
                         <tr>

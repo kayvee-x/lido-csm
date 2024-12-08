@@ -553,3 +553,60 @@ select:focus {
   background: #888;
   border-radius: 4px;
 }
+.reward-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #666;
+  font-size: 0.7rem;
+  cursor: help;
+  font-weight: 600;
+  margin: 0 0.5rem;
+}
+
+.tooltip-content {
+  visibility: hidden;
+  position: absolute;
+  width: 300px;
+  background: #01023a;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 100;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}

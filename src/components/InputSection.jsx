@@ -1,4 +1,5 @@
 import React from "react";
+import { Ttip } from "./Tooltip";
 
 export function InputSection({ config, onChange }) {
   const handleChange = (field, value) => {
@@ -45,7 +46,10 @@ export function InputSection({ config, onChange }) {
     <div className="input-container">
       <div className="input-grid">
         <div className="input-group">
-          <label className="input-label">ETH Amount</label>
+          <div className="label-with-tooltip">
+            <label className="input-label">ETH Amount</label>
+            <Ttip content="The amount of ETH you want to stake. Deposits are processed when gas prices are favorable. While waiting in the queue, you'll earn staking rewards from bond rebase." />
+          </div>
           <input
             type="number"
             min="0"
@@ -56,7 +60,10 @@ export function InputSection({ config, onChange }) {
         </div>
 
         <div className="input-group">
-          <label className="input-label">Standard Yield (%)</label>
+          <div className="label-with-tooltip">
+            <label className="input-label">Standard Yield (%)</label>
+            <Ttip content="Base staking rewards from running a vanilla Ethereum validator. This includes both Consensus Layer rewards and MEV opportunities." />
+          </div>
           <input
             type="number"
             min="0"
@@ -70,7 +77,10 @@ export function InputSection({ config, onChange }) {
         <span className="data-source">Live: beaconcha.in/api/v1/epoch/latest</span>
 
         <div className="input-group">
-          <label className="input-label">Lido APR (%)</label>
+          <div className="label-with-tooltip">
+            <label className="input-label">Lido APR (%)</label>
+            <Ttip content="Combined APR including Node Operator rewards and bond rebase. Rewards are smoothed across modules to reduce volatility and ensure consistent returns." />
+          </div>
           <input
             type="number"
             min="0"
@@ -83,10 +93,12 @@ export function InputSection({ config, onChange }) {
         </div>
         <span className="data-source">Live: eth-api.lido.fi/v1/protocol/eth/apr/last</span>
       </div>
+
       <div className="select-group">
-        <label className="input-label">
-          Early Adoption Status
-        </label>
+        <div className="label-with-tooltip">
+          <label className="input-label">Early Adoption Status</label>
+          <Ttip content="Early Adopters get lower bond requirements and priority queue access, but are limited to 12 validators. Regular stakers have higher requirements but no validator limit." />
+        </div>
         <select
           value={config.isEA.toString()}
           onChange={(e) => handleChange("isEA", e.target.value === "true")}
@@ -98,7 +110,9 @@ export function InputSection({ config, onChange }) {
       </div>
 
       <div className="validator-info">
-        <h4>Validator Capacity</h4>
+        <div className="info-header">
+          <h4>Validator Capacity</h4>
+        </div>
         <p>With {config.ethAvailable} ETH you can run: <strong>{validatorCount} validator{validatorCount !== 1 ? 's' : ''}</strong></p>
         {config.isEA && validatorCount > 12 && (
           <p className="note">Note: Maximum 12 validators during EA phase</p>
@@ -106,6 +120,9 @@ export function InputSection({ config, onChange }) {
       </div>
 
       <div className="duration-selector">
+        <div className="duration-header">
+          <h4>Calculation Period</h4>
+        </div>
         <div className="duration-buttons">
           {durationOptions.map(option => (
             <button
@@ -120,4 +137,5 @@ export function InputSection({ config, onChange }) {
       </div>
     </div>
   );
+
 }
