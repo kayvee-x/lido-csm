@@ -33,9 +33,10 @@ const fetchEthPrice = async (attempts = 0) => {
 
 const fetchLidoAPR = async () => {
     try {
-        const response = await fetch('https://eth-api.lido.fi/v1/protocol/eth/apr/last');
+        const response = await fetch('https://eth-api.lido.fi/v1/protocol/steth/apr/sma');
         const data = await response.json();
-        return data.data.apr;
+        const LidoAPR = data.data.smaApr;
+        return Number(LidoAPR.toFixed(2));  
     } catch (error) {
         return 0.03; // Fallback APR
     }
@@ -46,7 +47,7 @@ const fetchVanillaStakingAPR = async () => {
         const response = await fetch('https://beaconcha.in/api/v1/epoch/latest');
         const data = await response.json();
         const vanillaAPR = (data.data.averagevalidatorbalance - 32000000000) / 32000000000 * 365 / 28 * 100;
-        return Number(vanillaAPR.toFixed(1));  // Formats to one decimal place
+        return Number(vanillaAPR.toFixed(2)); 
     } catch (error) {
         return 3.0;
     }

@@ -286,7 +286,7 @@ function App() {
                 className={`tab-button ${activeTab === 'operators' ? 'active' : ''}`}
                 onClick={() => setActiveTab('operators')}
               >
-                <h3>CSM Live Operators</h3>
+                <h3>CSM Operators</h3>
               </button>
             </div>
 

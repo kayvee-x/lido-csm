@@ -79,7 +79,7 @@ export function InputSection({ config, onChange }) {
         <div className="input-group">
           <div className="label-with-tooltip">
             <label className="input-label">Lido APR (%)</label>
-            <Ttip content="Combined APR including Node Operator rewards and bond rebase. Rewards are smoothed across modules to reduce volatility and ensure consistent returns." />
+            <Ttip content="7-day Simple Moving Average (SMA) of stETH APR." />
           </div>
           <input
             type="number"
@@ -91,7 +91,7 @@ export function InputSection({ config, onChange }) {
             className="input-field"
           />
         </div>
-        <span className="data-source">Live: eth-api.lido.fi/v1/protocol/eth/apr/last</span>
+        <span className="data-source">Live: eth-api.lido.fi/v1/protocol/steth/apr/sma</span>
       </div>
 
       <div className="select-group">

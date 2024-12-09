@@ -21,31 +21,46 @@ export const OperatorAllocation = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    const fetchOperators = async () => {
+        try {
+            setIsLoading(true);
+            const response = await ApiService.fetchOperators();
+
+            // Correct data access paths
+            const operatorsData = response.data.operators;
+            const moduleInfo = response.data.module;
+
+            setOperators(operatorsData);
+            setModuleData(moduleInfo);
+
+            const newDepositedData = operatorsData
+                .filter(op => op.active)
+                .map(operator => ({
+                    operator: operator.name,
+                    availableCapacity: operator.stakingLimit - operator.usedSigningKeys,
+                    totalKeys: operator.totalSigningKeys,
+                    usedKeys: operator.usedSigningKeys,
+                    status: operator.active ? 'Active' : 'Inactive'
+                }));
+
+            setAllocatedData(newDepositedData);
+            setError(null);
+        } catch (err) {
+            console.log('Error:', err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+
     useEffect(() => {
         fetchOperators();
         const interval = setInterval(fetchOperators, 60000);
         return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
-        if (operators.length > 0) {
-            handleAllocation();
-        }
-    }, [operators]);
-
-    const fetchOperators = async () => {
-        try {
-            setIsLoading(true);
-            const data = await ApiService.fetchOperators();
-            setOperators(data.operators);
-            setModuleData(data.module);
-            setError(null);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleAllocation = () => {
         const newDepositedData = operators
@@ -121,7 +136,8 @@ export const OperatorAllocation = () => {
                                         paddingTop: "20px",
                                         paddingLeft: "10px"
                                     }}
-                                />                               <Bar dataKey="usedKeys" stackId="a" fill="#4764ff" name="Used Keys" />
+                                />
+                                <Bar dataKey="usedKeys" stackId="a" fill="#4764ff" name="Used Keys" />
                                 <Bar dataKey="availableCapacity" stackId="a" fill="#bbd7f3" name="Available Capacity" />
                             </BarChart>
                         </ResponsiveContainer>

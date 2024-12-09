@@ -2744,15 +2744,15 @@ export const STATIC_OPERATORS = {
             "lastDepositBlock": 21332855,
             "exitedValidatorsCount": 13,
             "active": true,
-            "lastChangedBlockHash": "0x7a7d32d42845912c1dfbd75b33272f7094a57dd15652115c9ae620ec70daab58"
-        }
+          "lastChangedBlockHash": "0x9603862be3261198616e93b0bd9ceb9bd6052d6ca404e2a9951133e9d0b41420"
+      }
     },
     "meta": {
         "elBlockSnapshot": {
-            "blockNumber": 21357977,
-            "blockHash": "0x99668357eae756eccbf830607fa9d4e6b629785efb1e8d9772a48ddebb94dfcf",
-            "timestamp": 1733663375,
-            "lastChangedBlockHash": "0xaf0fe2a8fdcb506fa54df979ff8b956ae3313deb12cba10005644e251372939e"
+            "blockNumber": 21363497,
+            "blockHash": "0x616059503050ce1549cd2488d54bee1a4e1da527b84abfbe8b4f1ec6ae05a874",
+            "timestamp": 1733729879,
+            "lastChangedBlockHash": "0x9603862be3261198616e93b0bd9ceb9bd6052d6ca404e2a9951133e9d0b41420"
         }
     }
-};
+}
