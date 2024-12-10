@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Ttip } from "./Tooltip";
 
 export function InputSection({ config, onChange }) {
+  const [nodeOperatorId, setNodeOperatorId] = useState('');
+
   const handleChange = (field, value) => {
     onChange({ ...config, [field]: value });
   };
@@ -29,7 +31,7 @@ export function InputSection({ config, onChange }) {
       return Math.floor((ethAmount - 2.4) / 1.3) + 1;
     }
   };
-  
+
   const validatorCount = getValidatorCount(config.ethAvailable, config.isEA);
 
   const durationOptions = [
@@ -47,6 +49,25 @@ export function InputSection({ config, onChange }) {
       <div className="input-grid">
         <div className="input-group">
           <div className="label-with-tooltip">
+            <label className="input-label">Node Operator ID</label>
+            <Ttip content="Enter your CSM Node Operator ID to view specific reward calculations" />
+          </div>
+          <input
+            type="number"
+            min="0"
+            max="2000"
+            value={config.nodeOperatorId}
+            onChange={(e) => handleChange("nodeOperatorId", Number(e.target.value))}
+            className="input-field"
+          />
+        </div>
+        <div>
+          <h4>
+            OR
+          </h4>
+        </div>
+        <div className="input-group">
+          <div className="label-with-tooltip">
             <label className="input-label">ETH Amount</label>
             <Ttip content="The amount of ETH you want to stake. Deposits are processed when gas prices are favorable. While waiting in the queue, you'll earn staking rewards from bond rebase." />
           </div>
@@ -59,7 +80,7 @@ export function InputSection({ config, onChange }) {
           />
         </div>
 
-        <div className="input-group">
+        {/* <div className="input-group">
           <div className="label-with-tooltip">
             <label className="input-label">Standard Yield (%)</label>
             <Ttip content="Base staking rewards from running a vanilla Ethereum validator. This includes both Consensus Layer rewards and MEV opportunities." />
@@ -74,9 +95,9 @@ export function InputSection({ config, onChange }) {
             className="input-field"
           />
         </div>
-        <span className="data-source">Live: beaconcha.in/api/v1/epoch/latest</span>
+        <span className="data-source">Live: beaconcha.in/api/v1/epoch/latest</span> */}
 
-        <div className="input-group">
+        {/* <div className="input-group">
           <div className="label-with-tooltip">
             <label className="input-label">Lido APR (%)</label>
             <Ttip content="7-day Simple Moving Average (SMA) of stETH APR." />
@@ -91,7 +112,7 @@ export function InputSection({ config, onChange }) {
             className="input-field"
           />
         </div>
-        <span className="data-source">Live: eth-api.lido.fi/v1/protocol/steth/apr/sma</span>
+        <span className="data-source">Live: eth-api.lido.fi/v1/protocol/steth/apr/sma</span> */}
       </div>
 
       <div className="select-group">
