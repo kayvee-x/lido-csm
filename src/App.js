@@ -19,7 +19,10 @@ import "./app.css";
 function App() {
   const [ethPrice, setEthPrice] = useState(null);
   const [activeTab, setActiveTab] = useState('staking');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [standardYield, setStandardYield] = useState(0);
+  const [csmYield, setCsmYield] = useState(0);
+  const [operatorRewards, setOperatorRewards] = useState(null);
+
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
     standardYield: 3,
@@ -222,11 +225,13 @@ function App() {
             <div className="input-wrapper">
               <InputSection config={stakingConfig} onChange={setStakingConfig} />
               <div className="yield-chart-container">
-                <YieldComparison
+                <YieldComparison 
                   standard={rewards.comparison.standard}
                   csm={rewards.comparison.csm}
-                  data={generateChartData(rewards)}
+                  config={stakingConfig}
+                  operatorRewards={rewards}
                 />
+
               </div>
               <div className="yield-comparison">
                 <div className="yield-card">

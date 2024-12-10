@@ -1,8 +1,29 @@
 import React, { useState } from "react";
+import { calculateCSMRewards } from "../utils/operatorReward";
 import { Ttip } from "./Tooltip";
 
 export function InputSection({ config, onChange }) {
-  const [nodeOperatorId, setNodeOperatorId] = useState('');
+  const [operatorRewards, setOperatorRewards] = useState(null);
+
+  const handleNodeOperatorChange = async (value) => {
+    handleChange("nodeOperatorId", value);
+    if (value) {
+      try {
+        const rewards = await calculateCSMRewards(value);
+        setOperatorRewards(rewards);
+        // Pass rewards up to parent
+        onChange({
+          ...config,
+          nodeOperatorId: value,
+          operatorRewards: rewards
+        });
+      } catch (error) {
+        console.error('Error calculating rewards:', error);
+        setOperatorRewards(null);
+      }
+    }
+  };
+
 
   const handleChange = (field, value) => {
     onChange({ ...config, [field]: value });
@@ -50,14 +71,14 @@ export function InputSection({ config, onChange }) {
         <div className="input-group">
           <div className="label-with-tooltip">
             <label className="input-label">Node Operator ID</label>
-            <Ttip content="Enter your CSM Node Operator ID to view specific reward calculations" />
+            <Ttip content="Enter your CSM Node Operator ID to view reward calculations" />
           </div>
           <input
             type="number"
             min="0"
-            max="2000"
+            max="247"
             value={config.nodeOperatorId}
-            onChange={(e) => handleChange("nodeOperatorId", Number(e.target.value))}
+            onChange={(e) => handleNodeOperatorChange(Number(e.target.value))}
             className="input-field"
           />
         </div>
