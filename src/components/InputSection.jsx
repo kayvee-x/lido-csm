@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { calculateCSMRewards } from "../utils/operatorReward";
+import { getOperatorRewards } from "../utils/getOperatorReward";
 import { Ttip } from "./Tooltip";
 
 export function InputSection({ config, onChange }) {
@@ -7,22 +7,22 @@ export function InputSection({ config, onChange }) {
 
   const handleNodeOperatorChange = async (value) => {
     handleChange("nodeOperatorId", value);
-    if (value) {
+    if (value >= 0 && value <= 300) {
       try {
-        const rewards = await calculateCSMRewards(value);
-        setOperatorRewards(rewards);
-        // Pass rewards up to parent
-        onChange({
-          ...config,
-          nodeOperatorId: value,
-          operatorRewards: rewards
-        });
-      } catch (error) {
-        console.error('Error calculating rewards:', error);
-        setOperatorRewards(null);
-      }
+          const rewards = await getOperatorRewards(value);
+          setOperatorRewards(rewards);
+          onChange({
+            ...config,
+            nodeOperatorId: value,
+            operatorRewards: rewards
+          });
+        } catch (error) {
+          console.error('Error fetching rewards:', error);
+          setOperatorRewards(null);
+        }
     }
   };
+
 
 
   const handleChange = (field, value) => {

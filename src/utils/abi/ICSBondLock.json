@@ -1,0 +1,155 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "getActualLockedBond",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getBondLockRetentionPeriod",
+      "inputs": [],
+      "outputs": [
+        { "name": "retention", "type": "uint256", "internalType": "uint256" }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getLockedBondInfo",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "tuple",
+          "internalType": "struct ICSBondLock.BondLock",
+          "components": [
+            { "name": "amount", "type": "uint128", "internalType": "uint128" },
+            {
+              "name": "retentionUntil",
+              "type": "uint128",
+              "internalType": "uint128"
+            }
+          ]
+        }
+      ],
+      "stateMutability": "view"
+    }
+  ],
+  "bytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "deployedBytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "methodIdentifiers": {
+    "getActualLockedBond(uint256)": "ead42a69",
+    "getBondLockRetentionPeriod()": "def82d02",
+    "getLockedBondInfo(uint256)": "83316184"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getActualLockedBond\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getBondLockRetentionPeriod\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"retention\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getLockedBondInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint128\",\"name\":\"amount\",\"type\":\"uint128\"},{\"internalType\":\"uint128\",\"name\":\"retentionUntil\",\"type\":\"uint128\"}],\"internalType\":\"struct ICSBondLock.BondLock\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/interfaces/ICSBondLock.sol\":\"ICSBondLock\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":250},\"remappings\":[\":@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/\",\":@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/\",\":ds-test/=node_modules/ds-test/src/\",\":forge-std/=node_modules/forge-std/src/\"]},\"sources\":{\"src/interfaces/ICSBondLock.sol\":{\"keccak256\":\"0xbd11e6c5c8e170b25be0782456471dc77669cdde13a7c4f23f89bc8b05d449f8\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://05a539adbf6de69f84797ded0b87bef974366c9b324a5eae0eabb256a1cc9784\",\"dweb:/ipfs/QmWqS6zXUq2ViMm6Vx5QgTfEDuX8djwYMyahqveLUz3qL5\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": { "version": "0.8.24+commit.e11b9ed9" },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getActualLockedBond",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getBondLockRetentionPeriod",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "retention",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getLockedBondInfo",
+          "outputs": [
+            {
+              "internalType": "struct ICSBondLock.BondLock",
+              "name": "",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint128",
+                  "name": "amount",
+                  "type": "uint128"
+                },
+                {
+                  "internalType": "uint128",
+                  "name": "retentionUntil",
+                  "type": "uint128"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "devdoc": { "kind": "dev", "methods": {}, "version": 1 },
+      "userdoc": { "kind": "user", "methods": {}, "version": 1 }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/",
+        "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
+        "ds-test/=node_modules/ds-test/src/",
+        "forge-std/=node_modules/forge-std/src/"
+      ],
+      "optimizer": { "enabled": true, "runs": 250 },
+      "metadata": { "bytecodeHash": "none" },
+      "compilationTarget": { "src/interfaces/ICSBondLock.sol": "ICSBondLock" },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "src/interfaces/ICSBondLock.sol": {
+        "keccak256": "0xbd11e6c5c8e170b25be0782456471dc77669cdde13a7c4f23f89bc8b05d449f8",
+        "urls": [
+          "bzz-raw://05a539adbf6de69f84797ded0b87bef974366c9b324a5eae0eabb256a1cc9784",
+          "dweb:/ipfs/QmWqS6zXUq2ViMm6Vx5QgTfEDuX8djwYMyahqveLUz3qL5"
+        ],
+        "license": "GPL-3.0"
+      }
+    },
+    "version": 1
+  },
+  "id": 84
+}

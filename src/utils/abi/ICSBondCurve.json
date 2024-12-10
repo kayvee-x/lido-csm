@@ -1,0 +1,350 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "DEFAULT_BOND_CURVE_ID",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getBondAmountByKeysCount",
+      "inputs": [
+        { "name": "keys", "type": "uint256", "internalType": "uint256" },
+        {
+          "name": "curve",
+          "type": "tuple",
+          "internalType": "struct ICSBondCurve.BondCurve",
+          "components": [
+            {
+              "name": "points",
+              "type": "uint256[]",
+              "internalType": "uint256[]"
+            },
+            { "name": "trend", "type": "uint256", "internalType": "uint256" }
+          ]
+        }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getBondAmountByKeysCount",
+      "inputs": [
+        { "name": "keys", "type": "uint256", "internalType": "uint256" },
+        { "name": "curveId", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getBondCurve",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "tuple",
+          "internalType": "struct ICSBondCurve.BondCurve",
+          "components": [
+            {
+              "name": "points",
+              "type": "uint256[]",
+              "internalType": "uint256[]"
+            },
+            { "name": "trend", "type": "uint256", "internalType": "uint256" }
+          ]
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getBondCurveId",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getCurveInfo",
+      "inputs": [
+        { "name": "curveId", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "tuple",
+          "internalType": "struct ICSBondCurve.BondCurve",
+          "components": [
+            {
+              "name": "points",
+              "type": "uint256[]",
+              "internalType": "uint256[]"
+            },
+            { "name": "trend", "type": "uint256", "internalType": "uint256" }
+          ]
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getKeysCountByBondAmount",
+      "inputs": [
+        { "name": "amount", "type": "uint256", "internalType": "uint256" },
+        {
+          "name": "curve",
+          "type": "tuple",
+          "internalType": "struct ICSBondCurve.BondCurve",
+          "components": [
+            {
+              "name": "points",
+              "type": "uint256[]",
+              "internalType": "uint256[]"
+            },
+            { "name": "trend", "type": "uint256", "internalType": "uint256" }
+          ]
+        }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getKeysCountByBondAmount",
+      "inputs": [
+        { "name": "amount", "type": "uint256", "internalType": "uint256" },
+        { "name": "curveId", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    }
+  ],
+  "bytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "deployedBytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "methodIdentifiers": {
+    "DEFAULT_BOND_CURVE_ID()": "443fbfef",
+    "getBondAmountByKeysCount(uint256,(uint256[],uint256))": "0f23e742",
+    "getBondAmountByKeysCount(uint256,uint256)": "546da24f",
+    "getBondCurve(uint256)": "6e13f099",
+    "getBondCurveId(uint256)": "0569b947",
+    "getCurveInfo(uint256)": "b5b624bf",
+    "getKeysCountByBondAmount(uint256,(uint256[],uint256))": "d2fa16a6",
+    "getKeysCountByBondAmount(uint256,uint256)": "dc38ea3d"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"DEFAULT_BOND_CURVE_ID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"keys\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256[]\",\"name\":\"points\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"trend\",\"type\":\"uint256\"}],\"internalType\":\"struct ICSBondCurve.BondCurve\",\"name\":\"curve\",\"type\":\"tuple\"}],\"name\":\"getBondAmountByKeysCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"keys\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"curveId\",\"type\":\"uint256\"}],\"name\":\"getBondAmountByKeysCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getBondCurve\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256[]\",\"name\":\"points\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"trend\",\"type\":\"uint256\"}],\"internalType\":\"struct ICSBondCurve.BondCurve\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getBondCurveId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"curveId\",\"type\":\"uint256\"}],\"name\":\"getCurveInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256[]\",\"name\":\"points\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"trend\",\"type\":\"uint256\"}],\"internalType\":\"struct ICSBondCurve.BondCurve\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256[]\",\"name\":\"points\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256\",\"name\":\"trend\",\"type\":\"uint256\"}],\"internalType\":\"struct ICSBondCurve.BondCurve\",\"name\":\"curve\",\"type\":\"tuple\"}],\"name\":\"getKeysCountByBondAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"curveId\",\"type\":\"uint256\"}],\"name\":\"getKeysCountByBondAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/interfaces/ICSBondCurve.sol\":\"ICSBondCurve\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":250},\"remappings\":[\":@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/\",\":@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/\",\":ds-test/=node_modules/ds-test/src/\",\":forge-std/=node_modules/forge-std/src/\"]},\"sources\":{\"src/interfaces/ICSBondCurve.sol\":{\"keccak256\":\"0xe9befd82382c4af74dc240aeccb13cd9cbc75a1be3d8480a9c8ec4346b1fc3d9\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://d4ab8b2a920c7282cba911845f5eba35e560418f9d9767aa1474db888a7894f6\",\"dweb:/ipfs/QmQsV6FWmigLAveGESNHWQhjzsw67XGjW4pAeBjV5fywwj\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": { "version": "0.8.24+commit.e11b9ed9" },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "DEFAULT_BOND_CURVE_ID",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "uint256", "name": "keys", "type": "uint256" },
+            {
+              "internalType": "struct ICSBondCurve.BondCurve",
+              "name": "curve",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256[]",
+                  "name": "points",
+                  "type": "uint256[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "trend",
+                  "type": "uint256"
+                }
+              ]
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getBondAmountByKeysCount",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "uint256", "name": "keys", "type": "uint256" },
+            { "internalType": "uint256", "name": "curveId", "type": "uint256" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getBondAmountByKeysCount",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getBondCurve",
+          "outputs": [
+            {
+              "internalType": "struct ICSBondCurve.BondCurve",
+              "name": "",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256[]",
+                  "name": "points",
+                  "type": "uint256[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "trend",
+                  "type": "uint256"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getBondCurveId",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "uint256", "name": "curveId", "type": "uint256" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getCurveInfo",
+          "outputs": [
+            {
+              "internalType": "struct ICSBondCurve.BondCurve",
+              "name": "",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256[]",
+                  "name": "points",
+                  "type": "uint256[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "trend",
+                  "type": "uint256"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            {
+              "internalType": "struct ICSBondCurve.BondCurve",
+              "name": "curve",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256[]",
+                  "name": "points",
+                  "type": "uint256[]"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "trend",
+                  "type": "uint256"
+                }
+              ]
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getKeysCountByBondAmount",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "internalType": "uint256", "name": "curveId", "type": "uint256" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getKeysCountByBondAmount",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        }
+      ],
+      "devdoc": { "kind": "dev", "methods": {}, "version": 1 },
+      "userdoc": { "kind": "user", "methods": {}, "version": 1 }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/",
+        "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
+        "ds-test/=node_modules/ds-test/src/",
+        "forge-std/=node_modules/forge-std/src/"
+      ],
+      "optimizer": { "enabled": true, "runs": 250 },
+      "metadata": { "bytecodeHash": "none" },
+      "compilationTarget": {
+        "src/interfaces/ICSBondCurve.sol": "ICSBondCurve"
+      },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "src/interfaces/ICSBondCurve.sol": {
+        "keccak256": "0xe9befd82382c4af74dc240aeccb13cd9cbc75a1be3d8480a9c8ec4346b1fc3d9",
+        "urls": [
+          "bzz-raw://d4ab8b2a920c7282cba911845f5eba35e560418f9d9767aa1474db888a7894f6",
+          "dweb:/ipfs/QmQsV6FWmigLAveGESNHWQhjzsw67XGjW4pAeBjV5fywwj"
+        ],
+        "license": "GPL-3.0"
+      }
+    },
+    "version": 1
+  },
+  "id": 83
+}

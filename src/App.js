@@ -44,6 +44,12 @@ function App() {
     bondAmount: 0,
     totalStaked: 0
   });
+  const handleConfigChange = (newConfig) => {
+    setStakingConfig(newConfig);
+    if (newConfig.operatorRewards) {
+      setOperatorRewards(newConfig.operatorRewards);
+    }
+  };
 
   const [rewards, setRewards] = useState({
     daily: { bond: 0, operator: 0, total: 0 },
@@ -211,6 +217,7 @@ function App() {
 
     processFrameMetrics();
   }, []);
+
 
   return (
     <div className="calculator-container">

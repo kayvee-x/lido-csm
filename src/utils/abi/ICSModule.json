@@ -1,0 +1,2151 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "decreaseVettedSigningKeysCount",
+      "inputs": [
+        {
+          "name": "_nodeOperatorIds",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "_vettedSigningKeysCounts",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "depositETH",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "payable"
+    },
+    {
+      "type": "function",
+      "name": "depositStETH",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "stETHAmount", "type": "uint256", "internalType": "uint256" },
+        {
+          "name": "permit",
+          "type": "tuple",
+          "internalType": "struct ICSAccounting.PermitInput",
+          "components": [
+            { "name": "value", "type": "uint256", "internalType": "uint256" },
+            {
+              "name": "deadline",
+              "type": "uint256",
+              "internalType": "uint256"
+            },
+            { "name": "v", "type": "uint8", "internalType": "uint8" },
+            { "name": "r", "type": "bytes32", "internalType": "bytes32" },
+            { "name": "s", "type": "bytes32", "internalType": "bytes32" }
+          ]
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "depositWstETH",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "wstETHAmount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "permit",
+          "type": "tuple",
+          "internalType": "struct ICSAccounting.PermitInput",
+          "components": [
+            { "name": "value", "type": "uint256", "internalType": "uint256" },
+            {
+              "name": "deadline",
+              "type": "uint256",
+              "internalType": "uint256"
+            },
+            { "name": "v", "type": "uint8", "internalType": "uint8" },
+            { "name": "r", "type": "bytes32", "internalType": "bytes32" },
+            { "name": "s", "type": "bytes32", "internalType": "bytes32" }
+          ]
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "getActiveNodeOperatorsCount",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNodeOperator",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "tuple",
+          "internalType": "struct NodeOperator",
+          "components": [
+            {
+              "name": "totalAddedKeys",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "totalWithdrawnKeys",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "totalDepositedKeys",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "totalVettedKeys",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "stuckValidatorsCount",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "depositableValidatorsCount",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "targetLimit",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "targetLimitMode",
+              "type": "uint8",
+              "internalType": "uint8"
+            },
+            {
+              "name": "totalExitedKeys",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "enqueuedCount",
+              "type": "uint32",
+              "internalType": "uint32"
+            },
+            {
+              "name": "managerAddress",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "proposedManagerAddress",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "rewardAddress",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "proposedRewardAddress",
+              "type": "address",
+              "internalType": "address"
+            },
+            {
+              "name": "extendedManagerPermissions",
+              "type": "bool",
+              "internalType": "bool"
+            }
+          ]
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNodeOperatorIds",
+      "inputs": [
+        { "name": "_offset", "type": "uint256", "internalType": "uint256" },
+        { "name": "_limit", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [
+        {
+          "name": "nodeOperatorIds",
+          "type": "uint256[]",
+          "internalType": "uint256[]"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNodeOperatorIsActive",
+      "inputs": [
+        {
+          "name": "_nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNodeOperatorNonWithdrawnKeys",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNodeOperatorSummary",
+      "inputs": [
+        {
+          "name": "_nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "targetLimitMode",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "targetValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "stuckValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "refundedValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "stuckPenaltyEndTimestamp",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "totalExitedValidators",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "totalDepositedValidators",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "depositableValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNodeOperatorsCount",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getNonce",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getSigningKeys",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "startIndex", "type": "uint256", "internalType": "uint256" },
+        { "name": "keysCount", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [{ "name": "", "type": "bytes", "internalType": "bytes" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getSigningKeysWithSignatures",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "startIndex", "type": "uint256", "internalType": "uint256" },
+        { "name": "keysCount", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [
+        { "name": "keys", "type": "bytes", "internalType": "bytes" },
+        { "name": "signatures", "type": "bytes", "internalType": "bytes" }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getStakingModuleSummary",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "totalExitedValidators",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "totalDepositedValidators",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "depositableValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "getType",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "bytes32", "internalType": "bytes32" }],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "obtainDepositData",
+      "inputs": [
+        {
+          "name": "_depositsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "_depositCalldata", "type": "bytes", "internalType": "bytes" }
+      ],
+      "outputs": [
+        { "name": "publicKeys", "type": "bytes", "internalType": "bytes" },
+        { "name": "signatures", "type": "bytes", "internalType": "bytes" }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "onExitedAndStuckValidatorsCountsUpdated",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "onRewardsMinted",
+      "inputs": [
+        { "name": "_totalShares", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "onWithdrawalCredentialsChanged",
+      "inputs": [],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "submitInitialSlashing",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "keyIndex", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "submitWithdrawal",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "keyIndex", "type": "uint256", "internalType": "uint256" },
+        { "name": "amount", "type": "uint256", "internalType": "uint256" },
+        { "name": "isSlashed", "type": "bool", "internalType": "bool" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "unsafeUpdateValidatorsCount",
+      "inputs": [
+        {
+          "name": "_nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "_exitedValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "_stuckValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "updateExitedValidatorsCount",
+      "inputs": [
+        {
+          "name": "_nodeOperatorIds",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "_exitedValidatorsCounts",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "updateRefundedValidatorsCount",
+      "inputs": [
+        {
+          "name": "_nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "_refundedValidatorsCount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "updateStuckValidatorsCount",
+      "inputs": [
+        {
+          "name": "_nodeOperatorIds",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "_stuckValidatorsCounts",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "updateTargetValidatorsLimits",
+      "inputs": [
+        {
+          "name": "_nodeOperatorId",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "_targetLimitMode",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        { "name": "_targetLimit", "type": "uint256", "internalType": "uint256" }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "event",
+      "name": "BatchEnqueued",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "count",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "ERC1155Recovered",
+      "inputs": [
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "tokenId",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "recipient",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "ERC20Recovered",
+      "inputs": [
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "recipient",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "ERC721Recovered",
+      "inputs": [
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "tokenId",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "recipient",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "EtherRecovered",
+      "inputs": [
+        {
+          "name": "recipient",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NodeOperatorManagerAddressChangeProposed",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "oldProposedAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newProposedAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NodeOperatorManagerAddressChanged",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "oldAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NodeOperatorRewardAddressChangeProposed",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "oldProposedAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newProposedAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NodeOperatorRewardAddressChanged",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "oldAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "newAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "NonceChanged",
+      "inputs": [
+        {
+          "name": "nonce",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "SigningKeyAdded",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "pubkey",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "SigningKeyRemoved",
+      "inputs": [
+        {
+          "name": "nodeOperatorId",
+          "type": "uint256",
+          "indexed": true,
+          "internalType": "uint256"
+        },
+        {
+          "name": "pubkey",
+          "type": "bytes",
+          "indexed": false,
+          "internalType": "bytes"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "StETHSharesRecovered",
+      "inputs": [
+        {
+          "name": "recipient",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "shares",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    { "type": "error", "name": "AlreadyProposed", "inputs": [] },
+    { "type": "error", "name": "FailedToSendEther", "inputs": [] },
+    { "type": "error", "name": "MethodCallIsNotAllowed", "inputs": [] },
+    { "type": "error", "name": "NodeOperatorDoesNotExist", "inputs": [] },
+    { "type": "error", "name": "NotAllowedToRecover", "inputs": [] },
+    { "type": "error", "name": "QueueIsEmpty", "inputs": [] },
+    { "type": "error", "name": "QueueLookupNoLimit", "inputs": [] },
+    { "type": "error", "name": "SameAddress", "inputs": [] },
+    { "type": "error", "name": "SenderIsNotManagerAddress", "inputs": [] },
+    { "type": "error", "name": "SenderIsNotProposedAddress", "inputs": [] },
+    { "type": "error", "name": "SenderIsNotRewardAddress", "inputs": [] },
+    { "type": "error", "name": "ZeroRewardAddress", "inputs": [] }
+  ],
+  "bytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "deployedBytecode": { "object": "0x", "sourceMap": "", "linkReferences": {} },
+  "methodIdentifiers": {
+    "decreaseVettedSigningKeysCount(bytes,bytes)": "b643189b",
+    "depositETH(uint256)": "5358fbda",
+    "depositStETH(uint256,uint256,(uint256,uint256,uint8,bytes32,bytes32))": "e1aa105d",
+    "depositWstETH(uint256,uint256,(uint256,uint256,uint8,bytes32,bytes32))": "3f214bb2",
+    "getActiveNodeOperatorsCount()": "8469cbd3",
+    "getNodeOperator(uint256)": "65c14dc7",
+    "getNodeOperatorIds(uint256,uint256)": "4febc81b",
+    "getNodeOperatorIsActive(uint256)": "5e2fb908",
+    "getNodeOperatorNonWithdrawnKeys(uint256)": "8ec69028",
+    "getNodeOperatorSummary(uint256)": "b3076c3c",
+    "getNodeOperatorsCount()": "a70c70e4",
+    "getNonce()": "d087d288",
+    "getSigningKeys(uint256,uint256,uint256)": "59e25c12",
+    "getSigningKeysWithSignatures(uint256,uint256,uint256)": "50388cb6",
+    "getStakingModuleSummary()": "9abddf09",
+    "getType()": "15dae03e",
+    "obtainDepositData(uint256,bytes)": "bee41b58",
+    "onExitedAndStuckValidatorsCountsUpdated()": "e864299e",
+    "onRewardsMinted(uint256)": "8d7e4017",
+    "onWithdrawalCredentialsChanged()": "90c09bdb",
+    "submitInitialSlashing(uint256,uint256)": "f96d3952",
+    "submitWithdrawal(uint256,uint256,uint256,bool)": "f408b551",
+    "unsafeUpdateValidatorsCount(uint256,uint256,uint256)": "f2e2ca63",
+    "updateExitedValidatorsCount(bytes,bytes)": "9b00c146",
+    "updateRefundedValidatorsCount(uint256,uint256)": "a2e080f1",
+    "updateStuckValidatorsCount(bytes,bytes)": "9b3d1900",
+    "updateTargetValidatorsLimits(uint256,uint256,uint256)": "08a679ad"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.24+commit.e11b9ed9\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"AlreadyProposed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"FailedToSendEther\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"MethodCallIsNotAllowed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NodeOperatorDoesNotExist\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotAllowedToRecover\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"QueueIsEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"QueueLookupNoLimit\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"SameAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"SenderIsNotManagerAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"SenderIsNotProposedAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"SenderIsNotRewardAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ZeroRewardAddress\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"count\",\"type\":\"uint256\"}],\"name\":\"BatchEnqueued\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ERC1155Recovered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ERC20Recovered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"}],\"name\":\"ERC721Recovered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"EtherRecovered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldProposedAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newProposedAddress\",\"type\":\"address\"}],\"name\":\"NodeOperatorManagerAddressChangeProposed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"NodeOperatorManagerAddressChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldProposedAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newProposedAddress\",\"type\":\"address\"}],\"name\":\"NodeOperatorRewardAddressChangeProposed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldAddress\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newAddress\",\"type\":\"address\"}],\"name\":\"NodeOperatorRewardAddressChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"nonce\",\"type\":\"uint256\"}],\"name\":\"NonceChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"pubkey\",\"type\":\"bytes\"}],\"name\":\"SigningKeyAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"pubkey\",\"type\":\"bytes\"}],\"name\":\"SigningKeyRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"shares\",\"type\":\"uint256\"}],\"name\":\"StETHSharesRecovered\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"_nodeOperatorIds\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"_vettedSigningKeysCounts\",\"type\":\"bytes\"}],\"name\":\"decreaseVettedSigningKeysCount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"depositETH\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"stETHAmount\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint8\",\"name\":\"v\",\"type\":\"uint8\"},{\"internalType\":\"bytes32\",\"name\":\"r\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"s\",\"type\":\"bytes32\"}],\"internalType\":\"struct ICSAccounting.PermitInput\",\"name\":\"permit\",\"type\":\"tuple\"}],\"name\":\"depositStETH\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"wstETHAmount\",\"type\":\"uint256\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"deadline\",\"type\":\"uint256\"},{\"internalType\":\"uint8\",\"name\":\"v\",\"type\":\"uint8\"},{\"internalType\":\"bytes32\",\"name\":\"r\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"s\",\"type\":\"bytes32\"}],\"internalType\":\"struct ICSAccounting.PermitInput\",\"name\":\"permit\",\"type\":\"tuple\"}],\"name\":\"depositWstETH\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getActiveNodeOperatorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getNodeOperator\",\"outputs\":[{\"components\":[{\"internalType\":\"uint32\",\"name\":\"totalAddedKeys\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"totalWithdrawnKeys\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"totalDepositedKeys\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"totalVettedKeys\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"stuckValidatorsCount\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"depositableValidatorsCount\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"targetLimit\",\"type\":\"uint32\"},{\"internalType\":\"uint8\",\"name\":\"targetLimitMode\",\"type\":\"uint8\"},{\"internalType\":\"uint32\",\"name\":\"totalExitedKeys\",\"type\":\"uint32\"},{\"internalType\":\"uint32\",\"name\":\"enqueuedCount\",\"type\":\"uint32\"},{\"internalType\":\"address\",\"name\":\"managerAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"proposedManagerAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"rewardAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"proposedRewardAddress\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"extendedManagerPermissions\",\"type\":\"bool\"}],\"internalType\":\"struct NodeOperator\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_limit\",\"type\":\"uint256\"}],\"name\":\"getNodeOperatorIds\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"nodeOperatorIds\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getNodeOperatorIsActive\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getNodeOperatorNonWithdrawnKeys\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_nodeOperatorId\",\"type\":\"uint256\"}],\"name\":\"getNodeOperatorSummary\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"targetLimitMode\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetValidatorsCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"stuckValidatorsCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"refundedValidatorsCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"stuckPenaltyEndTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalExitedValidators\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalDepositedValidators\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"depositableValidatorsCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getNodeOperatorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getNonce\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"keysCount\",\"type\":\"uint256\"}],\"name\":\"getSigningKeys\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"keysCount\",\"type\":\"uint256\"}],\"name\":\"getSigningKeysWithSignatures\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"keys\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"signatures\",\"type\":\"bytes\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getStakingModuleSummary\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalExitedValidators\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalDepositedValidators\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"depositableValidatorsCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getType\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_depositsCount\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"_depositCalldata\",\"type\":\"bytes\"}],\"name\":\"obtainDepositData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"publicKeys\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"signatures\",\"type\":\"bytes\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"onExitedAndStuckValidatorsCountsUpdated\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_totalShares\",\"type\":\"uint256\"}],\"name\":\"onRewardsMinted\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"onWithdrawalCredentialsChanged\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"keyIndex\",\"type\":\"uint256\"}],\"name\":\"submitInitialSlashing\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"keyIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isSlashed\",\"type\":\"bool\"}],\"name\":\"submitWithdrawal\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_exitedValidatorsCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_stuckValidatorsCount\",\"type\":\"uint256\"}],\"name\":\"unsafeUpdateValidatorsCount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"_nodeOperatorIds\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"_exitedValidatorsCounts\",\"type\":\"bytes\"}],\"name\":\"updateExitedValidatorsCount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_refundedValidatorsCount\",\"type\":\"uint256\"}],\"name\":\"updateRefundedValidatorsCount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"_nodeOperatorIds\",\"type\":\"bytes\"},{\"internalType\":\"bytes\",\"name\":\"_stuckValidatorsCounts\",\"type\":\"bytes\"}],\"name\":\"updateStuckValidatorsCount\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_nodeOperatorId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_targetLimitMode\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_targetLimit\",\"type\":\"uint256\"}],\"name\":\"updateTargetValidatorsLimits\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"NonceChanged(uint256)\":{\"details\":\"Event to be emitted on StakingModule's nonce change\"},\"SigningKeyAdded(uint256,bytes)\":{\"details\":\"Event to be emitted when a signing key is added to the StakingModule\"},\"SigningKeyRemoved(uint256,bytes)\":{\"details\":\"Event to be emitted when a signing key is removed from the StakingModule\"}},\"kind\":\"dev\",\"methods\":{\"decreaseVettedSigningKeysCount(bytes,bytes)\":{\"params\":{\"_nodeOperatorIds\":\"bytes packed array of the node operators id\",\"_vettedSigningKeysCounts\":\"bytes packed array of the new number of vetted keys for the node operators\"}},\"getNodeOperator(uint256)\":{\"params\":{\"nodeOperatorId\":\"Node Operator id\"}},\"getNodeOperatorIds(uint256,uint256)\":{\"details\":\"This view must not revert in case of invalid data passed. When `_offset` exceeds the     total node operators count or when `_limit` is equal to 0 MUST be returned empty array.\"},\"getNodeOperatorIsActive(uint256)\":{\"params\":{\"_nodeOperatorId\":\"Id of the node operator\"}},\"getNodeOperatorNonWithdrawnKeys(uint256)\":{\"params\":{\"nodeOperatorId\":\"ID of the node operator\"},\"returns\":{\"_0\":\"Non-withdrawn keys count\"}},\"getNodeOperatorSummary(uint256)\":{\"params\":{\"_nodeOperatorId\":\"id of the operator to return report for\"},\"returns\":{\"depositableValidatorsCount\":\"number of validators in the set available for deposit\",\"refundedValidatorsCount\":\"number of validators that can't be withdrawn, but deposit     costs were compensated to the Lido by the node operator\",\"stuckPenaltyEndTimestamp\":\"time when the penalty for stuck validators stops applying     to node operator rewards\",\"stuckValidatorsCount\":\"number of validators with an expired request to exit time\",\"targetLimitMode\":\"shows whether the current target limit applied to the node operator (1 = soft mode, 2 = forced mode)\",\"targetValidatorsCount\":\"relative target active validators limit for operator\",\"totalDepositedValidators\":\"total number of validators deposited via the official     Deposit Contract. This value is a cumulative counter: even when the validator goes into     EXITED state this counter is not decreasing\",\"totalExitedValidators\":\"total number of validators in the EXITED state     on the Consensus Layer. This value can't decrease in normal conditions\"}},\"getNonce()\":{\"details\":\"In some scenarios, it's allowed to update nonce without actual change of the deposit      data subset, but it MUST NOT lead to the DOS of the staking module via continuous      update of the nonce by the malicious actor\"},\"getSigningKeys(uint256,uint256,uint256)\":{\"params\":{\"keysCount\":\"Count of keys to get\",\"nodeOperatorId\":\"ID of the node operator\",\"startIndex\":\"Index of the first key\"},\"returns\":{\"_0\":\"Signing keys\"}},\"getSigningKeysWithSignatures(uint256,uint256,uint256)\":{\"params\":{\"keysCount\":\"Count of keys to get\",\"nodeOperatorId\":\"ID of the node operator\",\"startIndex\":\"Index of the first key\"},\"returns\":{\"keys\":\"Signing keys\",\"signatures\":\"Signatures of (deposit_message, domain) tuples\"}},\"getStakingModuleSummary()\":{\"returns\":{\"depositableValidatorsCount\":\"number of validators in the set available for deposit\",\"totalDepositedValidators\":\"total number of validators deposited via the     official Deposit Contract. This value is a cumulative counter: even when the validator     goes into EXITED state this counter is not decreasing\",\"totalExitedValidators\":\"total number of validators in the EXITED state     on the Consensus Layer. This value can't decrease in normal conditions\"}},\"obtainDepositData(uint256,bytes)\":{\"details\":\"The method MUST revert when the staking module has not enough deposit data items\",\"params\":{\"_depositCalldata\":\"Staking module defined data encoded as bytes.        IMPORTANT: _depositCalldata MUST NOT modify the deposit data set of the staking module\",\"_depositsCount\":\"Number of deposits to be done\"},\"returns\":{\"publicKeys\":\"Batch of the concatenated public validators keys\",\"signatures\":\"Batch of the concatenated deposit signatures for returned public keys\"}},\"onExitedAndStuckValidatorsCountsUpdated()\":{\"details\":\"IMPORTANT: this method SHOULD revert with empty error data ONLY because of \\\"out of gas\\\".      Details about error data: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions\"},\"onRewardsMinted(uint256)\":{\"details\":\"IMPORTANT: this method SHOULD revert with empty error data ONLY because of \\\"out of gas\\\".      Details about error data: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions\",\"params\":{\"_totalShares\":\"Amount of stETH shares that were minted to reward all node operators.\"}},\"onWithdrawalCredentialsChanged()\":{\"details\":\"This method MUST discard all StakingModule's unused deposit data cause they become      invalid after the withdrawal credentials are changedIMPORTANT: this method SHOULD revert with empty error data ONLY because of \\\"out of gas\\\".      Details about error data: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions\"},\"submitInitialSlashing(uint256,uint256)\":{\"params\":{\"keyIndex\":\"Index of the slashed key in the node operator's keys.\",\"nodeOperatorId\":\"Operator ID in the module.\"}},\"submitWithdrawal(uint256,uint256,uint256,bool)\":{\"params\":{\"amount\":\"Amount of withdrawn ETH in wei.\",\"isSlashed\":\"Validator is slashed or not\",\"keyIndex\":\"Index of the withdrawn key in the node operator's keys.\",\"nodeOperatorId\":\"Operator ID in the module.\"}},\"unsafeUpdateValidatorsCount(uint256,uint256,uint256)\":{\"params\":{\"_exitedValidatorsCount\":\"New number of EXITED validators for the node operator\",\"_nodeOperatorId\":\"Id of the node operator\",\"_stuckValidatorsCount\":\"New number of STUCK validator for the node operator\"}},\"updateExitedValidatorsCount(bytes,bytes)\":{\"params\":{\"_exitedValidatorsCounts\":\"bytes packed array of the new number of EXITED validators for the node operators\",\"_nodeOperatorIds\":\"bytes packed array of the node operators id\"}},\"updateRefundedValidatorsCount(uint256,uint256)\":{\"params\":{\"_nodeOperatorId\":\"Id of the node operator\",\"_refundedValidatorsCount\":\"New number of refunded validators of the node operator\"}},\"updateStuckValidatorsCount(bytes,bytes)\":{\"params\":{\"_nodeOperatorIds\":\"bytes packed array of the node operators id\",\"_stuckValidatorsCounts\":\"bytes packed array of the new number of STUCK validators for the node operators\"}},\"updateTargetValidatorsLimits(uint256,uint256,uint256)\":{\"params\":{\"_nodeOperatorId\":\"Id of the node operator\",\"_targetLimit\":\"Target limit of the node operator\",\"_targetLimitMode\":\"target limit mode\"}}},\"title\":\"Lido's Community Staking Module interface\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"decreaseVettedSigningKeysCount(bytes,bytes)\":{\"notice\":\"Called by StakingRouter to decrease the number of vetted keys for node operator with given id\"},\"getActiveNodeOperatorsCount()\":{\"notice\":\"Returns number of active node operators\"},\"getNodeOperator(uint256)\":{\"notice\":\"Returns the node operator by id\"},\"getNodeOperatorIds(uint256,uint256)\":{\"notice\":\"Returns up to `_limit` node operator ids starting from the `_offset`. The order of     the returned ids is not defined and might change between calls.\"},\"getNodeOperatorIsActive(uint256)\":{\"notice\":\"Returns if the node operator with given id is active\"},\"getNodeOperatorNonWithdrawnKeys(uint256)\":{\"notice\":\"Gets node operator non-withdrawn keys\"},\"getNodeOperatorSummary(uint256)\":{\"notice\":\"Returns all-validators summary belonging to the node operator with the given id\"},\"getNodeOperatorsCount()\":{\"notice\":\"Returns total number of node operators\"},\"getNonce()\":{\"notice\":\"Returns a counter that MUST change its value whenever the deposit data set changes.     Below is the typical list of actions that requires an update of the nonce:     1. a node operator's deposit data is added     2. a node operator's deposit data is removed     3. a node operator's ready-to-deposit data size is changed     4. a node operator was activated/deactivated     5. a node operator's deposit data is used for the deposit     Note: Depending on the StakingModule implementation above list might be extended\"},\"getSigningKeys(uint256,uint256,uint256)\":{\"notice\":\"Gets node operator signing keys\"},\"getSigningKeysWithSignatures(uint256,uint256,uint256)\":{\"notice\":\"Gets node operator signing keys with signatures\"},\"getStakingModuleSummary()\":{\"notice\":\"Returns all-validators summary in the staking module\"},\"getType()\":{\"notice\":\"Returns the type of the staking module\"},\"obtainDepositData(uint256,bytes)\":{\"notice\":\"Obtains deposit data to be used by StakingRouter to deposit to the Ethereum Deposit     contract\"},\"onExitedAndStuckValidatorsCountsUpdated()\":{\"notice\":\"Called by StakingRouter after it finishes updating exited and stuck validators counts for this module's node operators. Guaranteed to be called after an oracle report is applied, regardless of whether any node operator in this module has actually received any updated counts as a result of the report but given that the total number of exited validators returned from getStakingModuleSummary is the same as StakingRouter expects based on the total count received from the oracle.\"},\"onRewardsMinted(uint256)\":{\"notice\":\"Called by StakingRouter to signal that stETH rewards were minted for this module.\"},\"onWithdrawalCredentialsChanged()\":{\"notice\":\"Called by StakingRouter when withdrawal credentials are changed.\"},\"submitInitialSlashing(uint256,uint256)\":{\"notice\":\"Report node operator's key as slashed and apply initial slashing penalty.\"},\"submitWithdrawal(uint256,uint256,uint256,bool)\":{\"notice\":\"Report node operator's key as withdrawn and settle withdrawn amount.\"},\"unsafeUpdateValidatorsCount(uint256,uint256,uint256)\":{\"notice\":\"Unsafely updates the number of validators in the EXITED/STUCK states for node operator with given id      'unsafely' means that this method can both increase and decrease exited and stuck counters\"},\"updateExitedValidatorsCount(bytes,bytes)\":{\"notice\":\"Updates the number of the validators in the EXITED state for node operator with given id\"},\"updateRefundedValidatorsCount(uint256,uint256)\":{\"notice\":\"Updates the number of the refunded validators for node operator with the given id\"},\"updateStuckValidatorsCount(bytes,bytes)\":{\"notice\":\"Updates the number of the validators of the given node operator that were requested         to exit but failed to do so in the max allowed time\"},\"updateTargetValidatorsLimits(uint256,uint256,uint256)\":{\"notice\":\"Updates the limit of the validators that can be used for deposit\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/interfaces/ICSModule.sol\":\"ICSModule\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":250},\"remappings\":[\":@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/\",\":@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/\",\":ds-test/=node_modules/ds-test/src/\",\":forge-std/=node_modules/forge-std/src/\"]},\"sources\":{\"node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol\":{\"keccak256\":\"0x6caffc9cfdc623eca9f87a686071708af5d5c17454d65022843fdddbc53c0cce\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ecf8c7ed1f8ff443c181f64496ae380ee02e61dcd2ed120e1e997837a926f182\",\"dweb:/ipfs/QmWASYTrZPF2MrcpC3EBmxx6RgtZ5Fr4jwrsmB7ZF7qhDC\"]},\"node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0xc6a8ff0ea489379b61faa647490411b80102578440ab9d84e9a957cc12164e70\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0ea104e577e63faea3b69c415637e99e755dcbf64c5833d7140c35a714d6d90c\",\"dweb:/ipfs/Qmau6x4Ns9XdyynRCNNp3RhLqijJjFm7z5fyZazfYFGYdq\"]},\"node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol\":{\"keccak256\":\"0x6008dabfe393240d73d7dd7688033f72740d570aa422254d29a7dce8568f3aff\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f5196ec75139918c6c7bb4251b36395e668f1fa6d206beba7e7520e74913940d\",\"dweb:/ipfs/QmSyqjksXxmm2mCG6qRd1yuwLykypkSVBbnBnGqJRcuJMi\"]},\"node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol\":{\"keccak256\":\"0x37bb49513c49c87c4642a891b13b63571bc87013dde806617aa1efb54605f386\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b3036b3a83b7c48f96641f2a9002b9f2dcb6a5958dd670894ada21ae8229b3d0\",\"dweb:/ipfs/QmUNfSBdoVtjhETaUJCYcaC7pTMgbhht926tJ2uXJbiVd3\"]},\"node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol\":{\"keccak256\":\"0x5ef46daa3b58ef2702279d514780316efaa952915ee1aa3396f041ee2982b0b4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2f8f2a76e23b02fc69e8cd24c3cb47da6c7af3a2d6c3a382f8ac25c6e094ade7\",\"dweb:/ipfs/QmPV4ZS4tPVv4mTCf9ejyZ1ai57EEibDRj7mN2ARDCLV5n\"]},\"node_modules/@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0xaf28a975a78550e45f65e559a3ad6a5ad43b9b8a37366999abd1b7084eb70721\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b7bd24e224f67f65bfadf85dc2929fa965456bb2415478bd0125471b5ce35245\",\"dweb:/ipfs/QmRaydGr8BTHs1kvaZfsNU69pKzUAGFrvABn1KiRSbE51y\"]},\"node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x4296879f55019b23e135000eb36896057e7101fb7fb859c5ef690cf14643757b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://87b3541437c8c443ccd36795e56a338ed12855eec17f8da624511b8d1a7e14df\",\"dweb:/ipfs/QmeJQCtZrQjtJLr6u7ZHWeH3pBnjtLWzvRrKViAi7UZqxL\"]},\"src/interfaces/ICSAccounting.sol\":{\"keccak256\":\"0xcdd823bb369fb70970edacfb213aa5e2ed13f4607334e970ff08dc9c3fbfe1e8\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://ceed10a12da6316a406bea2a01f43950cf22cdf01836743169964e07960a7182\",\"dweb:/ipfs/Qmd1bFMwEuqVXm9LbhRQVSZruveRg9j8oCEDM8cT5VFuDJ\"]},\"src/interfaces/ICSBondCore.sol\":{\"keccak256\":\"0x1ac567e2e4f789c4448ff230a1d290b6246528aa8dc556cd2b20c8cd487fda3c\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://6d8c9ae3ebd63a9c2b3f4e2fa9e929009542594cb1494e56e38c4eb3856efdfa\",\"dweb:/ipfs/QmYWyD2c1fpXyN4fKYpRmP9zGDFEParAuqpg5omLUpuLKm\"]},\"src/interfaces/ICSBondCurve.sol\":{\"keccak256\":\"0xe9befd82382c4af74dc240aeccb13cd9cbc75a1be3d8480a9c8ec4346b1fc3d9\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://d4ab8b2a920c7282cba911845f5eba35e560418f9d9767aa1474db888a7894f6\",\"dweb:/ipfs/QmQsV6FWmigLAveGESNHWQhjzsw67XGjW4pAeBjV5fywwj\"]},\"src/interfaces/ICSBondLock.sol\":{\"keccak256\":\"0xbd11e6c5c8e170b25be0782456471dc77669cdde13a7c4f23f89bc8b05d449f8\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://05a539adbf6de69f84797ded0b87bef974366c9b324a5eae0eabb256a1cc9784\",\"dweb:/ipfs/QmWqS6zXUq2ViMm6Vx5QgTfEDuX8djwYMyahqveLUz3qL5\"]},\"src/interfaces/ICSFeeDistributor.sol\":{\"keccak256\":\"0x39588c50bfa46ec47ed023bd47cb84ffe2c130eccc1655351d7b004009f4addb\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://6423c9d88c784c4489f533ea28d8fc68d85b7856565f72caa61c84d3ed430f7d\",\"dweb:/ipfs/QmPdH9GFkZVRyACc7hUXjFSUeTADa1N2eDBV76C3zZmx8w\"]},\"src/interfaces/ICSModule.sol\":{\"keccak256\":\"0xa1501a80e8987e514eb680a3ccc32f520b71a11185e2362781b6a12fd1f92553\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://25c0534c48c9ac97d80f42f497913e7a03c70da410d19d1e6db75280ee1743a5\",\"dweb:/ipfs/QmSwZ5TkufFK2Dn8byN1ued1AQpm2R9AZSS8Jx6gbFQmAm\"]},\"src/interfaces/ILido.sol\":{\"keccak256\":\"0xcb2efa826a8babc1845d24a8d34fd594239d39a4ea363de649cc208cbf284d4d\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://7884e41ac96ad561a786840ff73be209a0492dc9880504c84ec80babcc150f98\",\"dweb:/ipfs/QmfWRFL1ZUH3ApzvQ2QQsV17H5LpxurPN8uthqSJVzZyKa\"]},\"src/interfaces/IStETH.sol\":{\"keccak256\":\"0xb56ce4425be1ab85acffa91b66a0204f644a6a162050d37c979d3e1a94c65071\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://39cd941a26261e04bd7f1b907b30393dfc2025c9208f522c028381ce24f08a18\",\"dweb:/ipfs/QmXGUzfVz5kqhWxsfTT3KmNCQsE6Rd1Miy8ksHMcPnPuNK\"]},\"src/interfaces/IStakingModule.sol\":{\"keccak256\":\"0xce2504b6dc7e365e53f6f5dd5de8953897fa54d74a6541bca9744936ca006cee\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://b74a10edfbcfff80a7e147b767a0b7cc1968a5a57a60502129a81d253a260168\",\"dweb:/ipfs/Qmc5gtnjijjQJahGiC3oPJLNRGmjrQB27aPpG3GTXM8X6G\"]},\"src/lib/AssetRecovererLib.sol\":{\"keccak256\":\"0x0a26d89326f90a3b3e15e0111418194513e58b979506b63276b487dd2f629ce1\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://3947fd37f87f37cd4d09f935970ae0f19f59b38fe38e5d73f912b7d7daede8a9\",\"dweb:/ipfs/QmZe59qHu3A95EQ8yQDTiqC4bFroEpnc7LfUcQrmAx26PP\"]},\"src/lib/NOAddresses.sol\":{\"keccak256\":\"0x0abca0b3729bb10f14c243b7b660c18d7a12f93d9772692ab7dccad92e31b02b\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://2ea1a9762c8711655de4af09793df9ee4d22c14c631d822eacb5b245a46339d3\",\"dweb:/ipfs/QmZCPQjTkrXaJFFoHvkN2FVevq3NXG22HmMjiNF2Wb3LXx\"]},\"src/lib/QueueLib.sol\":{\"keccak256\":\"0x75f7864e75d12ede0fd5064c90da8e2a78b3d8d16b3b15652fd5ad59feba59ef\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://e591c88ea99afbb8b24c76bde8842cf3ba438bc05ecc38f8f8c298db7b7b2cae\",\"dweb:/ipfs/QmVXbAxb5DnpEynKZubFDHBP7PKRB8zzxuKmb9R3bSMM8n\"]},\"src/lib/TransientUintUintMapLib.sol\":{\"keccak256\":\"0xe430692ec8806bdd32e322610cfa8169a190ec0f9aba0ebb9e252b87d91d08fe\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://c937a73125bc53aaa6bf1302ba3146c78339b0ca7361e5cd283524f89d64a0cd\",\"dweb:/ipfs/QmevexMEcFW83PGcZ55o2GiV2ZiPiDPmq3mYzRH7uKYZN2\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": { "version": "0.8.24+commit.e11b9ed9" },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        { "inputs": [], "type": "error", "name": "AlreadyProposed" },
+        { "inputs": [], "type": "error", "name": "FailedToSendEther" },
+        { "inputs": [], "type": "error", "name": "MethodCallIsNotAllowed" },
+        { "inputs": [], "type": "error", "name": "NodeOperatorDoesNotExist" },
+        { "inputs": [], "type": "error", "name": "NotAllowedToRecover" },
+        { "inputs": [], "type": "error", "name": "QueueIsEmpty" },
+        { "inputs": [], "type": "error", "name": "QueueLookupNoLimit" },
+        { "inputs": [], "type": "error", "name": "SameAddress" },
+        { "inputs": [], "type": "error", "name": "SenderIsNotManagerAddress" },
+        { "inputs": [], "type": "error", "name": "SenderIsNotProposedAddress" },
+        { "inputs": [], "type": "error", "name": "SenderIsNotRewardAddress" },
+        { "inputs": [], "type": "error", "name": "ZeroRewardAddress" },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "count",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "BatchEnqueued",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "tokenId",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "ERC1155Recovered",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "ERC20Recovered",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "tokenId",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "ERC721Recovered",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "EtherRecovered",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "oldProposedAddress",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newProposedAddress",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "NodeOperatorManagerAddressChangeProposed",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "oldAddress",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newAddress",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "NodeOperatorManagerAddressChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "oldProposedAddress",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newProposedAddress",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "NodeOperatorRewardAddressChangeProposed",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "oldAddress",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newAddress",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "NodeOperatorRewardAddressChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nonce",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "NonceChanged",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "pubkey",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "SigningKeyAdded",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256",
+              "indexed": true
+            },
+            {
+              "internalType": "bytes",
+              "name": "pubkey",
+              "type": "bytes",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "SigningKeyRemoved",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "shares",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "StETHSharesRecovered",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "_nodeOperatorIds",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_vettedSigningKeysCounts",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "decreaseVettedSigningKeysCount"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "payable",
+          "type": "function",
+          "name": "depositETH"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stETHAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "struct ICSAccounting.PermitInput",
+              "name": "permit",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "deadline",
+                  "type": "uint256"
+                },
+                { "internalType": "uint8", "name": "v", "type": "uint8" },
+                { "internalType": "bytes32", "name": "r", "type": "bytes32" },
+                { "internalType": "bytes32", "name": "s", "type": "bytes32" }
+              ]
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "depositStETH"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "wstETHAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "struct ICSAccounting.PermitInput",
+              "name": "permit",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "deadline",
+                  "type": "uint256"
+                },
+                { "internalType": "uint8", "name": "v", "type": "uint8" },
+                { "internalType": "bytes32", "name": "r", "type": "bytes32" },
+                { "internalType": "bytes32", "name": "s", "type": "bytes32" }
+              ]
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "depositWstETH"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getActiveNodeOperatorsCount",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNodeOperator",
+          "outputs": [
+            {
+              "internalType": "struct NodeOperator",
+              "name": "",
+              "type": "tuple",
+              "components": [
+                {
+                  "internalType": "uint32",
+                  "name": "totalAddedKeys",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "totalWithdrawnKeys",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "totalDepositedKeys",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "totalVettedKeys",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "stuckValidatorsCount",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "depositableValidatorsCount",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "targetLimit",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint8",
+                  "name": "targetLimitMode",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "totalExitedKeys",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "uint32",
+                  "name": "enqueuedCount",
+                  "type": "uint32"
+                },
+                {
+                  "internalType": "address",
+                  "name": "managerAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "proposedManagerAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "rewardAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "proposedRewardAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "extendedManagerPermissions",
+                  "type": "bool"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "inputs": [
+            { "internalType": "uint256", "name": "_offset", "type": "uint256" },
+            { "internalType": "uint256", "name": "_limit", "type": "uint256" }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNodeOperatorIds",
+          "outputs": [
+            {
+              "internalType": "uint256[]",
+              "name": "nodeOperatorIds",
+              "type": "uint256[]"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNodeOperatorIsActive",
+          "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNodeOperatorNonWithdrawnKeys",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_nodeOperatorId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNodeOperatorSummary",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "targetLimitMode",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "targetValidatorsCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stuckValidatorsCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "refundedValidatorsCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stuckPenaltyEndTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalExitedValidators",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalDepositedValidators",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "depositableValidatorsCount",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNodeOperatorsCount",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getNonce",
+          "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startIndex",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "keysCount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getSigningKeys",
+          "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startIndex",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "keysCount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getSigningKeysWithSignatures",
+          "outputs": [
+            { "internalType": "bytes", "name": "keys", "type": "bytes" },
+            { "internalType": "bytes", "name": "signatures", "type": "bytes" }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getStakingModuleSummary",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "totalExitedValidators",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalDepositedValidators",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "depositableValidatorsCount",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getType",
+          "outputs": [
+            { "internalType": "bytes32", "name": "", "type": "bytes32" }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_depositsCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_depositCalldata",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "obtainDepositData",
+          "outputs": [
+            { "internalType": "bytes", "name": "publicKeys", "type": "bytes" },
+            { "internalType": "bytes", "name": "signatures", "type": "bytes" }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "onExitedAndStuckValidatorsCountsUpdated"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_totalShares",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "onRewardsMinted"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "onWithdrawalCredentialsChanged"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            },
+            { "internalType": "uint256", "name": "keyIndex", "type": "uint256" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "submitInitialSlashing"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "keyIndex",
+              "type": "uint256"
+            },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "internalType": "bool", "name": "isSlashed", "type": "bool" }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "submitWithdrawal"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_exitedValidatorsCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_stuckValidatorsCount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "unsafeUpdateValidatorsCount"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "_nodeOperatorIds",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_exitedValidatorsCounts",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "updateExitedValidatorsCount"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_refundedValidatorsCount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "updateRefundedValidatorsCount"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "_nodeOperatorIds",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes",
+              "name": "_stuckValidatorsCounts",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "updateStuckValidatorsCount"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_nodeOperatorId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_targetLimitMode",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_targetLimit",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "updateTargetValidatorsLimits"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "decreaseVettedSigningKeysCount(bytes,bytes)": {
+            "params": {
+              "_nodeOperatorIds": "bytes packed array of the node operators id",
+              "_vettedSigningKeysCounts": "bytes packed array of the new number of vetted keys for the node operators"
+            }
+          },
+          "getNodeOperator(uint256)": {
+            "params": { "nodeOperatorId": "Node Operator id" }
+          },
+          "getNodeOperatorIds(uint256,uint256)": {
+            "details": "This view must not revert in case of invalid data passed. When `_offset` exceeds the     total node operators count or when `_limit` is equal to 0 MUST be returned empty array."
+          },
+          "getNodeOperatorIsActive(uint256)": {
+            "params": { "_nodeOperatorId": "Id of the node operator" }
+          },
+          "getNodeOperatorNonWithdrawnKeys(uint256)": {
+            "params": { "nodeOperatorId": "ID of the node operator" },
+            "returns": { "_0": "Non-withdrawn keys count" }
+          },
+          "getNodeOperatorSummary(uint256)": {
+            "params": {
+              "_nodeOperatorId": "id of the operator to return report for"
+            },
+            "returns": {
+              "depositableValidatorsCount": "number of validators in the set available for deposit",
+              "refundedValidatorsCount": "number of validators that can't be withdrawn, but deposit     costs were compensated to the Lido by the node operator",
+              "stuckPenaltyEndTimestamp": "time when the penalty for stuck validators stops applying     to node operator rewards",
+              "stuckValidatorsCount": "number of validators with an expired request to exit time",
+              "targetLimitMode": "shows whether the current target limit applied to the node operator (1 = soft mode, 2 = forced mode)",
+              "targetValidatorsCount": "relative target active validators limit for operator",
+              "totalDepositedValidators": "total number of validators deposited via the official     Deposit Contract. This value is a cumulative counter: even when the validator goes into     EXITED state this counter is not decreasing",
+              "totalExitedValidators": "total number of validators in the EXITED state     on the Consensus Layer. This value can't decrease in normal conditions"
+            }
+          },
+          "getNonce()": {
+            "details": "In some scenarios, it's allowed to update nonce without actual change of the deposit      data subset, but it MUST NOT lead to the DOS of the staking module via continuous      update of the nonce by the malicious actor"
+          },
+          "getSigningKeys(uint256,uint256,uint256)": {
+            "params": {
+              "keysCount": "Count of keys to get",
+              "nodeOperatorId": "ID of the node operator",
+              "startIndex": "Index of the first key"
+            },
+            "returns": { "_0": "Signing keys" }
+          },
+          "getSigningKeysWithSignatures(uint256,uint256,uint256)": {
+            "params": {
+              "keysCount": "Count of keys to get",
+              "nodeOperatorId": "ID of the node operator",
+              "startIndex": "Index of the first key"
+            },
+            "returns": {
+              "keys": "Signing keys",
+              "signatures": "Signatures of (deposit_message, domain) tuples"
+            }
+          },
+          "getStakingModuleSummary()": {
+            "returns": {
+              "depositableValidatorsCount": "number of validators in the set available for deposit",
+              "totalDepositedValidators": "total number of validators deposited via the     official Deposit Contract. This value is a cumulative counter: even when the validator     goes into EXITED state this counter is not decreasing",
+              "totalExitedValidators": "total number of validators in the EXITED state     on the Consensus Layer. This value can't decrease in normal conditions"
+            }
+          },
+          "obtainDepositData(uint256,bytes)": {
+            "details": "The method MUST revert when the staking module has not enough deposit data items",
+            "params": {
+              "_depositCalldata": "Staking module defined data encoded as bytes.        IMPORTANT: _depositCalldata MUST NOT modify the deposit data set of the staking module",
+              "_depositsCount": "Number of deposits to be done"
+            },
+            "returns": {
+              "publicKeys": "Batch of the concatenated public validators keys",
+              "signatures": "Batch of the concatenated deposit signatures for returned public keys"
+            }
+          },
+          "onExitedAndStuckValidatorsCountsUpdated()": {
+            "details": "IMPORTANT: this method SHOULD revert with empty error data ONLY because of \"out of gas\".      Details about error data: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions"
+          },
+          "onRewardsMinted(uint256)": {
+            "details": "IMPORTANT: this method SHOULD revert with empty error data ONLY because of \"out of gas\".      Details about error data: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions",
+            "params": {
+              "_totalShares": "Amount of stETH shares that were minted to reward all node operators."
+            }
+          },
+          "onWithdrawalCredentialsChanged()": {
+            "details": "This method MUST discard all StakingModule's unused deposit data cause they become      invalid after the withdrawal credentials are changedIMPORTANT: this method SHOULD revert with empty error data ONLY because of \"out of gas\".      Details about error data: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions"
+          },
+          "submitInitialSlashing(uint256,uint256)": {
+            "params": {
+              "keyIndex": "Index of the slashed key in the node operator's keys.",
+              "nodeOperatorId": "Operator ID in the module."
+            }
+          },
+          "submitWithdrawal(uint256,uint256,uint256,bool)": {
+            "params": {
+              "amount": "Amount of withdrawn ETH in wei.",
+              "isSlashed": "Validator is slashed or not",
+              "keyIndex": "Index of the withdrawn key in the node operator's keys.",
+              "nodeOperatorId": "Operator ID in the module."
+            }
+          },
+          "unsafeUpdateValidatorsCount(uint256,uint256,uint256)": {
+            "params": {
+              "_exitedValidatorsCount": "New number of EXITED validators for the node operator",
+              "_nodeOperatorId": "Id of the node operator",
+              "_stuckValidatorsCount": "New number of STUCK validator for the node operator"
+            }
+          },
+          "updateExitedValidatorsCount(bytes,bytes)": {
+            "params": {
+              "_exitedValidatorsCounts": "bytes packed array of the new number of EXITED validators for the node operators",
+              "_nodeOperatorIds": "bytes packed array of the node operators id"
+            }
+          },
+          "updateRefundedValidatorsCount(uint256,uint256)": {
+            "params": {
+              "_nodeOperatorId": "Id of the node operator",
+              "_refundedValidatorsCount": "New number of refunded validators of the node operator"
+            }
+          },
+          "updateStuckValidatorsCount(bytes,bytes)": {
+            "params": {
+              "_nodeOperatorIds": "bytes packed array of the node operators id",
+              "_stuckValidatorsCounts": "bytes packed array of the new number of STUCK validators for the node operators"
+            }
+          },
+          "updateTargetValidatorsLimits(uint256,uint256,uint256)": {
+            "params": {
+              "_nodeOperatorId": "Id of the node operator",
+              "_targetLimit": "Target limit of the node operator",
+              "_targetLimitMode": "target limit mode"
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "decreaseVettedSigningKeysCount(bytes,bytes)": {
+            "notice": "Called by StakingRouter to decrease the number of vetted keys for node operator with given id"
+          },
+          "getActiveNodeOperatorsCount()": {
+            "notice": "Returns number of active node operators"
+          },
+          "getNodeOperator(uint256)": {
+            "notice": "Returns the node operator by id"
+          },
+          "getNodeOperatorIds(uint256,uint256)": {
+            "notice": "Returns up to `_limit` node operator ids starting from the `_offset`. The order of     the returned ids is not defined and might change between calls."
+          },
+          "getNodeOperatorIsActive(uint256)": {
+            "notice": "Returns if the node operator with given id is active"
+          },
+          "getNodeOperatorNonWithdrawnKeys(uint256)": {
+            "notice": "Gets node operator non-withdrawn keys"
+          },
+          "getNodeOperatorSummary(uint256)": {
+            "notice": "Returns all-validators summary belonging to the node operator with the given id"
+          },
+          "getNodeOperatorsCount()": {
+            "notice": "Returns total number of node operators"
+          },
+          "getNonce()": {
+            "notice": "Returns a counter that MUST change its value whenever the deposit data set changes.     Below is the typical list of actions that requires an update of the nonce:     1. a node operator's deposit data is added     2. a node operator's deposit data is removed     3. a node operator's ready-to-deposit data size is changed     4. a node operator was activated/deactivated     5. a node operator's deposit data is used for the deposit     Note: Depending on the StakingModule implementation above list might be extended"
+          },
+          "getSigningKeys(uint256,uint256,uint256)": {
+            "notice": "Gets node operator signing keys"
+          },
+          "getSigningKeysWithSignatures(uint256,uint256,uint256)": {
+            "notice": "Gets node operator signing keys with signatures"
+          },
+          "getStakingModuleSummary()": {
+            "notice": "Returns all-validators summary in the staking module"
+          },
+          "getType()": { "notice": "Returns the type of the staking module" },
+          "obtainDepositData(uint256,bytes)": {
+            "notice": "Obtains deposit data to be used by StakingRouter to deposit to the Ethereum Deposit     contract"
+          },
+          "onExitedAndStuckValidatorsCountsUpdated()": {
+            "notice": "Called by StakingRouter after it finishes updating exited and stuck validators counts for this module's node operators. Guaranteed to be called after an oracle report is applied, regardless of whether any node operator in this module has actually received any updated counts as a result of the report but given that the total number of exited validators returned from getStakingModuleSummary is the same as StakingRouter expects based on the total count received from the oracle."
+          },
+          "onRewardsMinted(uint256)": {
+            "notice": "Called by StakingRouter to signal that stETH rewards were minted for this module."
+          },
+          "onWithdrawalCredentialsChanged()": {
+            "notice": "Called by StakingRouter when withdrawal credentials are changed."
+          },
+          "submitInitialSlashing(uint256,uint256)": {
+            "notice": "Report node operator's key as slashed and apply initial slashing penalty."
+          },
+          "submitWithdrawal(uint256,uint256,uint256,bool)": {
+            "notice": "Report node operator's key as withdrawn and settle withdrawn amount."
+          },
+          "unsafeUpdateValidatorsCount(uint256,uint256,uint256)": {
+            "notice": "Unsafely updates the number of validators in the EXITED/STUCK states for node operator with given id      'unsafely' means that this method can both increase and decrease exited and stuck counters"
+          },
+          "updateExitedValidatorsCount(bytes,bytes)": {
+            "notice": "Updates the number of the validators in the EXITED state for node operator with given id"
+          },
+          "updateRefundedValidatorsCount(uint256,uint256)": {
+            "notice": "Updates the number of the refunded validators for node operator with the given id"
+          },
+          "updateStuckValidatorsCount(bytes,bytes)": {
+            "notice": "Updates the number of the validators of the given node operator that were requested         to exit but failed to do so in the max allowed time"
+          },
+          "updateTargetValidatorsLimits(uint256,uint256,uint256)": {
+            "notice": "Updates the limit of the validators that can be used for deposit"
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/",
+        "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
+        "ds-test/=node_modules/ds-test/src/",
+        "forge-std/=node_modules/forge-std/src/"
+      ],
+      "optimizer": { "enabled": true, "runs": 250 },
+      "metadata": { "bytecodeHash": "none" },
+      "compilationTarget": { "src/interfaces/ICSModule.sol": "ICSModule" },
+      "evmVersion": "cancun",
+      "libraries": {}
+    },
+    "sources": {
+      "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
+        "keccak256": "0x6caffc9cfdc623eca9f87a686071708af5d5c17454d65022843fdddbc53c0cce",
+        "urls": [
+          "bzz-raw://ecf8c7ed1f8ff443c181f64496ae380ee02e61dcd2ed120e1e997837a926f182",
+          "dweb:/ipfs/QmWASYTrZPF2MrcpC3EBmxx6RgtZ5Fr4jwrsmB7ZF7qhDC"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+        "keccak256": "0xc6a8ff0ea489379b61faa647490411b80102578440ab9d84e9a957cc12164e70",
+        "urls": [
+          "bzz-raw://0ea104e577e63faea3b69c415637e99e755dcbf64c5833d7140c35a714d6d90c",
+          "dweb:/ipfs/Qmau6x4Ns9XdyynRCNNp3RhLqijJjFm7z5fyZazfYFGYdq"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol": {
+        "keccak256": "0x6008dabfe393240d73d7dd7688033f72740d570aa422254d29a7dce8568f3aff",
+        "urls": [
+          "bzz-raw://f5196ec75139918c6c7bb4251b36395e668f1fa6d206beba7e7520e74913940d",
+          "dweb:/ipfs/QmSyqjksXxmm2mCG6qRd1yuwLykypkSVBbnBnGqJRcuJMi"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+        "keccak256": "0x37bb49513c49c87c4642a891b13b63571bc87013dde806617aa1efb54605f386",
+        "urls": [
+          "bzz-raw://b3036b3a83b7c48f96641f2a9002b9f2dcb6a5958dd670894ada21ae8229b3d0",
+          "dweb:/ipfs/QmUNfSBdoVtjhETaUJCYcaC7pTMgbhht926tJ2uXJbiVd3"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+        "keccak256": "0x5ef46daa3b58ef2702279d514780316efaa952915ee1aa3396f041ee2982b0b4",
+        "urls": [
+          "bzz-raw://2f8f2a76e23b02fc69e8cd24c3cb47da6c7af3a2d6c3a382f8ac25c6e094ade7",
+          "dweb:/ipfs/QmPV4ZS4tPVv4mTCf9ejyZ1ai57EEibDRj7mN2ARDCLV5n"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/utils/Address.sol": {
+        "keccak256": "0xaf28a975a78550e45f65e559a3ad6a5ad43b9b8a37366999abd1b7084eb70721",
+        "urls": [
+          "bzz-raw://b7bd24e224f67f65bfadf85dc2929fa965456bb2415478bd0125471b5ce35245",
+          "dweb:/ipfs/QmRaydGr8BTHs1kvaZfsNU69pKzUAGFrvABn1KiRSbE51y"
+        ],
+        "license": "MIT"
+      },
+      "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+        "keccak256": "0x4296879f55019b23e135000eb36896057e7101fb7fb859c5ef690cf14643757b",
+        "urls": [
+          "bzz-raw://87b3541437c8c443ccd36795e56a338ed12855eec17f8da624511b8d1a7e14df",
+          "dweb:/ipfs/QmeJQCtZrQjtJLr6u7ZHWeH3pBnjtLWzvRrKViAi7UZqxL"
+        ],
+        "license": "MIT"
+      },
+      "src/interfaces/ICSAccounting.sol": {
+        "keccak256": "0xcdd823bb369fb70970edacfb213aa5e2ed13f4607334e970ff08dc9c3fbfe1e8",
+        "urls": [
+          "bzz-raw://ceed10a12da6316a406bea2a01f43950cf22cdf01836743169964e07960a7182",
+          "dweb:/ipfs/Qmd1bFMwEuqVXm9LbhRQVSZruveRg9j8oCEDM8cT5VFuDJ"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/ICSBondCore.sol": {
+        "keccak256": "0x1ac567e2e4f789c4448ff230a1d290b6246528aa8dc556cd2b20c8cd487fda3c",
+        "urls": [
+          "bzz-raw://6d8c9ae3ebd63a9c2b3f4e2fa9e929009542594cb1494e56e38c4eb3856efdfa",
+          "dweb:/ipfs/QmYWyD2c1fpXyN4fKYpRmP9zGDFEParAuqpg5omLUpuLKm"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/ICSBondCurve.sol": {
+        "keccak256": "0xe9befd82382c4af74dc240aeccb13cd9cbc75a1be3d8480a9c8ec4346b1fc3d9",
+        "urls": [
+          "bzz-raw://d4ab8b2a920c7282cba911845f5eba35e560418f9d9767aa1474db888a7894f6",
+          "dweb:/ipfs/QmQsV6FWmigLAveGESNHWQhjzsw67XGjW4pAeBjV5fywwj"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/ICSBondLock.sol": {
+        "keccak256": "0xbd11e6c5c8e170b25be0782456471dc77669cdde13a7c4f23f89bc8b05d449f8",
+        "urls": [
+          "bzz-raw://05a539adbf6de69f84797ded0b87bef974366c9b324a5eae0eabb256a1cc9784",
+          "dweb:/ipfs/QmWqS6zXUq2ViMm6Vx5QgTfEDuX8djwYMyahqveLUz3qL5"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/ICSFeeDistributor.sol": {
+        "keccak256": "0x39588c50bfa46ec47ed023bd47cb84ffe2c130eccc1655351d7b004009f4addb",
+        "urls": [
+          "bzz-raw://6423c9d88c784c4489f533ea28d8fc68d85b7856565f72caa61c84d3ed430f7d",
+          "dweb:/ipfs/QmPdH9GFkZVRyACc7hUXjFSUeTADa1N2eDBV76C3zZmx8w"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/ICSModule.sol": {
+        "keccak256": "0xa1501a80e8987e514eb680a3ccc32f520b71a11185e2362781b6a12fd1f92553",
+        "urls": [
+          "bzz-raw://25c0534c48c9ac97d80f42f497913e7a03c70da410d19d1e6db75280ee1743a5",
+          "dweb:/ipfs/QmSwZ5TkufFK2Dn8byN1ued1AQpm2R9AZSS8Jx6gbFQmAm"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/ILido.sol": {
+        "keccak256": "0xcb2efa826a8babc1845d24a8d34fd594239d39a4ea363de649cc208cbf284d4d",
+        "urls": [
+          "bzz-raw://7884e41ac96ad561a786840ff73be209a0492dc9880504c84ec80babcc150f98",
+          "dweb:/ipfs/QmfWRFL1ZUH3ApzvQ2QQsV17H5LpxurPN8uthqSJVzZyKa"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/IStETH.sol": {
+        "keccak256": "0xb56ce4425be1ab85acffa91b66a0204f644a6a162050d37c979d3e1a94c65071",
+        "urls": [
+          "bzz-raw://39cd941a26261e04bd7f1b907b30393dfc2025c9208f522c028381ce24f08a18",
+          "dweb:/ipfs/QmXGUzfVz5kqhWxsfTT3KmNCQsE6Rd1Miy8ksHMcPnPuNK"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/interfaces/IStakingModule.sol": {
+        "keccak256": "0xce2504b6dc7e365e53f6f5dd5de8953897fa54d74a6541bca9744936ca006cee",
+        "urls": [
+          "bzz-raw://b74a10edfbcfff80a7e147b767a0b7cc1968a5a57a60502129a81d253a260168",
+          "dweb:/ipfs/Qmc5gtnjijjQJahGiC3oPJLNRGmjrQB27aPpG3GTXM8X6G"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/lib/AssetRecovererLib.sol": {
+        "keccak256": "0x0a26d89326f90a3b3e15e0111418194513e58b979506b63276b487dd2f629ce1",
+        "urls": [
+          "bzz-raw://3947fd37f87f37cd4d09f935970ae0f19f59b38fe38e5d73f912b7d7daede8a9",
+          "dweb:/ipfs/QmZe59qHu3A95EQ8yQDTiqC4bFroEpnc7LfUcQrmAx26PP"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/lib/NOAddresses.sol": {
+        "keccak256": "0x0abca0b3729bb10f14c243b7b660c18d7a12f93d9772692ab7dccad92e31b02b",
+        "urls": [
+          "bzz-raw://2ea1a9762c8711655de4af09793df9ee4d22c14c631d822eacb5b245a46339d3",
+          "dweb:/ipfs/QmZCPQjTkrXaJFFoHvkN2FVevq3NXG22HmMjiNF2Wb3LXx"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/lib/QueueLib.sol": {
+        "keccak256": "0x75f7864e75d12ede0fd5064c90da8e2a78b3d8d16b3b15652fd5ad59feba59ef",
+        "urls": [
+          "bzz-raw://e591c88ea99afbb8b24c76bde8842cf3ba438bc05ecc38f8f8c298db7b7b2cae",
+          "dweb:/ipfs/QmVXbAxb5DnpEynKZubFDHBP7PKRB8zzxuKmb9R3bSMM8n"
+        ],
+        "license": "GPL-3.0"
+      },
+      "src/lib/TransientUintUintMapLib.sol": {
+        "keccak256": "0xe430692ec8806bdd32e322610cfa8169a190ec0f9aba0ebb9e252b87d91d08fe",
+        "urls": [
+          "bzz-raw://c937a73125bc53aaa6bf1302ba3146c78339b0ca7361e5cd283524f89d64a0cd",
+          "dweb:/ipfs/QmevexMEcFW83PGcZ55o2GiV2ZiPiDPmq3mYzRH7uKYZN2"
+        ],
+        "license": "GPL-3.0"
+      }
+    },
+    "version": 1
+  },
+  "id": 87
+}
