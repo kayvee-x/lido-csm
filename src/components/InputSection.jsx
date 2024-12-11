@@ -4,22 +4,31 @@ import { Ttip } from "./Tooltip";
 
 export function InputSection({ config, onChange }) {
   const [operatorRewards, setOperatorRewards] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNodeOperatorChange = async (value) => {
-    handleChange("nodeOperatorId", value);
+    onChange({
+      ...config,
+      nodeOperatorId: value,
+      operatorRewards: null
+    });
+
     if (value >= 0 && value <= 300) {
       try {
-          const rewards = await getOperatorRewards(value);
-          setOperatorRewards(rewards);
-          onChange({
-            ...config,
-            nodeOperatorId: value,
-            operatorRewards: rewards
-          });
-        } catch (error) {
-          console.error('Error fetching rewards:', error);
-          setOperatorRewards(null);
-        }
+        const rewards = await getOperatorRewards(value);
+        onChange({
+          ...config,
+          nodeOperatorId: value,
+          operatorRewards: rewards
+        });
+      } catch (error) {
+        console.error('Error fetching rewards:', error);
+        onChange({
+          ...config,
+          nodeOperatorId: value,
+          operatorRewards: { error: error.message }
+        });
+      }
     }
   };
 

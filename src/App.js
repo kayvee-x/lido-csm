@@ -21,6 +21,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('staking');
   const [standardYield, setStandardYield] = useState(0);
   const [csmYield, setCsmYield] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [operatorRewards, setOperatorRewards] = useState(null);
 
   const [stakingConfig, setStakingConfig] = useState({
@@ -44,12 +45,14 @@ function App() {
     bondAmount: 0,
     totalStaked: 0
   });
-  const handleConfigChange = (newConfig) => {
+
+  const handleConfigChange = async (newConfig) => {
     setStakingConfig(newConfig);
     if (newConfig.operatorRewards) {
       setOperatorRewards(newConfig.operatorRewards);
     }
   };
+
 
   const [rewards, setRewards] = useState({
     daily: { bond: 0, operator: 0, total: 0 },
@@ -230,13 +233,17 @@ function App() {
         <main className="calculator-content">
           <section className="primary-section">
             <div className="input-wrapper">
-              <InputSection config={stakingConfig} onChange={setStakingConfig} />
+              <InputSection
+                config={stakingConfig}
+                onChange={handleConfigChange}
+                isLoading={isLoading}
+              />
               <div className="yield-chart-container">
                 <YieldComparison 
                   standard={rewards.comparison.standard}
                   csm={rewards.comparison.csm}
                   config={stakingConfig}
-                  operatorRewards={rewards}
+                  operatorRewards={operatorRewards}
                 />
 
               </div>

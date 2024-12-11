@@ -610,3 +610,42 @@ select:focus {
   border-style: solid;
   border-color: #333 transparent transparent transparent;
 }
+.operator-rewards-panel.placeholder {
+  text-align: center;
+  padding: 1rem;
+  background: #f0f7ff;
+  border-radius: 8px;
+}
+
+.operator-rewards-panel.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.operator-rewards-panel.error {
+  text-align: center;
+  padding: 2rem;
+  background: #fff5f5;
+  border-radius: 8px;
+  color: #e53e3e;
+}
+
+.loading-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

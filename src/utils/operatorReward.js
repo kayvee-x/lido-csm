@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { ethers } from 'ethers';
+import accountingAbi from './abi/CSAccounting.json';
+import moduleAbi from './abi/ICSModule.json';
+import pooledEthSharesAbi from './abi/pooledEthSharesImp.abi.json';
+import distSharesAbi from './abi/distSharesImp.abi.json';
 
 export class CSMRewardsGetter {
     constructor() {
         const providerRPC = {
             dev: {
                 name: 'development',
-                rpc: process.env.RPC_URL,
+                rpc: process.env.REACT_APP_RPC_URL,
                 chainId: 1,
             }
         };
@@ -16,13 +20,31 @@ export class CSMRewardsGetter {
             name: providerRPC.dev.name,
         });
 
-        this.proofUrl = `${process.env.GITHUB_URL}${process.env.REWARDS_PROOF_FILE}`;
+        this.proofUrl = process.env.REACT_APP_PROOF_URL;
+        this.accountingAbi = JSON.parse(JSON.stringify(accountingAbi));
+        this.moduleAbi = JSON.parse(JSON.stringify(moduleAbi)).abi;
+        this.pooledEthSharesAbi = JSON.parse(JSON.stringify(pooledEthSharesAbi));
+        this.distSharesAbi = JSON.parse(JSON.stringify(distSharesAbi));
     }
 
     async getRewardsProof() {
-        const response = await axios.get(this.proofUrl);
+        const response = await axios.get(this.proofUrl, {
+            timeout: 60000,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            validateStatus: status => status === 200
+        });
+
+        if (!response.data) {
+            throw new Error('No data received from proof endpoint');
+        }
+
         return response.data;
     }
+
+
 
     async getCumulativeFeeShares(nodeOperatorID) {
         const data = await this.getRewardsProof();
@@ -37,24 +59,29 @@ export class CSMRewardsGetter {
     }
 
     async getPooledEthByShares(sharesAmount) {
-        const contract = new ethers.Contract(
-            process.env.POOLED_ETH_SHARES_PROXY_CONTRACT,
-            this.pooledEthSharesAbi,
-            this.provider
-        );
-
-        const pooledEthShares = await contract.getPooledEthByShares(BigInt(sharesAmount));
-        return Number(ethers.toBigInt(pooledEthShares)) / 1e18;
+        try {
+            const contract = new ethers.Contract(
+                process.env.REACT_APP_POOLED_ETH_SHARES_PROXY_CONTRACT,
+                this.pooledEthSharesAbi,
+                this.provider
+            );
+            const pooledEthShares = await contract.getPooledEthByShares(BigInt(sharesAmount));
+            return Number(ethers.toBigInt(pooledEthShares)) / 1e18;
+        } catch (error) {
+            console.error('Error fetching pooled ETH:', error);
+            return 0;
+        }
     }
+
 
     async getExcessBondShares(nodeOperatorID) {
         const accountingContract = new ethers.Contract(
-            process.env.CSACCOUNTING_CONTRACT_ADDRESS,
+            process.env.REACT_APP_CSACCOUNTING_CONTRACT_ADDRESS,
             this.accountingAbi,
             this.provider
         );
         const moduleContract = new ethers.Contract(
-            process.env.CSMODULE_CONTRACT_ADDRESS,
+            process.env.REACT_APP_CSMODULE_CONTRACT_ADDRESS,
             this.moduleAbi,
             this.provider
         );
@@ -77,7 +104,7 @@ export class CSMRewardsGetter {
 
     async getSharesByPooledEth(sharesAmount, curve) {
         const contract = new ethers.Contract(
-            process.env.POOLED_ETH_SHARES_PROXY_CONTRACT,
+            process.env.REACT_APP_POOLED_ETH_SHARES_PROXY_CONTRACT,
             this.pooledEthSharesAbi,
             this.provider
         );
@@ -88,7 +115,7 @@ export class CSMRewardsGetter {
 
     async getDistributedShares(nodeOperatorID) {
         const contract = new ethers.Contract(
-            process.env.DIST_SHARES_PROXY_CONTRACT,
+            process.env.REACT_APP_DIST_SHARES_PROXY_CONTRACT,
             this.distSharesAbi,
             this.provider
         );
@@ -98,6 +125,7 @@ export class CSMRewardsGetter {
     }
 
     async getNodeOperatorRewards(nodeOperatorID) {
+        console.log('Getting rewards for operator:', nodeOperatorID);
         const cumulativeFeeShares = await this.getCumulativeFeeShares(nodeOperatorID);
         const totalRewardsEth = await this.getPooledEthByShares(cumulativeFeeShares);
 
@@ -106,8 +134,7 @@ export class CSMRewardsGetter {
         const totalRequiredBond = await this.getPooledEthByShares(excessBondShares.requiredBondShares);
 
         const distributedEth = await this.getDistributedShares(nodeOperatorID);
-
-        return {
+        const result = {
             nodeOperatorID: String(nodeOperatorID),
             nonWithdrawnKeys: String(excessBondShares.keys),
             totalRequiredBond: Number(totalRequiredBond.toFixed(4)),
@@ -116,6 +143,9 @@ export class CSMRewardsGetter {
             distributedEth: Number((distributedEth ?? 0).toFixed(4)),
             totalNodeOperatorEth: Number((totalRequiredBond + totalRewardsEth + totalClaimableRewardsEth).toFixed(4))
         };
+        console.log('Final rewards calculation:', result);
+        return result;
+
     }
 }
 
