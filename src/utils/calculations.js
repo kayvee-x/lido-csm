@@ -169,7 +169,6 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     }
   }
 
-  // Rest of the calculation remains the same
   const yearlyValues = calculateYearlyValues(
     validators, 
     bondRequired,

@@ -119,7 +119,7 @@ function App() {
       ethAmount,
       stakingConfig.isEA,
       stakingConfig.standardYield,
-      aprToUse
+      stakingConfig.lidoApr
     );
 
     setCalculations(prev => ({
@@ -147,11 +147,11 @@ function App() {
       cumulative: cumulativeRewards,
       comparison: {
         standard: stakingConfig.standardYield,
-        csm: stakingConfig.recentApr,
+        csm: results?.apy || 0,
         efficiency: 237
       }
     });
-  }, [stakingConfig, useLatestApr]);
+  }, [stakingConfig]);
   useEffect(() => {
     const fetchLiveMetrics = async () => {
       const [ethPrice, lidoApr, vanillaApr] = await Promise.all([
