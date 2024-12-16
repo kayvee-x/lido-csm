@@ -14,44 +14,51 @@ export function RewardsBreakdown({ daily, cumulative, calculations }) {
     return `${days}-Day`;
   };
 
+  // Calculate annual rewards first
+  const annualRewards = {
+    // Bond rebase: bond * APR * (1 - 10% fee)
+    bondRebase: calculations.bondAmount * 0.03 * 0.9,
+    // Node operator rewards: validators * (32 * APR * 6%)
+    operatorRewards: calculations.validators * (32 * 0.03 * 0.06)
+  };
+
   const comparisonData = [
     {
       period: '1d',
-      csm: daily.total / 28,  // Convert from epoch to daily
-      vanilla: (daily.total / 28) / (calculations.isEA ? 2.37 : 2.32)
+      csm: (annualRewards.bondRebase + annualRewards.operatorRewards) / 365,
+      vanilla: (calculations.totalStaked * 0.03) / 365
     },
     {
       period: '7d',
-      csm: (daily.total / 28) * 7,
-      vanilla: ((daily.total / 28) * 7) / (calculations.isEA ? 2.37 : 2.32)
+      csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (7 / 365),
+      vanilla: (calculations.totalStaked * 0.03 * 7) / 365
     },
     {
       period: '14d',
-      csm: (daily.total / 28) * 14,
-      vanilla: ((daily.total / 28) * 14) / (calculations.isEA ? 2.37 : 2.32)
+      csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (14 / 365),
+      vanilla: (calculations.totalStaked * 0.03 * 14) / 365
     },
     {
       period: '28d',
-      csm: daily.total,
-      vanilla: daily.total / (calculations.isEA ? 2.37 : 2.32)
+      csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (28 / 365),
+      vanilla: (calculations.totalStaked * 0.03 * 28) / 365
     },
     {
       period: '90d',
-      csm: daily.total * (90 / 28),
-      vanilla: (daily.total * (90 / 28)) / (calculations.isEA ? 2.37 : 2.32)
+      csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (90 / 365),
+      vanilla: (calculations.totalStaked * 0.03 * 90) / 365
     },
     {
       period: '180d',
-      csm: daily.total * (180 / 28),
-      vanilla: (daily.total * (180 / 28)) / (calculations.isEA ? 2.37 : 2.32)
+      csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (180 / 365),
+      vanilla: (calculations.totalStaked * 0.03 * 180) / 365
     },
     {
       period: '365d',
-      csm: daily.total * (365 / 28),
-      vanilla: (daily.total * (365 / 28)) / (calculations.isEA ? 2.37 : 2.32)
+      csm: annualRewards.bondRebase + annualRewards.operatorRewards,
+      vanilla: calculations.totalStaked * 0.03
     }
   ];
-
   // Filter data to show only up to selected duration
   const filteredData = comparisonData.filter(item => {
     const itemDays = parseInt(item.period);
