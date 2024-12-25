@@ -137,7 +137,7 @@ function App() {
     const cumulativeRewards = {
       daily: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 1),
       weekly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 7),
-      monthly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 30),
+      monthly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 28),
       yearly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 365)
     };
 

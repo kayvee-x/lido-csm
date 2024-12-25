@@ -106,7 +106,7 @@ export const calculateYearlyValues = (validators, bondRequired, standardYield, n
 
   const standardYieldDecimal = standardYield / 100;
   const lidoAprDecimal = lidoApr / 100;
-  const lidoAprStatic = 3 / 100;
+  const lidoAprStatic = 3.21 / 100;
   const totalStaked = validators * 32;
 
   const bondYieldGross = bondRequired * lidoAprStatic;
