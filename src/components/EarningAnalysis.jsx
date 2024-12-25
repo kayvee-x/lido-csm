@@ -1,15 +1,9 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import { generateEarningsData } from '../utils/calculations';
 export function EarningsAnalysis({ ethPrice, rewards }) {
-  const earningsData = [
-    { month: 'Jan 2025', earnings: rewards.monthly * 1 * ethPrice },
-    { month: 'Mar 2025', earnings: rewards.monthly * 3 * ethPrice },
-    { month: 'May 2025', earnings: rewards.monthly * 5 * ethPrice },
-    { month: 'Jul 2025', earnings: rewards.monthly * 7 * ethPrice },
-    { month: 'Sep 2025', earnings: rewards.monthly * 9 * ethPrice },
-    { month: 'Nov 2025', earnings: rewards.monthly * 11 * ethPrice }
-  ];
+
+  const earningsData = generateEarningsData(rewards, ethPrice);
 
   return (
     <div className="earnings-chart">

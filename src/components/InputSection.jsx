@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getOperatorRewards } from "../utils/getOperatorReward";
 import { Ttip } from "./Tooltip";
+import { getValidatorCount } from "../utils/calculations";
 
 export function InputSection({ config, onChange }) {
   const [operatorRewards, setOperatorRewards] = useState(null);
@@ -37,30 +38,7 @@ export function InputSection({ config, onChange }) {
   const handleChange = (field, value) => {
     onChange({ ...config, [field]: value });
   };
-  const getValidatorCount = (ethAmount, isEA) => {
-    if (isEA) {
-      if (ethAmount < 1.5) return 0;
-      if (ethAmount === 2) return 1;
-      if (ethAmount === 8) return 6;
-      if (ethAmount === 15.8) return 12;
-      if (ethAmount === 32) return 24;
-      if (ethAmount > 32) {
-        const additionalValidators = Math.floor((ethAmount - 31.4) / 1.3);
-        return 24 + additionalValidators;
-      }
-      return Math.floor((ethAmount - 1.5) / 1.3) + 1;
-    } else {
-      if (ethAmount < 2.4) return 0;
-      if (ethAmount === 2.4) return 1;
-      if (ethAmount === 8) return 5;
-      if (ethAmount === 32) return 23;
-      if (ethAmount > 32) {
-        const additionalValidators = Math.floor((ethAmount - 31) / 1.3);
-        return 23 + additionalValidators;
-      }
-      return Math.floor((ethAmount - 2.4) / 1.3) + 1;
-    }
-  };
+
 
   const validatorCount = getValidatorCount(config.ethAvailable, config.isEA);
 

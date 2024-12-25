@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR } from './utils/api';
 import { calculateRewards } from "./utils/calculations";
-import { generateChartData } from "./utils/calculations";
 import { RewardsBreakdown } from "./components/RewardsBreakdown";
 import { YieldComparison } from "./components/YieldComparison";
 import { InputSection } from "./components/InputSection";
@@ -60,7 +59,7 @@ function App() {
     comparison: {
       standard: 0,
       csm: 0,
-      efficiency: 237 // Set to 237 to display as 2.37x
+      efficiency: 237 
     }
   });
 
@@ -113,7 +112,7 @@ function App() {
       }
     }
 
-    const aprToUse = useLatestApr ? stakingConfig.recentApr : stakingConfig.standardYield;
+    // const aprToUse = useLatestApr ? stakingConfig.recentApr : stakingConfig.standardYield;
 
     const results = calculateRewards(
       ethAmount,
@@ -179,24 +178,24 @@ function App() {
   const RETRY_ATTEMPTS = 3;
   const RETRY_DELAY = 1000; // 1 second
 
-  const fetchEthPrice = async (attempts = 0) => {
-    try {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-      const data = await response.json();
+  // const fetchEthPrice = async (attempts = 0) => {
+  //   try {
+  //     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+  //     const data = await response.json();
 
-      if (data.ethereum?.usd) {
-        return data.ethereum.usd;
-      }
-      throw new Error('Invalid price data');
-    } catch (error) {
-      if (attempts < RETRY_ATTEMPTS) {
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-        return fetchEthPrice(attempts + 1);
-      } else {
-        return FALLBACK_PRICE;
-      }
-    }
-  };
+  //     if (data.ethereum?.usd) {
+  //       return data.ethereum.usd;
+  //     }
+  //     throw new Error('Invalid price data');
+  //   } catch (error) {
+  //     if (attempts < RETRY_ATTEMPTS) {
+  //       await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+  //       return fetchEthPrice(attempts + 1);
+  //     } else {
+  //       return FALLBACK_PRICE;
+  //     }
+  //   }
+  // };
   useEffect(() => {
     const processFrameMetrics = () => {
       const frameLength = frameData.frame[1] - frameData.frame[0];
