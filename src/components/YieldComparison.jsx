@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Ttip } from './Tooltip';
 
 export function YieldComparison({ standard, csm, operatorRewards, config }) {
+  const [previousNodeOperatorId, setPreviousNodeOperatorId] = useState(config.nodeOperatorId);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (config.nodeOperatorId !== previousNodeOperatorId) {
+      setIsLoading(true);
+      setPreviousNodeOperatorId(config.nodeOperatorId);
+    }
+  }, [config.nodeOperatorId, previousNodeOperatorId]);
+
+  useEffect(() => {
+    if (operatorRewards && operatorRewards.nodeOperatorID === config.nodeOperatorId.toString()) {
+      setIsLoading(false);
+    }
+  }, [operatorRewards, config.nodeOperatorId]);
+
   const renderOperatorPanel = () => {
+    if (isLoading) {
+      return (
+        <div className="operator-rewards-panel loading">
+          <h4>Loading Operator {config.nodeOperatorId} Rewards...</h4>
+          <div className="loading-spinner"></div>
+        </div>
+      );
+    }
+
     if (!config.nodeOperatorId && config.nodeOperatorId !== 0) {
       return (
         <div className="operator-rewards-panel placeholder">
-          <h4>Enter Node Operator ID to view rewards</h4>
+          <h4>Enter Node Operator ID to view rewards for the Operator</h4>
         </div>
       );
     }

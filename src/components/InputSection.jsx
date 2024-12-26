@@ -8,13 +8,17 @@ export function InputSection({ config, onChange }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNodeOperatorChange = async (value) => {
+    if (value > 10000) {
+      value = 10000;
+    }
+
     onChange({
       ...config,
       nodeOperatorId: value,
       operatorRewards: null
     });
 
-    if (value >= 0 && value <= 300) {
+    if (value >= 0 && value <= 10000) {
       try {
         const rewards = await getOperatorRewards(value);
         onChange({
@@ -31,14 +35,18 @@ export function InputSection({ config, onChange }) {
         });
       }
     }
+
+    renderOperatorPanel();
   };
-
-
 
   const handleChange = (field, value) => {
     onChange({ ...config, [field]: value });
   };
 
+  const renderOperatorPanel = () => {
+    // Your logic to render the operator panel
+    console.log("Operator panel refreshed");
+  };
 
   const validatorCount = getValidatorCount(config.ethAvailable, config.isEA);
 
@@ -63,7 +71,7 @@ export function InputSection({ config, onChange }) {
           <input
             type="number"
             min="0"
-            max="247"
+            max="10000"
             value={config.nodeOperatorId}
             onChange={(e) => handleNodeOperatorChange(Number(e.target.value))}
             className="input-field"
@@ -87,40 +95,6 @@ export function InputSection({ config, onChange }) {
             className="input-field"
           />
         </div>
-
-        {/* <div className="input-group">
-          <div className="label-with-tooltip">
-            <label className="input-label">Standard Yield (%)</label>
-            <Ttip content="Base staking rewards from running a vanilla Ethereum validator. This includes both Consensus Layer rewards and MEV opportunities." />
-          </div>
-          <input
-            type="number"
-            min="0"
-            max="100"
-            step="0.1"
-            value={config.standardYield}
-            onChange={(e) => handleChange("standardYield", Number(e.target.value))}
-            className="input-field"
-          />
-        </div>
-        <span className="data-source">Live: beaconcha.in/api/v1/epoch/latest</span> */}
-
-        {/* <div className="input-group">
-          <div className="label-with-tooltip">
-            <label className="input-label">Lido APR (%)</label>
-            <Ttip content="7-day Simple Moving Average (SMA) of stETH APR." />
-          </div>
-          <input
-            type="number"
-            min="0"
-            max="100"
-            step="0.1"
-            value={config.lidoApr}
-            onChange={(e) => handleChange("lidoApr", Number(e.target.value))}
-            className="input-field"
-          />
-        </div>
-        <span className="data-source">Live: eth-api.lido.fi/v1/protocol/steth/apr/sma</span> */}
       </div>
 
       <div className="select-group">
@@ -166,5 +140,4 @@ export function InputSection({ config, onChange }) {
       </div>
     </div>
   );
-
 }
