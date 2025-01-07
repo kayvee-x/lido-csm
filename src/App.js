@@ -77,41 +77,33 @@ function App() {
     let validators, bondRequired;
 
     if (stakingConfig.isEA) {
-      if (ethAmount <= 2) {
-        validators = 1;
-        bondRequired = 1.5;
-      } else if (ethAmount <= 8) {
-        validators = 6;
-        bondRequired = 8;
-      } else if (ethAmount <= 15.8) {
-        validators = 12;
-        bondRequired = 15.8;
-      } else if (ethAmount <= 32) {
-        validators = 24;
-        bondRequired = 31.4;
-      } else {
-        const multiplier = Math.floor(ethAmount / 32);
+      if (ethAmount >= 31.4) {
+        const multiplier = Math.floor(ethAmount / 31.4);
         validators = 24 * multiplier;
         bondRequired = 31.4 * multiplier;
+      } else if (ethAmount >= 15.8) {
+        validators = 24;
+        bondRequired = 15.8;
+      } else if (ethAmount >= 1.5) {
+        validators = 1;
+        bondRequired = 1.5;
+      } else {
+        validators = 0;
+        bondRequired = 0;
       }
     } else {
-      if (ethAmount <= 2.4) {
-        validators = 1;
-        bondRequired = 2.4;
-      } else if (ethAmount <= 8) {
-        validators = 5;
-        bondRequired = 7.6;
-      } else if (ethAmount <= 32) {
-        validators = 23;
-        bondRequired = 31;
-      } else {
-        const multiplier = Math.floor(ethAmount / 32);
+      if (ethAmount >= 31) {
+        const multiplier = Math.floor(ethAmount / 31);
         validators = 23 * multiplier;
         bondRequired = 31 * multiplier;
+      } else if (ethAmount >= 2.4) {
+        validators = 1;
+        bondRequired = 2.4;
+      } else {
+        validators = 0;
+        bondRequired = 0;
       }
     }
-
-    // const aprToUse = useLatestApr ? stakingConfig.recentApr : stakingConfig.standardYield;
 
     const results = calculateRewards(
       ethAmount,
@@ -149,8 +141,7 @@ function App() {
         efficiency: 237
       }
     });
-  }, [stakingConfig]);
-  useEffect(() => {
+  }, [stakingConfig]); useEffect(() => {
     const fetchLiveMetrics = async () => {
       const [ethPrice, lidoApr, vanillaApr] = await Promise.all([
         fetchEthPrice(),
