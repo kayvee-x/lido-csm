@@ -111,7 +111,7 @@ export function YieldComparison({ standard, csm, operatorRewards, config }) {
           </div>
           <div className="reward-item">
             <span>Frame Eligibility:</span>
-            <span>{((frameData?.eligibleValidators / frameData?.totalValidators) * 100).toFixed(1)}%</span>
+            <span>{((frameData?.eligibleValidators / frameData?.totalValidators) * 100).toFixed(0)}%</span>
           </div>
         </div>
       </div>
