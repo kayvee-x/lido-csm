@@ -46,7 +46,7 @@ export const OperatorAllocation = () => {
             setAllocatedData(newDepositedData);
             setError(null);
         } catch (err) {
-            console.log('Error:', err);
+            // console.log('Error:', err);
             setError(err.message);
         } finally {
             setIsLoading(false);

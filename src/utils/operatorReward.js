@@ -125,7 +125,7 @@ export class CSMRewardsGetter {
     }
 
     async getNodeOperatorRewards(nodeOperatorID) {
-        console.log('Getting rewards for operator:', nodeOperatorID);
+        // console.log('Getting rewards for operator:', nodeOperatorID);
         const cumulativeFeeShares = await this.getCumulativeFeeShares(nodeOperatorID);
         const totalRewardsEth = await this.getPooledEthByShares(cumulativeFeeShares);
 
@@ -143,7 +143,7 @@ export class CSMRewardsGetter {
             distributedEth: Number((distributedEth ?? 0).toFixed(4)),
             totalNodeOperatorEth: Number((totalRequiredBond + totalRewardsEth + totalClaimableRewardsEth).toFixed(4))
         };
-        console.log('Final rewards calculation:', result);
+        // console.log('Final rewards calculation:', result);
         return result;
 
     }

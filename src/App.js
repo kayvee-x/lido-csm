@@ -13,13 +13,12 @@ import { frameData } from "./utils/recentData"
 import { InfoSection } from "./components/InfoSection";
 import { FramePerformanceTable } from './components/performanceTable';
 import { OperatorAllocation } from "./components/OperatorAllocation";
+import { RebaseHistory } from "./components/RebaseHistory";
 import "./app.css";
 
 function App() {
   const [ethPrice, setEthPrice] = useState(null);
   const [activeTab, setActiveTab] = useState('staking');
-  const [standardYield, setStandardYield] = useState(0);
-  const [csmYield, setCsmYield] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [operatorRewards, setOperatorRewards] = useState(null);
 
@@ -36,8 +35,8 @@ function App() {
     epochRewards: 0,
     operatorPerformance: 0
   });
-
-  const [useLatestApr, setUseLatestApr] = useState(true);
+  const [rebaseHistory, setRebaseHistory] = useState([]);
+  const [operatorEligibility, setOperatorEligibility] = useState(null);
 
   const [calculations, setCalculations] = useState({
     validators: 0,
@@ -244,6 +243,8 @@ function App() {
                   config={stakingConfig}
                   operatorRewards={operatorRewards}
                 />
+                {/* <RebaseHistory bondAmount={calculations.bondAmount} /> */}
+
 
               </div>
               <div className="yield-comparison">
@@ -262,13 +263,13 @@ function App() {
                     <p>Multiplier: {(rewards.comparison.efficiency / 100).toFixed(2)}x</p>
                     <p>Total CSM Bond Required: {formatEth(calculations.bondAmount)} ETH</p>
                   </div>
+
                 </div>
               </div>
 
             </div>
 
             <div className="metrics-grid">
-
               <RewardsBreakdown
                 daily={rewards.daily}
                 cumulative={rewards.cumulative}

@@ -4,6 +4,7 @@ import { Ttip } from './Tooltip';
 export function YieldComparison({ standard, csm, operatorRewards, config }) {
   const [previousNodeOperatorId, setPreviousNodeOperatorId] = useState(config.nodeOperatorId);
   const [isLoading, setIsLoading] = useState(false);
+  const [frameData, setFrameData] = useState(null);
 
   useEffect(() => {
     if (config.nodeOperatorId !== previousNodeOperatorId) {
@@ -18,6 +19,30 @@ export function YieldComparison({ standard, csm, operatorRewards, config }) {
     }
   }, [operatorRewards, config.nodeOperatorId]);
 
+  useEffect(() => {
+    const fetchOperatorFrameData = async () => {
+      const response = await fetch('https://ipfs.io/ipfs/QmezkGCHPUJ9XSAJfibmo6Sup35VgbhnodfYsc1xNT3rbo');
+      const data = await response.json();
+      const operatorData = data.operators[config.nodeOperatorId];
+
+      if (operatorData) {
+        const eligibleValidators = Object.values(operatorData.validators)
+          .filter(v => v.perf.included / v.perf.assigned >= 0.95).length;
+
+        setFrameData({
+          totalValidators: Object.keys(operatorData.validators).length,
+          eligibleValidators,
+          frameRewards: data.distributable
+        });
+        // console.log(eligibleValidators)
+
+      }
+    };
+
+    if (config.nodeOperatorId) {
+      fetchOperatorFrameData();
+    }
+  }, [config.nodeOperatorId]);
   const renderOperatorPanel = () => {
     if (isLoading) {
       return (
@@ -79,6 +104,14 @@ export function YieldComparison({ standard, csm, operatorRewards, config }) {
           <div className="reward-item">
             <span>Claimable Rewards:</span>
             <span>{operatorRewards.excessBond} ETH</span>
+          </div>
+          <div className="reward-item">
+            <span>First Frame Eligible Validators:</span>
+            <span>{frameData?.eligibleValidators || 0} / {frameData?.totalValidators || 0}</span>
+          </div>
+          <div className="reward-item">
+            <span>Frame Eligibility:</span>
+            <span>{((frameData?.eligibleValidators / frameData?.totalValidators) * 100).toFixed(1)}%</span>
           </div>
         </div>
       </div>

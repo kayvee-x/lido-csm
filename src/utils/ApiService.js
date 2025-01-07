@@ -15,12 +15,12 @@ class ApiService {
         try {
             const response = await fetch(this.API_URL, this.options);
             if (!response.ok) {
-                console.log('Falling back to static data');
+                // console.log('Falling back to static data');
                 return STATIC_OPERATORS.data;
             }
             return await response.json();
         } catch (error) {
-            console.log('Error fetching operators, using static data:', error);
+            // console.log('Error fetching operators, using static data:', error);
             return STATIC_OPERATORS.data;
         }
     }

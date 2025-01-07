@@ -44,8 +44,7 @@ export function InputSection({ config, onChange }) {
   };
 
   const renderOperatorPanel = () => {
-    // Your logic to render the operator panel
-    console.log("Operator panel refreshed");
+    // console.log("Operator panel refreshed");
   };
 
   const validatorCount = getValidatorCount(config.ethAvailable, config.isEA);
