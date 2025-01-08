@@ -1,3 +1,5 @@
+// utils/calculations.js
+
 // Constants
 const CONSTANTS = {
   BASE_APR: 0.03,
@@ -11,6 +13,7 @@ const CONSTANTS = {
   MONTH_NAMES: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 };
 
+// Utility Functions
 const validateInput = (value, name = 'Value') => {
   if (typeof value !== 'number' || isNaN(value)) {
     throw new Error(`${name} must be a valid number`);
@@ -27,9 +30,9 @@ export const calculateDailyRewards = ({ validators, bondAmount, standardYield = 
 
   const dailyYield = standardYield / CONSTANTS.DAYS_PER_YEAR;
   const bondRewards = bondAmount * dailyYield * 0.9;
-  const totalStaked = validators * 32;
+  const totalStaked = validators * CONSTANTS.VALIDATOR_SIZE;
   const totalDailyYield = totalStaked * dailyYield;
-  const operatorRewards = totalDailyYield * 0.06;
+  const operatorRewards = totalDailyYield * CONSTANTS.OPERATOR_FEE;
   
   return {
     bond: bondRewards,
@@ -72,32 +75,57 @@ export function generateChartData(rewards, months = 12) {
   }));
 }
 
-export function calculateValidatorsAndBond(ethAvailable, isEA) {
-  validateInput(ethAvailable, 'ETH available');
-
-  const baseRequirement = isEA ? 1.5 : 2.4;
-  let validators;
-  let bondAmount;
+export const calculateValidatorsAndBond = (ethAmount, isEA) => {
+  let validators, bondRequired;
 
   if (isEA) {
-    if (ethAvailable >= 15.8) {
-      validators = 12;
-      bondAmount = 15.8;
+    if (ethAmount >= CONSTANTS.EA_BOND_MIN) {
+      validators = 1 + Math.floor((ethAmount - CONSTANTS.EA_BOND_MIN) / 1.3);
+      bondRequired = CONSTANTS.EA_BOND_MIN + (validators - 1) * 1.3;
     } else {
-      validators = Math.floor(ethAvailable / baseRequirement);
-      bondAmount = validators * baseRequirement;
+      validators = 0;
+      bondRequired = 0;
     }
   } else {
-    validators = Math.floor(ethAvailable / baseRequirement);
-    bondAmount = validators * baseRequirement;
+    if (ethAmount >= CONSTANTS.REGULAR_BOND_MIN) {
+      validators = 1 + Math.floor((ethAmount - CONSTANTS.REGULAR_BOND_MIN) / 1.3);
+      bondRequired = CONSTANTS.REGULAR_BOND_MIN + (validators - 1) * 1.3;
+    } else {
+      validators = 0;
+      bondRequired = 0;
+    }
   }
 
-  return {
-    validators,
-    bondAmount,
-    totalStaked: validators * 32
+  return { validators, bondRequired };
+};
+
+export const calculatePeriodRewards = (results, stakingDuration) => {
+  const selectedPeriodRewards = {
+    bond: (results?.bondRebase || 0) * stakingDuration,
+    operator: (results?.nodeOperatorRewards || 0) * stakingDuration,
+    total: (results?.totalRewards || 0) * stakingDuration
   };
-}
+
+  const cumulativeRewards = {
+    daily: selectedPeriodRewards.total / (stakingDuration / 1),
+    weekly: selectedPeriodRewards.total / (stakingDuration / 7),
+    monthly: selectedPeriodRewards.total / (stakingDuration / 28),
+    yearly: selectedPeriodRewards.total / (stakingDuration / CONSTANTS.DAYS_PER_YEAR)
+  };
+
+  return { selectedPeriodRewards, cumulativeRewards };
+};
+
+export const getTimeframeLabel = (days) => {
+  if (days === 1) return '24-Hour';
+  if (days === 7) return '7-Day';
+  if (days === 14) return '14-Day';
+  if (days === 28) return '28-Day';
+  if (days === 90) return '3-Month';
+  if (days === 180) return '6-Month';
+  if (days === 365) return '12-Month';
+  return `${days}-Day`;
+};
 
 export const calculateYearlyValues = (validators, bondRequired, standardYield, nodeOperatorFee, lidoFee, lidoApr = standardYield) => {
   validateInput(validators, 'Validators');
@@ -107,7 +135,7 @@ export const calculateYearlyValues = (validators, bondRequired, standardYield, n
   const standardYieldDecimal = standardYield / 100;
   const lidoAprDecimal = lidoApr / 100;
   const lidoAprStatic = 3.21 / 100;
-  const totalStaked = validators * 32;
+  const totalStaked = validators * CONSTANTS.VALIDATOR_SIZE;
 
   const bondYieldGross = bondRequired * lidoAprStatic;
   const lidoFeeAmount = bondYieldGross * lidoFee;
@@ -191,8 +219,8 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     validators, 
     bondRequired,
     standardYield,
-    0.06,
-    0.10,
+    CONSTANTS.OPERATOR_FEE,
+    CONSTANTS.LIDO_FEE,
     lidoApr
   );
 
@@ -212,7 +240,7 @@ export const getValidatorCount = (ethAmount, isEA) => {
   validateInput(ethAmount, 'ETH amount');
 
   if (isEA) {
-    if (ethAmount < 1.5) return 0;
+    if (ethAmount < CONSTANTS.EA_BOND_MIN) return 0;
     if (ethAmount === 2) return 1;
     if (ethAmount === 8) return 6;
     if (ethAmount === 15.8) return 12;
@@ -221,9 +249,9 @@ export const getValidatorCount = (ethAmount, isEA) => {
       const additionalValidators = Math.floor((ethAmount - 31.4) / 1.3);
       return 24 + additionalValidators;
     }
-    return Math.floor((ethAmount - 1.5) / 1.3) + 1;
+    return Math.floor((ethAmount - CONSTANTS.EA_BOND_MIN) / 1.3) + 1;
   } else {
-    if (ethAmount < 2.4) return 0;
+    if (ethAmount < CONSTANTS.REGULAR_BOND_MIN) return 0;
     if (ethAmount === 2.4) return 1;
     if (ethAmount === 8) return 5;
     if (ethAmount === 32) return 23;
@@ -231,51 +259,51 @@ export const getValidatorCount = (ethAmount, isEA) => {
       const additionalValidators = Math.floor((ethAmount - 31) / 1.3);
       return 23 + additionalValidators;
     }
-    return Math.floor((ethAmount - 2.4) / 1.3) + 1;
+    return Math.floor((ethAmount - CONSTANTS.REGULAR_BOND_MIN) / 1.3) + 1;
   }
 };
 
 export const generateComparisonData = (calculations, rewards) => {
   const annualRewards = {
-    bondRebase: calculations.bondAmount * 0.03 * 0.9,
-    operatorRewards: calculations.validators * (32 * 0.03 * 0.06)
+    bondRebase: calculations.bondAmount * CONSTANTS.BASE_APR * 0.9,
+    operatorRewards: calculations.validators * (CONSTANTS.VALIDATOR_SIZE * CONSTANTS.BASE_APR * CONSTANTS.OPERATOR_FEE)
   };
 
   return [
     {
       period: '1d',
       csm: (annualRewards.bondRebase + annualRewards.operatorRewards) / CONSTANTS.DAYS_PER_YEAR,
-      vanilla: (calculations.totalStaked * 0.03) / CONSTANTS.DAYS_PER_YEAR
+      vanilla: (calculations.totalStaked * CONSTANTS.BASE_APR) / CONSTANTS.DAYS_PER_YEAR
     },
     {
       period: '7d',
       csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (7 / CONSTANTS.DAYS_PER_YEAR),
-      vanilla: (calculations.totalStaked * 0.03 * 7) / CONSTANTS.DAYS_PER_YEAR
+      vanilla: (calculations.totalStaked * CONSTANTS.BASE_APR * 7) / CONSTANTS.DAYS_PER_YEAR
     },
     {
       period: '14d',
       csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (14 / CONSTANTS.DAYS_PER_YEAR),
-      vanilla: (calculations.totalStaked * 0.03 * 14) / CONSTANTS.DAYS_PER_YEAR
+      vanilla: (calculations.totalStaked * CONSTANTS.BASE_APR * 14) / CONSTANTS.DAYS_PER_YEAR
     },
     {
       period: '28d',
       csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (28 / CONSTANTS.DAYS_PER_YEAR),
-      vanilla: (calculations.totalStaked * 0.03 * 28) / CONSTANTS.DAYS_PER_YEAR
+      vanilla: (calculations.totalStaked * CONSTANTS.BASE_APR * 28) / CONSTANTS.DAYS_PER_YEAR
     },
     {
       period: '90d',
       csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (90 / CONSTANTS.DAYS_PER_YEAR),
-      vanilla: (calculations.totalStaked * 0.03 * 90) / CONSTANTS.DAYS_PER_YEAR
+      vanilla: (calculations.totalStaked * CONSTANTS.BASE_APR * 90) / CONSTANTS.DAYS_PER_YEAR
     },
     {
       period: '180d',
       csm: (annualRewards.bondRebase + annualRewards.operatorRewards) * (180 / CONSTANTS.DAYS_PER_YEAR),
-      vanilla: (calculations.totalStaked * 0.03 * 180) / CONSTANTS.DAYS_PER_YEAR
+      vanilla: (calculations.totalStaked * CONSTANTS.BASE_APR * 180) / CONSTANTS.DAYS_PER_YEAR
     },
     {
       period: '365d',
       csm: annualRewards.bondRebase + annualRewards.operatorRewards,
-      vanilla: calculations.totalStaked * 0.03
+      vanilla: calculations.totalStaked * CONSTANTS.BASE_APR
     }
   ];
 };
@@ -338,6 +366,7 @@ export const fetchRealAPRData = async () => {
     };
   }
 };
+
 const calculateReturn = (reward, stake, bondAmount, days) => {
   if (!stake || stake === 0) return 0;
   const annualReturn = (reward / stake) * (CONSTANTS.DAYS_PER_YEAR / days);
@@ -396,4 +425,33 @@ export const generateStakingData = (calculations, rewards, ethPrice) => {
     };
   });
 };
+export const performCalculations = (stakingConfig, ethAmount) => {
+  let validators, bondRequired;
 
+  if (stakingConfig.isEA) {
+    if (ethAmount >= 1.5) {
+      validators = Math.min(12, Math.floor(ethAmount / 1.3));
+      bondRequired = 1.5 + (validators - 1) * 1.3;
+    } else {
+      validators = 0;
+      bondRequired = 0;
+    }
+  } else {
+    if (ethAmount >= 2.4) {
+      validators = 1 + Math.floor((ethAmount - 2.4) / 1.3);
+      bondRequired = 2.4 + (validators - 1) * 1.3;
+    } else {
+      validators = 0;
+      bondRequired = 0;
+    }
+  }
+
+
+  // Enforce the 12 validator limit during EA
+  if (stakingConfig.isEA && validators > 12) {
+    validators = 12;
+    bondRequired = 1.5 + 11 * 1.3;
+  }
+
+  return { validators, bondRequired };
+};

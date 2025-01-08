@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR } from './utils/api';
-import { calculateRewards } from "./utils/calculations";
+import { calculateRewards, performCalculations } from "./utils/calculations";
 import { RewardsBreakdown } from "./components/RewardsBreakdown";
 import { YieldComparison } from "./components/YieldComparison";
 import { InputSection } from "./components/InputSection";
@@ -9,11 +9,10 @@ import { StakingTable } from "./components/StakingTable";
 import { BondCurveTables } from "./components/BondCurveTables";
 import { formatEth } from "./utils/formatting";
 import { bondCurveData } from "./utils/data";
-import { frameData } from "./utils/recentData"
+import { frameData } from "./utils/recentData";
 import { InfoSection } from "./components/InfoSection";
 import { FramePerformanceTable } from './components/performanceTable';
 import { OperatorAllocation } from "./components/OperatorAllocation";
-import { RebaseHistory } from "./components/RebaseHistory";
 import "./app.css";
 
 function App() {
@@ -28,20 +27,22 @@ function App() {
     lidoApr: 3,
     recentApr: 7.6,
     isEA: true,
-    stakingDuration: 28
+    stakingDuration: 28,
   });
+
   const [frameMetrics, setFrameMetrics] = useState({
     currentFrame: [],
     epochRewards: 0,
-    operatorPerformance: 0
+    operatorPerformance: 0,
   });
+
   const [rebaseHistory, setRebaseHistory] = useState([]);
   const [operatorEligibility, setOperatorEligibility] = useState(null);
 
   const [calculations, setCalculations] = useState({
     validators: 0,
     bondAmount: 0,
-    totalStaked: 0
+    totalStaked: 0,
   });
 
   const handleConfigChange = async (newConfig) => {
@@ -51,15 +52,14 @@ function App() {
     }
   };
 
-
   const [rewards, setRewards] = useState({
     daily: { bond: 0, operator: 0, total: 0 },
     cumulative: { weekly: 0, monthly: 0, yearly: 0 },
     comparison: {
       standard: 0,
       csm: 0,
-      efficiency: 237 
-    }
+      efficiency: 237,
+    },
   });
 
   const getTimeframeLabel = (days) => {
@@ -72,33 +72,11 @@ function App() {
     if (days === 365) return '12-Month';
     return `${days}-Day`;
   };
+
   useEffect(() => {
     const ethAmount = Number(stakingConfig.ethAvailable) || 0;
-    let validators, bondRequired;
+    const { validators, bondRequired } = performCalculations(stakingConfig, ethAmount);
 
-    if (stakingConfig.isEA) {
-      if (ethAmount >= 1.5) {
-        validators = 1 + Math.floor((ethAmount - 1.5) / 1.3);
-        bondRequired = 1.5 + (validators - 1) * 1.3; 
-      } else {
-        validators = 0;
-        bondRequired = 0;
-      }
-    } else {
-      if (ethAmount >= 2.4) {
-        validators = 1 + Math.floor((ethAmount - 2.4) / 1.3);
-        bondRequired = 2.4 + (validators - 1) * 1.3;
-      } else {
-        validators = 0;
-        bondRequired = 0;
-      }
-    }
-
-    // Enforce the 12 validator limit during EA
-    if (stakingConfig.isEA && validators > 12) {
-      validators = 12;
-      bondRequired = 1.5 + 11 * 1.3;
-    } 
     const results = calculateRewards(
       ethAmount,
       stakingConfig.isEA,
@@ -110,20 +88,20 @@ function App() {
       ...prev,
       bondAmount: bondRequired,
       validators: validators,
-      totalStaked: ethAmount
+      totalStaked: ethAmount,
     }));
 
     const selectedPeriodRewards = {
       bond: (results?.bondRebase || 0) * stakingConfig.stakingDuration,
       operator: (results?.nodeOperatorRewards || 0) * stakingConfig.stakingDuration,
-      total: (results?.totalRewards || 0) * stakingConfig.stakingDuration
+      total: (results?.totalRewards || 0) * stakingConfig.stakingDuration,
     };
 
     const cumulativeRewards = {
       daily: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 1),
       weekly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 7),
       monthly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 28),
-      yearly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 365)
+      yearly: selectedPeriodRewards.total / (stakingConfig.stakingDuration / 365),
     };
 
     setRewards({
@@ -132,10 +110,13 @@ function App() {
       comparison: {
         standard: stakingConfig.standardYield,
         csm: results?.apy || 0,
-        efficiency: 237
-      }
+        efficiency: 237,
+      },
     });
-  }, [stakingConfig]); useEffect(() => {
+  }, [stakingConfig]);
+
+
+  useEffect(() => {
     const fetchLiveMetrics = async () => {
       const [ethPrice, lidoApr, vanillaApr] = await Promise.all([
         fetchEthPrice(),

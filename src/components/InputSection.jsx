@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getOperatorRewards } from "../utils/getOperatorReward";
 import { Ttip } from "./Tooltip";
-import { getValidatorCount } from "../utils/calculations";
+import { performCalculations } from "../utils/calculations";
 
 export function InputSection({ config, onChange }) {
   const [operatorRewards, setOperatorRewards] = useState(null);
@@ -47,7 +47,8 @@ export function InputSection({ config, onChange }) {
     // console.log("Operator panel refreshed");
   };
 
-  const validatorCount = getValidatorCount(config.ethAvailable, config.isEA);
+  // Use performCalculations to get validator count and bond amount
+  const { validators: validatorCount } = performCalculations(config, Number(config.ethAvailable));
 
   const durationOptions = [
     { label: '1D', value: 1 },
@@ -77,9 +78,7 @@ export function InputSection({ config, onChange }) {
           />
         </div>
         <div>
-          <h4>
-            OR
-          </h4>
+          <h4>OR</h4>
         </div>
         <div className="input-group">
           <div className="label-with-tooltip">
@@ -140,5 +139,3 @@ export function InputSection({ config, onChange }) {
     </div>
   );
 }
-
-
