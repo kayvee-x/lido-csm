@@ -120,7 +120,6 @@ export function InputSection({ config, onChange }) {
           <h4>Validator Capacity</h4>
         </div>
         <p>With {config.ethAvailable} ETH you can run: <strong>{validatorCount} validator{validatorCount !== 1 ? 's' : ''}</strong></p>
-        {console.log(validatorCount)}
         {validatorCount > 12 && config.isEA && (
           <p className="note">Note: Maximum 12 validators during EA phase</p>
         )}
