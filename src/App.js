@@ -77,34 +77,28 @@ function App() {
     let validators, bondRequired;
 
     if (stakingConfig.isEA) {
-      if (ethAmount >= 31.4) {
-        const multiplier = Math.floor(ethAmount / 31.4);
-        validators = 24 * multiplier;
-        bondRequired = 31.4 * multiplier;
-      } else if (ethAmount >= 15.8) {
-        validators = 24;
-        bondRequired = 15.8;
-      } else if (ethAmount >= 1.5) {
-        validators = 1;
-        bondRequired = 1.5;
+      if (ethAmount >= 1.5) {
+        validators = 1 + Math.floor((ethAmount - 1.5) / 1.3);
+        bondRequired = 1.5 + (validators - 1) * 1.3; 
       } else {
         validators = 0;
         bondRequired = 0;
       }
     } else {
-      if (ethAmount >= 31) {
-        const multiplier = Math.floor(ethAmount / 31);
-        validators = 23 * multiplier;
-        bondRequired = 31 * multiplier;
-      } else if (ethAmount >= 2.4) {
-        validators = 1;
-        bondRequired = 2.4;
+      if (ethAmount >= 2.4) {
+        validators = 1 + Math.floor((ethAmount - 2.4) / 1.3);
+        bondRequired = 2.4 + (validators - 1) * 1.3;
       } else {
         validators = 0;
         bondRequired = 0;
       }
     }
 
+    // Enforce the 12 validator limit during EA
+    if (stakingConfig.isEA && validators > 12) {
+      validators = 12;
+      bondRequired = 1.5 + 11 * 1.3;
+    } 
     const results = calculateRewards(
       ethAmount,
       stakingConfig.isEA,
@@ -168,24 +162,6 @@ function App() {
   const RETRY_ATTEMPTS = 3;
   const RETRY_DELAY = 1000; // 1 second
 
-  // const fetchEthPrice = async (attempts = 0) => {
-  //   try {
-  //     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-  //     const data = await response.json();
-
-  //     if (data.ethereum?.usd) {
-  //       return data.ethereum.usd;
-  //     }
-  //     throw new Error('Invalid price data');
-  //   } catch (error) {
-  //     if (attempts < RETRY_ATTEMPTS) {
-  //       await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-  //       return fetchEthPrice(attempts + 1);
-  //     } else {
-  //       return FALLBACK_PRICE;
-  //     }
-  //   }
-  // };
   useEffect(() => {
     const processFrameMetrics = () => {
       const frameLength = frameData.frame[1] - frameData.frame[0];
