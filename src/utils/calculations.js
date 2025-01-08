@@ -430,7 +430,7 @@ export const performCalculations = (stakingConfig, ethAmount) => {
 
   if (stakingConfig.isEA) {
     if (ethAmount >= 1.5) {
-      validators = Math.min(12, Math.floor(ethAmount / 1.3));
+      validators = Math.floor(ethAmount / 1.3);
       bondRequired = 1.5 + (validators - 1) * 1.3;
     } else {
       validators = 0;
@@ -444,13 +444,6 @@ export const performCalculations = (stakingConfig, ethAmount) => {
       validators = 0;
       bondRequired = 0;
     }
-  }
-
-
-  // Enforce the 12 validator limit during EA
-  if (stakingConfig.isEA && validators > 12) {
-    validators = 12;
-    bondRequired = 1.5 + 11 * 1.3;
   }
 
   return { validators, bondRequired };

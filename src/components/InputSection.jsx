@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getOperatorRewards } from "../utils/getOperatorReward";
 import { Ttip } from "./Tooltip";
 import { performCalculations } from "../utils/calculations";
@@ -6,6 +6,14 @@ import { performCalculations } from "../utils/calculations";
 export function InputSection({ config, onChange }) {
   const [operatorRewards, setOperatorRewards] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [validatorCount, setValidatorCount] = useState(0);
+
+  useEffect(() => {
+    // Calculate validators and bond required whenever config changes
+    const ethAmount = Number(config.ethAvailable);
+    const { validators } = performCalculations(config, ethAmount);
+    setValidatorCount(validators);
+  }, [config]);
 
   const handleNodeOperatorChange = async (value) => {
     if (value > 10000) {
@@ -46,9 +54,6 @@ export function InputSection({ config, onChange }) {
   const renderOperatorPanel = () => {
     // console.log("Operator panel refreshed");
   };
-
-  // Use performCalculations to get validator count and bond amount
-  const { validators: validatorCount } = performCalculations(config, Number(config.ethAvailable));
 
   const durationOptions = [
     { label: '1D', value: 1 },
@@ -115,7 +120,8 @@ export function InputSection({ config, onChange }) {
           <h4>Validator Capacity</h4>
         </div>
         <p>With {config.ethAvailable} ETH you can run: <strong>{validatorCount} validator{validatorCount !== 1 ? 's' : ''}</strong></p>
-        {config.isEA && validatorCount > 12 && (
+        {console.log(validatorCount)}
+        {validatorCount > 12 && config.isEA && (
           <p className="note">Note: Maximum 12 validators during EA phase</p>
         )}
       </div>

@@ -115,7 +115,6 @@ function App() {
     });
   }, [stakingConfig]);
 
-
   useEffect(() => {
     const fetchLiveMetrics = async () => {
       const [ethPrice, lidoApr, vanillaApr] = await Promise.all([
