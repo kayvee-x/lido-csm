@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { JsonRpcProvider, Contract, formatEther } from 'ethers';
+import { formatEther } from 'ethers';
 import { ArrowUpDown } from 'lucide-react';
 import { calculateFrameTiming } from '../utils/calculations';
 import { fetchLatestFrames } from '../utils/fetchframeHash';
@@ -24,6 +24,7 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
     const [selectedFrame, setSelectedFrame] = useState(FRAME_HISTORY[0]);
     const [frameData, setFrameData] = useState({ operators: [] });
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+    const [priorityOperatorId, setPriorityOperatorId] = useState('');
 
     const handleSort = (key) => {
         setSortConfig({
@@ -59,8 +60,12 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
         const direction = sortConfig.direction === 'asc' ? 1 : -1;
         return a[sortConfig.key] > b[sortConfig.key] ? direction : -direction;
     });
-    const frameTiming = calculateFrameTiming(FRAME_HISTORY);
 
+    const prioritizedData = priorityOperatorId
+        ? sortedData.filter(op => op.operatorId === priorityOperatorId)
+        : sortedData;
+
+    const frameTiming = calculateFrameTiming(FRAME_HISTORY);
 
     return (
         <div className="frame-performance-container">
@@ -69,6 +74,7 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
                 <p data-label="Days Remaining">{frameTiming.daysRemaining}</p>
                 <p data-label="Current Frame Ends">{frameTiming.frameEndDate}</p>
             </div>
+            <div className="frame-header-container">
 
             <div className="frame-select">
                 <select
@@ -87,6 +93,17 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
                 </select>
             </div>
 
+                <div className="priority-operator">
+                    <input
+                        type="text"
+                        placeholder="Enter Operator ID"
+                        value={priorityOperatorId}
+                        onChange={(e) => setPriorityOperatorId(e.target.value)}
+                    />
+                </div>
+            </div>
+
+
             <div className="table-wrapper">
                 <table className="frame-table">
                     <thead>
@@ -104,7 +121,7 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedData.map((op) => (
+                        {prioritizedData.map((op) => (
                             <tr key={op.operatorId}>
                                 <td>Operator {op.operatorId}</td>
                                 <td>{op.validatorCount}</td>

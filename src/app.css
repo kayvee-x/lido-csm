@@ -786,3 +786,14 @@ select:focus {
   font-size: 0.875rem;
   margin-bottom: 8px;
 }
+.frame-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priority-operator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
