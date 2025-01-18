@@ -263,11 +263,9 @@ select:focus {
 .duration-button:hover:not(.active) {
   background: #f5f5f5;
 }
-
 /* Common Table Styles */
 .bond-table,
-.staking-table,
-.frame-table {
+.staking-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
@@ -277,8 +275,7 @@ select:focus {
 }
 
 .bond-table th,
-.staking-table th,
-.frame-table th {
+.staking-table th {
   background: #f8fafc;
   padding: 16px;
   text-align: left;
@@ -291,8 +288,7 @@ select:focus {
 }
 
 .bond-table td,
-.staking-table td,
-.frame-table td {
+.staking-table td {
   padding: 16px;
   border-bottom: 1px solid #eef2f7;
   color: #1a1f36;
@@ -300,8 +296,7 @@ select:focus {
 
 /* Table Container Styles */
 .bond-curve-container,
-.staking-table-container,
-.frame-performance-container {
+.staking-table-container {
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -309,6 +304,113 @@ select:focus {
   margin-top: 1rem;
 }
 
+.frame-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.frame-table th {
+  background-color: #f5f7fa;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.frame-table th:hover {
+  background-color: #e9ecef;
+}
+
+.frame-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sort-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.frame-section {
+  margin-bottom: 40px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.frame-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.frame-performance-container {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.frame-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.frame-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  position: relative;
+}
+
+.frame-card.current-frame {
+  background: #e8f4ff;
+  border-color: #4764ff;
+}
+
+.frame-dates {
+  color: #666;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.active-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #4764ff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.metrics-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.metric-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.metric-card .value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #4764ff;
+  margin-top: 10px;
+}
 /* Table Controls */
 .table-controls {
   margin-bottom: 24px;
@@ -650,4 +752,37 @@ select:focus {
   100% {
     transform: rotate(360deg);
   }
+}
+.frame-timing-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+  background: white;
+  padding: 5px;
+  border-radius: 12px;
+  color: fff;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.frame-timing-info p {
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.frame-timing-info p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.frame-timing-info p::before {
+  content: attr(data-label);
+  display: block;
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
 }

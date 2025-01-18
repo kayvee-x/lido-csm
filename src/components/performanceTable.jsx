@@ -1,10 +1,28 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { JsonRpcProvider, Contract, formatEther } from 'ethers';
 import { ArrowUpDown } from 'lucide-react';
-import { formatEth } from '../utils/formatting';
-import { frameData } from '../utils/recentData';
+import { calculateFrameTiming } from '../utils/calculations';
+import { fetchLatestFrames } from '../utils/fetchframeHash';
 
+const FRAME_HISTORY = [
+    {
+        period: "Current Frame (Dec 20 - Jan 17)",
+        logCid: "QmePUqG8tMXbv3eHDu3j56Dod4gwmGh1Vapsh7u4gxotT4"
+    },
+    {
+        period: "Frame 2 (Nov 22 - Dec 20)",
+        logCid: "Qmb5CZUD9uLXP9LS68jnJp1v2GTF1KjYsNLJuML9fpRufE"
+    },
+    {
+        period: "Frame 1 (Oct 25 - Nov 22)",
+        logCid: "QmezkGCHPUJ9XSAJfibmo6Sup35VgbhnodfYsc1xNT3rbo"
+    }
+];
 
-export function FramePerformanceTable({ ethPrice }) {
+export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
+    const [frameHistory, setFrameHistory] = useState([]);
+    const [selectedFrame, setSelectedFrame] = useState(FRAME_HISTORY[0]);
+    const [frameData, setFrameData] = useState({ operators: [] });
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
     const handleSort = (key) => {
@@ -13,44 +31,62 @@ export function FramePerformanceTable({ ethPrice }) {
             direction: sortConfig.key === key && sortConfig.direction === 'asc' ? 'desc' : 'asc'
         });
     };
-    const frameOptions = [
-        { label: `Frame ${frameData.frame[0]} - ${frameData.frame[1]}`, value: 'current' },
-        // more data as they come in
-    ];
-    const operatorStats = Object.entries(frameData.operators).map(([id, data]) => {
-        const validators = Object.values(data.validators);
-        const totalAssigned = validators.reduce((sum, val) => sum + val.perf.assigned, 0);
-        const totalIncluded = validators.reduce((sum, val) => sum + val.perf.included, 0);
-        const effectiveness = (totalIncluded / totalAssigned) * 100;
-        const distributed = data.distributed / 1e18;
 
-        return {
-            operatorId: id,
-            validatorCount: validators.length,
-            effectiveness,
-            distributed,
-            usdValue: distributed * ethPrice
-        };
-    });
+    const fetchFrameData = async (logCid) => {
+        const response = await fetch(`https://ipfs.io/ipfs/${logCid}`);
+        const data = await response.json();
+        const operators = Object.entries(data.operators).map(([id, data]) => {
+            const distributedBigInt = BigInt(data.distributed);
+            const distributedEth = parseFloat(formatEther(distributedBigInt));
+            return {
+                operatorId: id,
+                validatorCount: Object.keys(data.validators).length,
+                distributed: distributedBigInt,
+                distributedEth: distributedEth,
+                usdValue: distributedEth * ethPrice
+            };
+        });
 
-    const sortedData = [...operatorStats].sort((a, b) => {
+        setFrameData({ operators });
+    };
+
+    useEffect(() => {
+        fetchFrameData(selectedFrame.logCid);
+    }, [selectedFrame, ethPrice]);
+
+    const sortedData = [...frameData.operators].sort((a, b) => {
         if (!sortConfig.key) return 0;
         const direction = sortConfig.direction === 'asc' ? 1 : -1;
         return a[sortConfig.key] > b[sortConfig.key] ? direction : -direction;
     });
+    const frameTiming = calculateFrameTiming(FRAME_HISTORY);
+
 
     return (
         <div className="frame-performance-container">
+            <div className="frame-timing-info">
+                <p data-label="Last Frame Ended">{frameTiming.lastFrameEnd}</p>
+                <p data-label="Days Remaining">{frameTiming.daysRemaining}</p>
+                <p data-label="Current Frame Ends">{frameTiming.frameEndDate}</p>
+            </div>
+
             <div className="frame-select">
-                <select className="frame-dropdown">
-                    {frameOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
+                <select
+                    className="frame-dropdown"
+                    value={selectedFrame.period}
+                    onChange={(e) => {
+                        const frame = FRAME_HISTORY.find(f => f.period === e.target.value);
+                        setSelectedFrame(frame);
+                    }}
+                >
+                    {FRAME_HISTORY.map((frame) => (
+                        <option key={frame.period} value={frame.period}>
+                            {frame.period}
                         </option>
                     ))}
                 </select>
-            </div>            
-            <h3>Frame {frameData.frame[0]} - {frameData.frame[1]} Node Operator Performance</h3>
+            </div>
+
             <div className="table-wrapper">
                 <table className="frame-table">
                     <thead>
@@ -59,7 +95,7 @@ export function FramePerformanceTable({ ethPrice }) {
                             <th onClick={() => handleSort('validatorCount')}>
                                 Validators <ArrowUpDown className="sort-icon" />
                             </th>
-                            <th onClick={() => handleSort('distributed')}>
+                            <th onClick={() => handleSort('distributedEth')}>
                                 Node-Reward (ETH) <ArrowUpDown className="sort-icon" />
                             </th>
                             <th onClick={() => handleSort('usdValue')}>
@@ -72,7 +108,7 @@ export function FramePerformanceTable({ ethPrice }) {
                             <tr key={op.operatorId}>
                                 <td>Operator {op.operatorId}</td>
                                 <td>{op.validatorCount}</td>
-                                <td>{formatEth(op.distributed)} ETH</td>
+                                <td>{op.distributedEth.toFixed(2)} ETH</td>
                                 <td>${op.usdValue.toLocaleString()}</td>
                             </tr>
                         ))}
@@ -81,4 +117,4 @@ export function FramePerformanceTable({ ethPrice }) {
             </div>
         </div>
     );
-}
+};

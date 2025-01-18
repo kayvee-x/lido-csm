@@ -448,3 +448,31 @@ export const performCalculations = (stakingConfig, ethAmount) => {
 
   return { validators, bondRequired };
 };
+export const calculateFrameTiming = (frameHistory) => {
+  const FRAME_DAYS = 28;
+  const DAY_MS = 86400000;
+
+  // Start from Oct 25, 2023 as the first frame
+  const firstFrameStart = new Date('2024-10-25');
+  const currentDate = new Date();
+
+  // Calculate how many complete frames have passed
+  const daysSinceStart = Math.floor((currentDate - firstFrameStart) / DAY_MS);
+  const completedFrames = Math.floor(daysSinceStart / FRAME_DAYS);
+
+  // Calculate current frame start and end
+  const currentFrameStart = new Date(firstFrameStart);
+  currentFrameStart.setDate(firstFrameStart.getDate() + (completedFrames * FRAME_DAYS));
+
+  const currentFrameEnd = new Date(currentFrameStart);
+  currentFrameEnd.setDate(currentFrameStart.getDate() + FRAME_DAYS);
+
+  // Calculate days remaining in current frame
+  const daysRemaining = Math.ceil((currentFrameEnd - currentDate) / DAY_MS);
+
+  return {
+    lastFrameEnd: currentFrameStart.toLocaleDateString(),
+    daysRemaining,
+    frameEndDate: currentFrameEnd.toLocaleDateString()
+  };
+}
