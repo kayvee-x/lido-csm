@@ -108,7 +108,7 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
                             <tr key={op.operatorId}>
                                 <td>Operator {op.operatorId}</td>
                                 <td>{op.validatorCount}</td>
-                                <td>{op.distributedEth.toFixed(2)} ETH</td>
+                                <td>{op.distributedEth.toFixed(4)} ETH</td>
                                 <td>${op.usdValue.toLocaleString()}</td>
                             </tr>
                         ))}
