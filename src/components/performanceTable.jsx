@@ -96,7 +96,7 @@ export const FramePerformanceTable = ({ frameMetrics, ethPrice }) => {
                                 Validators <ArrowUpDown className="sort-icon" />
                             </th>
                             <th onClick={() => handleSort('distributedEth')}>
-                                Node-Reward (ETH) <ArrowUpDown className="sort-icon" />
+                                Node Operator Reward (stETH) <ArrowUpDown className="sort-icon" />
                             </th>
                             <th onClick={() => handleSort('usdValue')}>
                                 Value (USD) <ArrowUpDown className="sort-icon" />
