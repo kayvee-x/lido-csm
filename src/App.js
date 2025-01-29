@@ -228,6 +228,21 @@ function App() {
               />
             </div>
           </section>
+          <div className="upgrade-notification">
+            <div className="notification-content">
+              <span className="notification-icon">🗳️</span>
+              <p>
+                Vote To Transition Community Staking Module To Permissionless Phase
+                <a
+                  href="https://vote.lido.fi/vote/183"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Vote Now
+                </a>
+              </p>
+            </div>
+          </div>
           <section className="analysis-section">
             <div className="table-tabs">
               <button
