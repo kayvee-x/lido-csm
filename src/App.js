@@ -184,7 +184,7 @@ function App() {
                 isLoading={isLoading}
               />
               <div className="yield-chart-container">
-                <YieldComparison 
+                <YieldComparison
                   standard={rewards.comparison.standard}
                   csm={rewards.comparison.csm}
                   config={stakingConfig}
@@ -232,13 +232,13 @@ function App() {
             <div className="notification-content">
               <span className="notification-icon">🗳️</span>
               <p>
-                Vote To Transition Community Staking Module To Permissionless Phase
+                CSM transitioned to the Permissionless Phase as of January 31, 2025.
                 <a
                   href="https://vote.lido.fi/vote/183"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Vote Now
+                  View Voting Results
                 </a>
               </p>
             </div>
@@ -289,7 +289,7 @@ function App() {
                 <BondCurveTables bondCurveData={bondCurveData} />
               )}
               {activeTab === 'operators' && (
-                <OperatorAllocation  />
+                <OperatorAllocation />
               )}
             </div>
           </section>
