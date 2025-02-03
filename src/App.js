@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchEthPrice, fetchLidoAPR, fetchVanillaStakingAPR } from './utils/api';
+import { ArrowUpDown } from 'lucide-react';
 import { calculateRewards, performCalculations } from "./utils/calculations";
 import { RewardsBreakdown } from "./components/RewardsBreakdown";
 import { YieldComparison } from "./components/YieldComparison";
@@ -13,6 +14,8 @@ import { frameData } from "./utils/recentData";
 import { InfoSection } from "./components/InfoSection";
 import { FramePerformanceTable } from './components/performanceTable';
 import { OperatorAllocation } from "./components/OperatorAllocation";
+import { getQueueData } from './utils/queueTracker';
+
 import "./app.css";
 
 function App() {
@@ -20,6 +23,10 @@ function App() {
   const [activeTab, setActiveTab] = useState('staking');
   const [isLoading, setIsLoading] = useState(false);
   const [operatorRewards, setOperatorRewards] = useState(null);
+  const [queueData, setQueueData] = useState(null);
+  const [queueSearchId, setQueueSearchId] = useState('');
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
 
   const [stakingConfig, setStakingConfig] = useState({
     ethAvailable: 32,
@@ -35,9 +42,6 @@ function App() {
     epochRewards: 0,
     operatorPerformance: 0,
   });
-
-  const [rebaseHistory, setRebaseHistory] = useState([]);
-  const [operatorEligibility, setOperatorEligibility] = useState(null);
 
   const [calculations, setCalculations] = useState({
     validators: 0,
@@ -165,6 +169,20 @@ function App() {
 
     processFrameMetrics();
   }, []);
+  useEffect(() => {
+    fetchQueueData();
+  }, []);
+
+  const fetchQueueData = async () => {
+    setIsRefreshing(true);
+    try {
+      const data = await getQueueData();
+      setQueueData(data);
+    } catch (error) {
+      console.error("Error fetching queue data:", error);
+    }
+    setIsRefreshing(false);
+  };
 
 
   return (
@@ -258,6 +276,12 @@ function App() {
                 <h3>Recent Reward Distribution</h3>
               </button>
               <button
+                className={`tab-button ${activeTab === 'queueStatus' ? 'active' : ''}`}
+                onClick={() => setActiveTab('queueStatus')}
+              >
+                <h3>View Queue Status (WIP) </h3>
+              </button>
+              <button
                 className={`tab-button ${activeTab === 'bondCurve' ? 'active' : ''}`}
                 onClick={() => setActiveTab('bondCurve')}
               >
@@ -290,6 +314,84 @@ function App() {
               )}
               {activeTab === 'operators' && (
                 <OperatorAllocation />
+              )}
+              {activeTab === 'queueStatus' && (
+                <div className="bond-curve-container">
+                  <div className="table-controls">
+                    <div className="search-refresh">
+                      <input
+                        type="text"
+                        placeholder="Search Node Operator ID..."
+                        value={queueSearchId}
+                        onChange={(e) => setQueueSearchId(e.target.value)}
+                        className="search-input"
+                      />
+                      <button
+                        onClick={fetchQueueData}
+                        className="refresh-button"
+                        disabled={isRefreshing}
+                      >
+                        {isRefreshing ? 'Refreshing...' : '🔄 Refresh'}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="table-wrapper">
+                    {queueData ? (
+                      <>
+                        {queueData?.summary && (
+                          <div className="summary-section">
+                            <div className="summary-item">
+                              <span>Total Batches:</span>
+                              <span>{queueData.summary.totalBatches}</span>
+                            </div>
+                            <div className="summary-item">
+                              <span>Total Keys:</span>
+                              <span>{queueData.summary.totalKeys}</span>
+                            </div>
+                            {queueData.summary.found && (
+                              <div className="summary-item">
+                                <span>Keys Before Your Batch:</span>
+                                <span>{queueData.summary.keysInFront}</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        <table className="bond-table">
+                          <thead>
+                            <tr>
+                              <th>Position</th>
+                              <th>Node Operator ID</th>
+                              <th>Keys</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {queueData.entries
+                              .filter(entry =>
+                                !queueSearchId ||
+                                entry.noId.startsWith(queueSearchId.trim())
+                              )
+
+
+                              .map(entry => (
+                                <tr key={entry.position}
+                                  className={entry.noId === queueSearchId ? 'highlight' : ''}>
+                                  <td>{entry.position}</td>
+                                  <td>{entry.noId}</td>
+                                  <td>{entry.keysCount}</td>
+                                  <td>{entry.noId === queueSearchId ? '⏳ pending' : '⏳ pending'}</td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                      </>
+                    ) : (
+                      <div className="queue-message">Loading queue data...</div>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
           </section>

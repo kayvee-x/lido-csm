@@ -120,8 +120,8 @@ export function InputSection({ config, onChange }) {
           <h4>Validator Capacity</h4>
         </div>
         <p>With {config.ethAvailable} ETH you can run: <strong>{validatorCount} validator{validatorCount !== 1 ? 's' : ''}</strong></p>
-        {validatorCount > 12 && config.isEA && (
-          <p className="note">CSM is now permissionless, with no limit to the validators.</p>
+        {validatorCount && (
+          <p className="note">CSM is permissionless, with no limit to the validators.</p>
         )}
       </div>
 
