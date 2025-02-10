@@ -193,10 +193,18 @@ export const calculateRewards = (ethAvailable, isEA, standardYield = 3, lidoApr 
     } else if (ethAvailable <= 32) {
       validators = Math.floor((ethAvailable - 15.8) / 1.3) + 12;
       bondRequired = 15.8 + ((validators - 12) * 1.3);
-    } else {
-      const multiplier = Math.floor(ethAvailable / 32);
-      validators = 24 * multiplier;
-      bondRequired = 31.4 * multiplier;
+    } else if (ethAvailable > 32) {
+      const fullSets = Math.floor(ethAvailable / 32);
+      const remainder = ethAvailable % 32;
+
+      validators = 24 * fullSets;
+      bondRequired = 31.4 * fullSets;
+
+      if (remainder > 0) {
+        const additionalValidators = Math.floor(remainder / 1.3);
+        validators += additionalValidators;
+        bondRequired += additionalValidators * 1.3;
+      }
     }
   } else {
     if (ethAvailable <= 2.4) {

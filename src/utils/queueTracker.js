@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const CSM_ADDRESS = '0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F';
+const CSM_ADDRESS = process.env.REACT_APP_CSMODULE_CONTRACT_ADDRESS;
 const CSM_ABI = [
     "function depositQueue() view returns (uint128 head, uint128 tail)",
     "function depositQueueItem(uint128 index) view returns (uint256)"
