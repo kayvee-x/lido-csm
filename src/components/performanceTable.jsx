@@ -6,7 +6,11 @@ import { fetchLatestFrames } from '../utils/fetchframeHash';
 
 const FRAME_HISTORY = [
     {
-        period: "Latest Frame (Dec 20 - Jan 17)",
+        period: "Latest Frame (Jan 17 - Feb 14)",
+        logCid: "QmT5JWn3sR7fYxxxSh3kHBmjZyPBWjKb6CsSLGXMQbLXMX"
+    },
+    {
+        period: "Frame 3 (Dec 20 - Jan 17)",
         logCid: "QmePUqG8tMXbv3eHDu3j56Dod4gwmGh1Vapsh7u4gxotT4"
     },
     {
