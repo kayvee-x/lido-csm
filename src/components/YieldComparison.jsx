@@ -128,7 +128,7 @@ export function YieldComparison({ standard, csm, operatorRewards, config }) {
             <span>Vanilla Staking</span>
             <Ttip content="Traditional solo staking rewards from running your own Ethereum validator" />
           </h4>
-          <span className="yield-value">{standard.toFixed(2)}% APR</span>
+          <span className="yield-value">3.0% APR</span>
         </div>
 
         <div className="yield-card highlight">

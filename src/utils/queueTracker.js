@@ -30,7 +30,6 @@ export async function getQueueData() {
         let position = 1;
         let queueEntries = [];
 
-        // Process queue items in batches
         while (nextItem !== 0n && position <= 50) { // Limit to first 50 entries
             const item = await contract.depositQueueItem(nextItem);
             const { noId, keysCount, nextItem: newNext } = parseQueueItem(item);
@@ -44,7 +43,6 @@ export async function getQueueData() {
             position++;
             nextItem = newNext;
 
-            // Add small delay between requests
             await new Promise(resolve => setTimeout(resolve, 100));
         }
 
@@ -56,8 +54,7 @@ export async function getQueueData() {
             }
         };
     } finally {
-        provider.destroy(); // Cleanup provider
+        provider.destroy(); 
     }
 }
-
 
